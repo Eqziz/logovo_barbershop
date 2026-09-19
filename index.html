@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- Author: Nodir Muhammedov -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official website of Logovo Barbershop in Astana. Classic haircuts, straight-razor shaving, and authentic men's club culture.">
+    <meta name="author" content="Nodir Muhammedov">
+    <title>Logovo Barbershop — Home in Astana</title>
+    <!-- Cascade loading order: shared team styles first, personal sheet second -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/nodir.css">
+</head>
+<body>
+    <header>
+        <div class="site-header-inner">
+            <h1>Logovo Barbershop</h1>
+            <!-- CASCADE DEMO: Exactly one inline style attribute demonstrating specificity 1-0-0-0 -->
+            <p style="letter-spacing: 2px;">Authentic Men's Club &amp; Grooming Traditions in Astana</p>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services &amp; Pricing</a></li>
+                    <li><a href="barbers.html">Barbers</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="marketbar.html">MarketBar</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Single unique ID used for anchor navigation and relative positioning -->
+        <section id="about-hero" class="hero-banner">
+            <span class="badge-floating">Astana 2026</span>
+            <h2 class="section-heading">About Our Club Philosophy</h2>
+            <!-- Floated interior photograph wrapped with paragraph text -->
+            <img src="images/photo1.jpg" alt="Logovo Barbershop lounge area with brick pillars, hanging Edison lamps, and round wooden tables" class="float-interior-img" width="300">
+            <p>
+                <b>Logovo Barbershop</b> in Astana is a private sanctuary dedicated to gentlemen who appreciate razor precision, steady craftsmanship, and classic grooming rituals. We engineered an interior featuring dark brick textures, warm amber Edison illumination, and heavy leather seating where guests disconnect from urban bustle, sip single-origin espresso, and trust their personal style to seasoned artisans.
+            </p>
+            <p>
+                Our philosophy centers on calculating cranial geometry and hair growth mechanics. We reject standardized factory haircuts, preferring to tailor every neckline, taper fade, and beard silhouette to individual features.
+            </p>
+            <!-- Clearing float to preserve semantic document flow -->
+            <div class="clear-flow"></div>
+        </section>
+
+        <section>
+            <h2 class="section-heading">Words of Our Master Barber</h2>
+            <!-- Target element for Specificity Experiment (blockquote vs .master-quote) -->
+            <blockquote class="master-quote" cite="https://2gis.kz">
+                "At Logovo Barbershop, we restore the heritage of genuine male grooming: crisp scissor cuts, hot towel soothing rituals, and an open razor edge that accepts no compromise."
+            </blockquote>
+            <p>— Head Barber Azamat, consultation statement from <time datetime="2026-03-01">March 1, 2026</time>.</p>
+        </section>
+
+        <!-- Flexbox container featuring responsive card layout -->
+        <section>
+            <h2 class="section-heading">Service Hallmarks</h2>
+            <div class="features-container">
+                <article class="feature-card">
+                    <h3>Instrument Sterilization</h3>
+                    <p>Every set of shears and guards undergoes medical-grade disinfection followed by dry-heat cabinet processing.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Club Hospitality</h3>
+                    <p>Zero crowds: enjoy a tranquil lounge stocked with craft beverages, daily periodicals, and calm background acoustics.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Apothecary Cosmetics</h3>
+                    <p>We work exclusively with certified organic styling clays, nourishing balms, and natural beard conditioning tonics.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- CSS Grid layout for branch interior gallery -->
+        <section>
+            <h2 class="section-heading">Branch Interior Gallery</h2>
+            <div class="gallery-grid">
+                <figure class="gallery-featured-item">
+                    <img src="images/photo2.jpg" alt="Master cutting stations with illuminated mirrors and professional hydraulic barber chairs at Logovo" width="100%">
+                    <figcaption>Main cutting floor and premium ergonomic workstations at our central branch.</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/photo4.jpg" alt="Logovo Barbershop hospitality bar counter with espresso machines and glassware" width="100%">
+                    <figcaption>Integrated lounge bar counter serving freshly brewed coffee.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <aside class="normal-flow-block">
+            <h3>Club Privileges</h3>
+            <p>
+                Active club cardholders receive an instant <mark>10%</mark> cashback toward home care apothecary products.
+            </p>
+            <p>
+                Quick Jump: <a href="#about-hero">Return to Club Overview</a>
+            </p>
+        </aside>
+    </main>
+
+    <!-- Fixed position action button for direct call -->
+    <a href="tel:+77012181919" class="floating-contact-btn" aria-label="Call Logovo Barbershop">Call Club</a>
+
+    <footer>
+        <p>17/1 Syganak St, Astana, Kazakhstan | Direct Phone: <a href="tel:+77012181919">+7 (701) 218-19-19</a></p>
+        <p>Find us: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer">Logovo Barbershop on 2GIS Astana</a></p>
+        <p>&copy; 2026 Logovo Barbershop. All rights reserved &trade; &bull; &sect; 1.</p>
+    </footer>
+</body>
+</html>
