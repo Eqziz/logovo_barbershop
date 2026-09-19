@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- Author: Nodir Muhammedov -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official price list and service specifications for Logovo Barbershop in Astana: haircuts, beard shaping, and royal shaving.">
+    <meta name="author" content="Nodir Muhammedov">
+    <title>Services &amp; Pricing — Logovo Barbershop</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/nodir.css">
+
+    <!-- CASCADE DEMO: Exactly one internal style block overriding external stylesheet rules -->
+    <style>
+        /* Specificity 0-0-1. Overrides default table body text color for higher readability */
+        .price-table td {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-header-inner">
+            <h1>Logovo Barbershop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services &amp; Pricing</a></li>
+                    <li><a href="barbers.html">Barbers</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="marketbar.html">MarketBar</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <h2 class="section-heading">Service Tariff &amp; Time Allocation for 2026</h2>
+            <p>
+                All procedures at Logovo Barbershop follow rigorous procedural cards utilizing certified Japanese steel shears. Every haircut booking incorporates a preliminary hair consultation, a refreshing menthol shampoo wash, and finished styling using matte texturizing clay.
+            </p>
+
+            <!-- Accessible table containing caption, thead, tbody, and explicit scope attributes -->
+            <table class="price-table">
+                <caption>Standard and Royal Package Rates at Logovo Barbershop</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Service Description</th>
+                        <th scope="col">Duration (Min)</th>
+                        <th scope="col">Rate (KZT)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" rowspan="2">Haircuts</th>
+                        <td>Signature Classic Scissor Cut</td>
+                        <td>50</td>
+                        <td>7 000</td>
+                    </tr>
+                    <tr>
+                        <td>Skin Fade Precision Clipper Cut</td>
+                        <td>35</td>
+                        <td>5 000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" rowspan="2">Beard &amp; Shaving</th>
+                        <td>Beard Sculpting &amp; Hot Towel Treatment</td>
+                        <td>40</td>
+                        <td>5 500</td>
+                    </tr>
+                    <tr>
+                        <td>Royal Straight-Razor Wet Shave</td>
+                        <td>45</td>
+                        <td>6 500</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Combination</th>
+                        <td>Father &amp; Son Royal Package</td>
+                        <td>80</td>
+                        <td>11 500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <!-- Centering Technique #3: Grid place-items: center -->
+        <div class="promo-center-box">
+            <p><strong>Introductory Offer:</strong> First-time guests receive complimentary beard oil styling!</p>
+        </div>
+
+        <section>
+            <h2 class="section-heading">Sanitation Protocols</h2>
+            <dl>
+                <dt><dfn>Dry-Heat Cabinet</dfn></dt>
+                <dd>Thermal decontamination of metal tools at 180°C ensuring comprehensive elimination of pathogens.</dd>
+                <dt><dfn>Single-Use Neck Strips</dfn></dt>
+                <dd>Individual disposable barriers preventing skin contact with salon capes.</dd>
+            </dl>
+        </section>
+
+        <figure>
+            <img src="images/photo3.jpg" alt="Master barber holding hand-sharpened Japanese shears in Logovo Barbershop" width="500">
+            <figcaption>Master technician demonstrating precision haircutting tools prior to an appointment.</figcaption>
+        </figure>
+    </main>
+
+    <footer>
+        <p>17/1 Syganak St, Astana | Service Desk: <a href="mailto:service@logovo-astana.kz">service@logovo-astana.kz</a></p>
+        <p>&copy; 2026 Logovo Barbershop. Certified service quality &reg;.</p>
+    </footer>
+</body>
+</html>
