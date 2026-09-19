@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- Author: Nodir Muhammedov -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Customer service feedback and quality control portal for Logovo Barbershop in Astana.">
+    <meta name="author" content="Nodir Muhammedov">
+    <title>Feedback &amp; Quality Control — Logovo Barbershop</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/nodir.css">
+</head>
+<body>
+    <header>
+        <div class="site-header-inner">
+            <h1>Logovo Barbershop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services &amp; Pricing</a></li>
+                    <li><a href="barbers.html">Barbers</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="marketbar.html">MarketBar</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-heading">Customer Quality Assurance Registry</h2>
+            <p>
+                We continuously audit service standards across all Logovo branches. Whether you wish to commend an artisan or submit observations regarding our waiting lounge, please complete the form below. Senior administration reviews each submission.
+            </p>
+
+            <!-- 
+                ID #feedback-portal used once for styling and anchor purposes.
+                ASSIGNMENT COMMENT: This form does not transmit data to a remote backend server
+                as server-side technologies are introduced in later course assignments.
+            -->
+            <form id="feedback-portal" action="#" method="post">
+                <fieldset>
+                    <legend>Client Identification</legend>
+                    <div class="form-group">
+                        <label for="client-name">Full Name:</label><br>
+                        <input type="text" id="client-name" name="client_name" class="form-control" placeholder="e.g. Arman Kassymov" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="client-phone">Phone Number:</label><br>
+                        <input type="tel" id="client-phone" name="client_phone" class="form-control" placeholder="+7 (701) 000-00-00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="client-email">Email Address:</label><br>
+                        <input type="email" id="client-email" name="client_email" class="form-control" placeholder="arman@example.kz" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Visit Details &amp; Evaluation</legend>
+                    <div class="form-group">
+                        <label for="branch-select">Visited Branch in Astana:</label><br>
+                        <select id="branch-select" name="branch" class="form-control" required>
+                            <option value="">-- Choose Branch Location --</option>
+                            <option value="syganak">17/1 Syganak St</option>
+                            <option value="kabanbay">58A Kabanbay Batyr Ave</option>
+                            <option value="mangilik">38 Mangilik El Ave</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="visit-date">Appointment Date:</label><br>
+                        <input type="date" id="visit-date" name="visit_date" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service-rating">Rating (1 to 5):</label><br>
+                        <input type="number" id="service-rating" name="service_rating" class="form-control" min="1" max="5" value="5" required>
+                    </div>
+
+                    <p>Would you recommend Logovo Barbershop to colleagues?</p>
+                    <p>
+                        <input type="radio" id="rec-yes" name="recommendation" value="yes" checked>
+                        <label for="rec-yes">Definitely Yes</label><br>
+                        <input type="radio" id="rec-maybe" name="recommendation" value="maybe">
+                        <label for="rec-maybe">Undecided</label><br>
+                        <input type="radio" id="rec-no" name="recommendation" value="no">
+                        <label for="rec-no">Have Reservations</label>
+                    </p>
+
+                    <div class="form-group">
+                        <label for="feedback-comments">Observations &amp; Suggestions:</label><br>
+                        <textarea id="feedback-comments" name="comments" class="form-control" rows="4" placeholder="Detail your haircut precision or staff courtesy..." required></textarea>
+                    </div>
+
+                    <p>
+                        <input type="checkbox" id="data-consent" name="consent" required>
+                        <label for="data-consent">I authorize review of this testimonial by quality supervisors</label>
+                    </p>
+                </fieldset>
+
+                <!-- Centering Technique #2: Flexbox button .action-btn -->
+                <button type="submit" class="action-btn">Submit Evaluation</button>
+                <button type="reset">Reset Form</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Quality Department: <a href="mailto:care@logovo-astana.kz">care@logovo-astana.kz</a></p>
+        <p>&copy; 2026 Logovo Barbershop. Client feedback registry &bull; Astana.</p>
+    </footer>
+</body>
+</html>

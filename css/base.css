@@ -1,0 +1,115 @@
+/* ==========================================================================
+   PALETTE DEFINITION (Max 5 colors per specification):
+   1. #1a1a1a (Hex)       - Dark Graphite: Solid foundational background for Logovo
+   2. #f4f1ea (Hex)       - Soft Linen: Warm, high-contrast readable text
+   3. #c59b27 (Hex)       - Noble Ochre Gold: Brand accent color for borders and highlights
+   4. rgba(0, 0, 0, 0.7)  - Translucent Black: Surface overlay for cards and header
+   5. steelblue (Named)   - Named CSS color: Utility links and secondary indicators
+   ========================================================================== */
+
+/* Universal selector (*) resetting box model across elements */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Base typography and body flow */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #f4f1ea;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+}
+
+/* Comma grouping selector for headings */
+h1, h2, h3, h4 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #c59b27;
+    margin-top: 0;
+}
+
+/* 
+   MARGIN COLLAPSE EXPLANATION:
+   In normal document flow, h1 has margin-bottom: 20px while the nav block has margin-top: 20px. 
+   Per CSS box model rules, these adjoining vertical margins collapse into a single 20px margin 
+   instead of adding up to 40px.
+*/
+header {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-bottom: 2px solid #c59b27;
+    padding: 25px 40px;
+    text-align: center;
+}
+
+/* Centering Technique #1 (Margin auto) */
+.site-header-inner {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* FLEXBOX: Primary site navigation configured as a flex row */
+nav ul {
+    list-style: none;
+    margin: 20px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Descendant selector for navigation anchors */
+nav ul li a {
+    color: #f4f1ea;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+}
+
+/* Pseudo-class :hover */
+nav ul li a:hover {
+    color: #c59b27;
+    background-color: rgba(197, 155, 39, 0.1);
+}
+
+/* Pseudo-class :focus for keyboard accessibility */
+nav ul li a:focus {
+    outline: 2px solid #c59b27;
+    outline-offset: 3px;
+}
+
+/* Main container with structured padding */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Global footer formatting */
+footer {
+    background-color: #111111;
+    border-top: 1px solid #333333;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #888888;
+}
+
+/* Child selector (footer > p) */
+footer > p {
+    margin: 8px 0;
+}
