@@ -1,0 +1,211 @@
+/* ==========================================================================
+   PERSONAL STYLESHEET — NURASYL ILYAS
+   Pages: barbers.html, (supplementary styling)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. SPECIFICITY EXPERIMENT (NURASYL ILYAS)
+   -------------------------------------------------------------------------- */
+
+/* RULE 1: Type selector. Specificity: 0-0-1 */
+/* Yields to the class selector below due to lower cascade weight */
+figcaption {
+    color: #888888;
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+/* RULE 2: Class selector. Specificity: 0-1-0 */
+/* Wins: 0-1-0 holds higher specificity than 0-0-1 without using !important */
+.master-caption {
+    color: #c59b27;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. SINGLE DELIBERATE !IMPORTANT USAGE
+   -------------------------------------------------------------------------- */
+
+/* 
+   JUSTIFICATION FOR !IMPORTANT: 
+   Applied exactly once for an urgent system badge denoting master unavailability, 
+   ensuring it overrides any contextual status colors.
+*/
+.status-busy {
+    background-color: #8b0000 !important;
+    color: #ffffff;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. REQUIRED SELECTORS
+   -------------------------------------------------------------------------- */
+
+/* Adjacent sibling selector (+): Styles the first list directly following an h3 */
+h3 + ol {
+    padding-left: 25px;
+    border-left: 2px solid #c59b27;
+}
+
+/* Attribute selector ([attr]): Targets ordered lists with Roman numbering */
+ol[type="I"] {
+    line-height: 2;
+    color: #f4f1ea;
+}
+
+/* Pseudo-class :nth-child(even): Alternates list item color for readable rows */
+ul li:nth-child(even) {
+    color: #e0d8c3;
+}
+
+/* Pseudo-element ::after: Appends a decorative bullet glyph after branch titles */
+.branch-title::after {
+    content: " •";
+    color: #c59b27;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. IDENTIFIERS (ID)
+   -------------------------------------------------------------------------- */
+
+/* 
+   ID #barbers-roster: 
+   Unique master roster container on barbers.html. 
+   Justified because this staff directory section exists once per document.
+*/
+#barbers-roster {
+    position: relative;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid #333333;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. POSITIONING (Static, Relative, Absolute, Fixed)
+   -------------------------------------------------------------------------- */
+
+/* STATIC: Default document flow block without offsets */
+.branch-info-static {
+    position: static;
+}
+
+/* RELATIVE: Parent container providing bounding box for absolute badges */
+.barber-card-wrap {
+    position: relative;
+    background-color: #222222;
+    padding: 20px;
+    border: 1px solid #3d3d3d;
+}
+
+/* ABSOLUTE: Experience badge pinned to top-right corner of barber card */
+.barber-exp-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #c59b27;
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 2px;
+}
+
+/* FIXED: Floor manager status callout fixed to bottom-left of viewport */
+.duty-admin-fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #111111;
+    border: 1px solid #c59b27;
+    color: #f4f1ea;
+    padding: 10px 16px;
+    font-size: 12px;
+    z-index: 999;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. FLOAT & CLEAR
+   -------------------------------------------------------------------------- */
+
+/* Master portrait floated right with text wrapping along its left edge */
+.float-barber-img {
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #c59b27;
+}
+
+/* 
+   CLEAR EXPLANATION:
+   clear: both restores normal document flow. Without clear, subsequent lists 
+   would collapse upwards and tuck under the floated image box.
+*/
+.clear-barber-flow {
+    clear: both;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. FLEXBOX
+   -------------------------------------------------------------------------- */
+
+/* Flexible container displaying branch studio cards */
+.branches-flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.branch-flex-card {
+    flex: 1 1 280px;
+    background-color: #252525;
+    padding: 15px;
+    border-top: 3px solid #c59b27;
+}
+
+
+/* --------------------------------------------------------------------------
+   8. CSS GRID
+   -------------------------------------------------------------------------- */
+
+/* 
+   GRID EXPLANATION:
+   Grid was chosen for the barber shift roster to maintain a rigid 2D schedule 
+   matrix across weekdays and shifts with explicit fr and minmax track sizing.
+*/
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+/* Schedule item spanning across two adjacent column tracks */
+.schedule-span-card {
+    grid-column: span 2;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. CENTERING
+   -------------------------------------------------------------------------- */
+
+/* Centering via Flexbox: centers action label inside master booking button */
+.barber-select-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c59b27;
+    color: #1a1a1a;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 15px auto;
+}
