@@ -1,0 +1,207 @@
+/* ==========================================================================
+   PERSONAL STYLESHEET — NURKEN MAMAY
+   Pages: marketbar.html, careers.html
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. SPECIFICITY EXPERIMENT (NURKEN MAMAY)
+   -------------------------------------------------------------------------- */
+
+/* RULE 1: Type selector. Specificity: 0-0-1 */
+/* Yields to the class selector below */
+caption {
+    font-weight: normal;
+    color: #888888;
+    text-align: left;
+}
+
+/* RULE 2: Class selector. Specificity: 0-1-0 */
+/* Wins: 0-1-0 holds higher specificity than 0-0-1 without using !important */
+.market-table-caption {
+    font-weight: bold;
+    color: #c59b27;
+    text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. SINGLE DELIBERATE !IMPORTANT USAGE
+   -------------------------------------------------------------------------- */
+
+/* 
+   JUSTIFICATION FOR !IMPORTANT: 
+   Used exactly once to enforce border highlighting on the featured apothecary 
+   item of the week, suppressing any conflicting catalog borders.
+*/
+.featured-product {
+    border: 2px solid #c59b27 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. REQUIRED SELECTORS
+   -------------------------------------------------------------------------- */
+
+/* Child selector (>): Table header cells within the primary heading row */
+thead > tr > th {
+    background-color: #181818;
+    text-transform: uppercase;
+}
+
+/* Attribute selector ([attr]): Customizes candidate track select element */
+select[name="cand_role"] {
+    background-color: #222222;
+    color: #c59b27;
+    padding: 8px;
+    border: 1px solid #444444;
+}
+
+/* Pseudo-class :nth-child(1): Highlights first data column in catalog tables */
+.price-table td:nth-child(1) {
+    font-weight: 600;
+}
+
+/* Pseudo-element ::before: Injects text label before cosmetic price fields */
+.product-price::before {
+    content: "Price: ";
+    color: #888888;
+    font-size: 12px;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. IDENTIFIERS (ID)
+   -------------------------------------------------------------------------- */
+
+/* 
+   ID #careers-form-box: 
+   Single unique container wrapping candidate application form on careers.html.
+*/
+#careers-form-box {
+    position: relative;
+    padding: 30px;
+    background-color: #1f1f1f;
+    border: 1px solid #333333;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. POSITIONING (Static, Relative, Absolute, Fixed)
+   -------------------------------------------------------------------------- */
+
+/* STATIC: Natural document flow container for general career notes */
+.career-static-note {
+    position: static;
+}
+
+/* RELATIVE: Provides containing coordinate block for product sale tags */
+.product-item-wrap {
+    position: relative;
+    background-color: #242424;
+    padding: 20px;
+}
+
+/* ABSOLUTE: Corner sale sticker pinned inside .product-item-wrap */
+.market-sale-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: steelblue;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 3px 6px;
+    text-transform: uppercase;
+}
+
+/* FIXED: Quick cosmetic inquiry widget anchored at top-right of viewport */
+.quick-order-widget {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border: 1px solid #c59b27;
+    padding: 8px 15px;
+    font-size: 12px;
+    z-index: 1001;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. FLOAT & CLEAR
+   -------------------------------------------------------------------------- */
+
+/* MarketBar counter image floated left */
+.float-bar-counter {
+    float: left;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    border: 1px solid #c59b27;
+}
+
+/* 
+   CLEAR EXPLANATION:
+   clear: both resets the floating formatting context for the product table. 
+   Without clear, the table layout would distort around the floated image box.
+*/
+.clear-market-flow {
+    clear: both;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. FLEXBOX
+   -------------------------------------------------------------------------- */
+
+/* Display flex container for featured cosmetic items */
+.market-products-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.market-item-card {
+    flex: 1 1 220px;
+    background-color: #202020;
+    padding: 18px;
+    border: 1px solid #333333;
+}
+
+
+/* --------------------------------------------------------------------------
+   8. CSS GRID
+   -------------------------------------------------------------------------- */
+
+/* 
+   GRID EXPLANATION:
+   Grid was selected for the apothecary inventory to guarantee a balanced 
+   catalog arrangement using repeat() and minmax() calculations simultaneously.
+*/
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+/* Featured product card spanning two horizontal columns */
+.catalog-wide-card {
+    grid-column: span 2;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. CENTERING
+   -------------------------------------------------------------------------- */
+
+/* Centering via Grid: centers promotional academy banner contents */
+.academy-banner-center {
+    display: grid;
+    place-items: center;
+    background-color: #1c1c1c;
+    border: 1px solid #c59b27;
+    min-height: 90px;
+    margin: 20px 0;
+    text-align: center;
+}
