@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Author: Nurken Mamay -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Career opportunities and barber academy admissions at Logovo Barbershop in Astana.">
+    <meta name="author" content="Nurken Mamay">
+    <title>Careers &amp; Academy — Logovo Barbershop</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/nurken.css">
+</head>
+<body>
+    <header>
+        <div class="site-header-inner">
+            <h1>Logovo Barbershop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services &amp; Pricing</a></li>
+                    <li><a href="barbers.html">Barbers</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="marketbar.html">MarketBar</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-heading">Join the Logovo Team</h2>
+            <p>
+                Our team expands consistently across the capital. If you possess documented experience in classical men's grooming or wish to apprentice through our foundational internal academy, submit your credentials below.
+            </p>
+
+            <!-- 
+                ASSIGNMENT COMMENT: This application form does not dispatch data across live networks
+                as server-side backend operations will be implemented later in the academic year.
+            -->
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Applicant Information</legend>
+                    <p>
+                        <label for="cand-name">Candidate Name:</label><br>
+                        <input type="text" id="cand-name" name="cand_name" placeholder="Daniyar Serikov" required>
+                    </p>
+                    <p>
+                        <label for="cand-phone">Contact Phone:</label><br>
+                        <input type="tel" id="cand-phone" name="cand_phone" placeholder="+7 (705) 111-22-33" required>
+                    </p>
+                    <p>
+                        <label for="cand-email">Email Address:</label><br>
+                        <input type="email" id="cand-email" name="cand_email" placeholder="daniyar@example.kz" required>
+                    </p>
+                    <p>
+                        <label for="cand-exp">Experience (Years):</label><br>
+                        <input type="number" id="cand-exp" name="cand_exp" min="0" max="25" value="1" required>
+                    </p>
+                    <p>
+                        <label for="cand-date">Earliest Start Date:</label><br>
+                        <input type="date" id="cand-date" name="cand_date" required>
+                    </p>
+                    <p>
+                        <label for="cand-role">Desired Track:</label><br>
+                        <select id="cand-role" name="cand_role" required>
+                            <option value="">-- Choose Position --</option>
+                            <option value="barber">Floor Barber</option>
+                            <option value="apprentice">Academy Apprentice</option>
+                            <option value="admin">Branch Administrator</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="cand-text">Portfolio Links &amp; Background:</label><br>
+                        <textarea id="cand-text" name="cand_text" rows="4" placeholder="Detail past certifications or work profiles..."></textarea>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="cand-agree" name="cand_agree" required>
+                        <label for="cand-agree">I confirm that all disclosed qualifications are accurate</label>
+                    </p>
+                    <p>
+                        <button type="submit">Submit Application</button>
+                        <button type="reset">Reset</button>
+                    </p>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Human Resources: <a href="mailto:hr@logovo-astana.kz">hr@logovo-astana.kz</a></p>
+        <p>&copy; 2026 Logovo Barbershop. Career opportunities in Astana.</p>
+    </footer>
+</body>
+</html>
