@@ -1,113 +1,201 @@
 <!DOCTYPE html>
 <!-- Author: Nodir Muhammedov -->
+<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Official website of Logovo Barbershop in Astana. Classic haircuts, straight-razor shaving, and authentic men's club culture.">
+    <meta name="description" content="Official website of Logovo Barbershop in Astana. Classic haircuts, straight-razor shaving, and authentic club grooming traditions.">
     <meta name="author" content="Nodir Muhammedov">
     <title>Logovo Barbershop — Home in Astana</title>
-    <!-- Cascade loading order: shared team styles first, personal sheet second -->
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/nodir.css">
+    
+    <!-- Bootstrap v5.3.3 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom brand correction layer loaded strictly after Bootstrap -->
+    <link rel="stylesheet" href="css/custom.css">
 </head>
-<body>
-    <header>
-        <div class="site-header-inner">
-            <h1>Logovo Barbershop</h1>
-            <!-- CASCADE DEMO: Exactly one inline style attribute demonstrating specificity 1-0-0-0 -->
-            <p style="letter-spacing: 2px;">Authentic Men's Club &amp; Grooming Traditions in Astana</p>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services &amp; Pricing</a></li>
-                    <li><a href="barbers.html">Barbers</a></li>
-                    <li><a href="feedback.html">Feedback</a></li>
-                    <li><a href="marketbar.html">MarketBar</a></li>
-                    <li><a href="careers.html">Careers</a></li>
-                </ul>
-            </nav>
-        </div>
+<body class="bg-black text-light">
+
+    <!-- 
+        CONTAINER 1 RATIONALE:
+        container-fluid is applied to the header and navbar so that the dark bar background
+        spans 100% of the viewport width across desktop and mobile screens without side borders.
+    -->
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+            <div class="container-fluid px-3 px-md-4">
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                
+                <!-- Responsive navbar toggler for viewports below 992px -->
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+                    <ul class="navbar-nav gap-lg-2">
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="services.html">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html">Feedback</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main>
-        <!-- Single unique ID used for anchor navigation and relative positioning -->
-        <section id="about-hero" class="hero-banner">
-            <span class="badge-floating">Astana 2026</span>
-            <h2 class="section-heading">About Our Club Philosophy</h2>
-            <!-- Floated interior photograph wrapped with paragraph text -->
-            <img src="images/photo1.jpg" alt="Logovo Barbershop lounge area with brick pillars, hanging Edison lamps, and round wooden tables" class="float-interior-img" width="300">
-            <p>
-                <b>Logovo Barbershop</b> in Astana is a private sanctuary dedicated to gentlemen who appreciate razor precision, steady craftsmanship, and classic grooming rituals. We engineered an interior featuring dark brick textures, warm amber Edison illumination, and heavy leather seating where guests disconnect from urban bustle, sip single-origin espresso, and trust their personal style to seasoned artisans.
-            </p>
-            <p>
-                Our philosophy centers on calculating cranial geometry and hair growth mechanics. We reject standardized factory haircuts, preferring to tailor every neckline, taper fade, and beard silhouette to individual features.
-            </p>
-            <!-- Clearing float to preserve semantic document flow -->
-            <div class="clear-flow"></div>
+    <!-- 
+        CONTAINER 2 RATIONALE:
+        Standard fixed .container is applied to the main content to center the layout grid,
+        maintain standard reading margins, and prevent excessive line stretching on wide displays.
+    -->
+    <main class="container my-5">
+
+        <!-- Hero Section: Responsive two-column grid (col-12 on mobile/tablet, col-lg-7 and 5 on desktop) -->
+        <section class="p-4 p-md-5 mb-5 rounded bg-dark border border-secondary border-opacity-25 shadow">
+            <div class="row align-items-center g-4">
+                <div class="col-12 col-lg-7">
+                    <span class="badge bg-gold mb-3 text-uppercase fw-bold">Astana 2026</span>
+                    <h1 class="display-5 fw-bold text-gold mb-3">Men's Club & Grooming Traditions</h1>
+                    
+                    <p class="lead text-light mb-3">
+                        <b>Logovo Barbershop</b> in Astana is a private sanctuary for gentlemen who value sharp silhouette geometry, steady master hands, and traditional wet shaving.
+                    </p>
+                    <p class="text-secondary mb-4">
+                        We calculate the anatomical proportions of every haircut to complement individual facial structures and hair types. Inside our club lounge, guests can unwind from urban pressure with a fresh cup of specialty espresso.
+                    </p>
+
+                    <!-- Demonstration of 4 Bootstrap button variations: primary, outline, large (lg), disabled -->
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="services.html" class="btn btn-gold btn-lg">View Price List</a>
+                        <a href="feedback.html" class="btn btn-outline-gold btn-lg">Leave Feedback</a>
+                        <button type="button" class="btn btn-secondary btn-sm" disabled>Fully Booked Today</button>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5 text-center">
+                    <img src="images/photo1.jpg" alt="Logovo Barbershop lounge waiting area with brick pillars and round wooden tables" class="img-fluid rounded shadow border border-secondary border-opacity-50">
+                </div>
+            </div>
         </section>
 
-        <section>
-            <h2 class="section-heading">Words of Our Master Barber</h2>
-            <!-- Target element for Specificity Experiment (blockquote vs .master-quote) -->
-            <blockquote class="master-quote" cite="https://2gis.kz">
+        <!-- Master Barber Statement using Bootstrap typography and border classes -->
+        <section class="my-5 p-4 border-start border-4 border-warning bg-dark rounded shadow-sm">
+            <blockquote class="blockquote text-light fst-italic mb-2" cite="https://2gis.kz">
                 "At Logovo Barbershop, we restore the heritage of genuine male grooming: crisp scissor cuts, hot towel soothing rituals, and an open razor edge that accepts no compromise."
             </blockquote>
-            <p>— Head Barber Azamat, consultation statement from <time datetime="2026-03-01">March 1, 2026</time>.</p>
+            <figcaption class="blockquote-footer text-secondary mt-1 mb-0">
+                Head Barber Azamat, consultation statement from <time datetime="2026-03-01">March 1, 2026</time>
+            </figcaption>
         </section>
 
-        <!-- Flexbox container featuring responsive card layout -->
-        <section>
-            <h2 class="section-heading">Service Hallmarks</h2>
-            <div class="features-container">
-                <article class="feature-card">
-                    <h3>Instrument Sterilization</h3>
-                    <p>Every set of shears and guards undergoes medical-grade disinfection followed by dry-heat cabinet processing.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Club Hospitality</h3>
-                    <p>Zero crowds: enjoy a tranquil lounge stocked with craft beverages, daily periodicals, and calm background acoustics.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Apothecary Cosmetics</h3>
-                    <p>We work exclusively with certified organic styling clays, nourishing balms, and natural beard conditioning tonics.</p>
-                </article>
+        <!-- 
+            BOOTSTRAP COMPONENT: Cards (.card, .card-body)
+            Responsive grid across 3 breakpoints: col-12 (phones), col-md-6 (tablets), col-lg-4 (desktops)
+        -->
+        <section class="my-5">
+            <h2 class="h3 fw-bold text-gold mb-4 text-center text-md-start">Logovo Service Hallmarks</h2>
+            
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card card-dark h-100 shadow-sm border border-secondary border-opacity-25">
+                        <div class="card-body p-4">
+                            <h3 class="h5 card-title text-gold mb-2">Medical Sterility</h3>
+                            <p class="card-text text-secondary mb-0">
+                                Every steel tool undergoes three-stage chemical disinfection and thermal processing inside a dry-heat cabinet at 180°C.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card card-dark h-100 shadow-sm border border-secondary border-opacity-25">
+                        <div class="card-body p-4">
+                            <h3 class="h5 card-title text-gold mb-2">Club Lounge Bar</h3>
+                            <p class="card-text text-secondary mb-0">
+                                Guests enjoy full access to our hospitality bar serving freshly ground coffee, artisan tea blends, and cold beverages.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-12 col-lg-4">
+                    <div class="card card-dark h-100 shadow-sm border border-secondary border-opacity-25">
+                        <div class="card-body p-4">
+                            <h3 class="h5 card-title text-gold mb-2">Apothecary Cosmetics</h3>
+                            <p class="card-text text-secondary mb-0">
+                                We style hair exclusively with certified organic styling clays, nourishing balms, and natural beard conditioning oils.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- CSS Grid layout for branch interior gallery -->
-        <section>
-            <h2 class="section-heading">Branch Interior Gallery</h2>
-            <div class="gallery-grid">
-                <figure class="gallery-featured-item">
-                    <img src="images/photo2.jpg" alt="Master cutting stations with illuminated mirrors and professional hydraulic barber chairs at Logovo" width="100%">
-                    <figcaption>Main cutting floor and premium ergonomic workstations at our central branch.</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/photo4.jpg" alt="Logovo Barbershop hospitality bar counter with espresso machines and glassware" width="100%">
-                    <figcaption>Integrated lounge bar counter serving freshly brewed coffee.</figcaption>
-                </figure>
+        <!-- 
+            NESTED GRID (Nesting):
+            Inside the col-lg-8 column, a nested .row coordinates two child col-md-6 columns
+        -->
+        <section class="my-5 p-4 p-md-5 rounded bg-dark border border-secondary border-opacity-25">
+            <div class="row align-items-center g-4">
+                <div class="col-12 col-lg-8">
+                    <h2 class="h4 text-gold mb-3">Floor Specifications & Technical Standards</h2>
+                    <p class="text-secondary mb-3">
+                        All haircutting stations are equipped with heavy hydraulic leather chairs, shadowless lighting, and precision Japanese shears.
+                    </p>
+
+                    <!-- Nested row -->
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-black rounded border border-secondary border-opacity-25 h-100">
+                                <span class="fw-bold text-light d-block mb-1">Japanese Steel</span>
+                                <small class="text-secondary">Micro-serrated shear blades provide clean cuts without splitting hair ends.</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-black rounded border border-secondary border-opacity-25 h-100">
+                                <span class="fw-bold text-light d-block mb-1">Sharp Perimeters</span>
+                                <small class="text-secondary">Neckline edges are finished using disposable surgical-grade blades opened per guest.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 text-center">
+                    <img src="images/photo2.jpg" alt="Master barber workstations and hydraulic chairs at Logovo" class="img-fluid rounded shadow border border-secondary border-opacity-50">
+                </div>
             </div>
         </section>
 
-        <aside class="normal-flow-block">
-            <h3>Club Privileges</h3>
-            <p>
-                Active club cardholders receive an instant <mark>10%</mark> cashback toward home care apothecary products.
-            </p>
-            <p>
-                Quick Jump: <a href="#about-hero">Return to Club Overview</a>
-            </p>
+        <!-- Loyalty Club Banner using responsive flex utilities -->
+        <aside class="p-4 rounded bg-dark border border-secondary border-opacity-25 my-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <h3 class="h5 text-gold mb-1">Club Loyalty Program</h3>
+                    <p class="text-secondary mb-0">Regular guests receive an instant <mark class="bg-gold px-2 py-0 rounded">10%</mark> cashback on all home grooming cosmetics.</p>
+                </div>
+                <a href="services.html" class="btn btn-outline-gold align-self-start align-self-md-center">Explore Details</a>
+            </div>
         </aside>
+
     </main>
 
-    <!-- Fixed position action button for direct call -->
-    <a href="tel:+77012181919" class="floating-contact-btn" aria-label="Call Logovo Barbershop">Call Club</a>
+    <!-- Floating Call Button (Hidden on ultra-narrow phones via d-none d-sm-inline-block to prevent overflow) -->
+    <a href="tel:+77012181919" class="btn btn-gold shadow-lg rounded-pill px-4 py-2 btn-floating-call d-none d-sm-inline-block">
+        Call Club
+    </a>
 
-    <footer>
-        <p>17/1 Syganak St, Astana, Kazakhstan | Direct Phone: <a href="tel:+77012181919">+7 (701) 218-19-19</a></p>
-        <p>Find us: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer">Logovo Barbershop on 2GIS Astana</a></p>
-        <p>&copy; 2026 Logovo Barbershop. All rights reserved &trade; &bull; &sect; 1.</p>
+    <!-- Footer -->
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+        <div class="container">
+            <p class="mb-1 text-light">17/1 Syganak St, Astana, Kazakhstan | Direct Phone: <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a></p>
+            <p class="mb-2 text-secondary small">Find us on maps: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-underline">Logovo Barbershop on 2GIS Astana</a></p>
+            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana. All rights reserved ™ • § 1.</p>
+        </div>
     </footer>
+
+    <!-- Bootstrap v5.3.3 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>

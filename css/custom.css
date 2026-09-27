@@ -1,0 +1,55 @@
+body {
+    background-color: #1a1a1a;
+    color: #f4f1ea;
+    font-family: 'Segoe UI', -apple-system, Roboto, sans-serif;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+    font-family: 'Georgia', serif;
+    color: #c59b27;
+}
+
+.text-gold {
+    color: #c59b27 !important;
+}
+
+.bg-gold {
+    background-color: #c59b27 !important;
+    color: #1a1a1a !important;
+}
+
+.btn-gold {
+    background-color: #c59b27;
+    border-color: #c59b27;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.btn-gold:hover {
+    background-color: #b0891f;
+    border-color: #b0891f;
+    color: #ffffff;
+}
+
+.btn-outline-gold {
+    border-color: #c59b27;
+    color: #c59b27;
+}
+
+.btn-outline-gold:hover {
+    background-color: #c59b27;
+    color: #1a1a1a;
+}
+
+.card-dark {
+    background-color: #242424;
+    border: 1px solid #383838;
+    color: #f4f1ea;
+}
+
+.btn-floating-call {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1030;
+}
