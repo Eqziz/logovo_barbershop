@@ -31,7 +31,7 @@
         <section>
             <h2 class="section-heading">Join the Logovo Team</h2>
             <p>
-                Our team expands consistently across the capital. If you possess documented experience in classical men's grooming or wish to apprentice through our foundational internal academy, submit your credentials below.
+                Our expands consistently across the capital. If you possess documented experience in classical men's grooming or wish to apprentice through our foundational internal academy, submit your credentials below.
             </p>
 
             <!-- 
@@ -41,26 +41,29 @@
             <form action="#" method="post">
                 <fieldset>
                     <legend>Applicant Information</legend>
-                    <p>
-                        <label for="cand-name">Candidate Name:</label><br>
-                        <input type="text" id="cand-name" name="cand_name" placeholder="Daniyar Serikov" required>
-                    </p>
-                    <p>
-                        <label for="cand-phone">Contact Phone:</label><br>
-                        <input type="tel" id="cand-phone" name="cand_phone" placeholder="+7 (705) 111-22-33" required>
-                    </p>
-                    <p>
-                        <label for="cand-email">Email Address:</label><br>
-                        <input type="email" id="cand-email" name="cand_email" placeholder="daniyar@example.kz" required>
-                    </p>
-                    <p>
-                        <label for="cand-exp">Experience (Years):</label><br>
-                        <input type="number" id="cand-exp" name="cand_exp" min="0" max="25" value="1" required>
-                    </p>
-                    <p>
-                        <label for="cand-date">Earliest Start Date:</label><br>
-                        <input type="date" id="cand-date" name="cand_date" required>
-                    </p>
+                    <div class="center">
+                        <p>
+                            <label for="cand-name">Candidate Name:</label>
+                            <input class="cr"  type="text" name="cand_name" placeholder="Daniyar Serikov" required><br>  
+                        </p>
+                        <p>
+                            <label for="cand-phone">Contact Phone:</label>
+                            <input class="cr" type="tel" id="cand-phone" name="cand_phone"  placeholder="+7 (705) 111-22-33" required>
+                        </p>
+                        <p>
+                            <label for="cand-email">Email Address:</label>
+                            <input class="cr" type="email" id="cand-email" name="cand_email" placeholder="daniyar@example.kz" required>
+                        </p>
+                        <p>
+                            <label for="cand-exp">Experience (Years):</label>
+                            <input class="cr" type="number" id="cand-exp" name="cand_exp" min="0" max="25" value="1" required>
+                        </p>
+                        <p>
+                            <label for="cand-date">Earliest Start Date:</label>
+                            <input class="cr" type="date" id="cand-date" name="cand_date" required>
+                        </p> 
+                    </div>
+                    
                     <p>
                         <label for="cand-role">Desired Track:</label><br>
                         <select id="cand-role" name="cand_role" required>
@@ -93,3 +96,4 @@
     </footer>
 </body>
 </html>
+

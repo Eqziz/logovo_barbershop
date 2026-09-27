@@ -124,6 +124,12 @@ select[name="cand_role"] {
     font-size: 12px;
     z-index: 1001;
 }
+.qwerty{
+    display: grid;
+    gap: 15px 20px;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+}
 
 
 /* --------------------------------------------------------------------------
@@ -204,4 +210,13 @@ select[name="cand_role"] {
     min-height: 90px;
     margin: 20px 0;
     text-align: center;
+}
+
+
+
+.center{
+    text-align: center;
+}
+.cr{
+    
 }
