@@ -1,68 +1,59 @@
 # Logovo Barbershop Astana — Web Technologies Course Project
 
 ## 1. Project Overview & Organization
-* **Theme**: Authentic Men's Barbershop & Lounge Club "Logovo" (Барбершоп «Логово»).
-* **Physical Location**: 17/1 Syganak St, Astana, Kazakhstan[cite: 6, 7].
-* **Assignment Stage**: Assignment 2 — CSS Fundamentals, Priority, Layouts (Flexbox & Grid), Positioning, and Box Model.
-* **Technology Stack**: Semantic HTML5 (0 validator errors) and pure CSS3 (0 validator errors)[cite: 6, 7]. No frameworks, libraries, or JavaScript used[cite: 6, 7].
-
----
+* Theme: Authentic Men's Barbershop & Lounge Club "Logovo" (Барбершоп «Логово») in Astana.
+* Physical Location: 17/1 Syganak St, Astana, Kazakhstan.
+* Assignment Stage: Assignment 3 — Bootstrap Framework Integration, Responsive Grid, Utility Classes, and CSS Clean-up Layer.
+* Framework Stack: Bootstrap v5.3.3 (CSS & JS Bundle CDN) + Custom Brand Correction Layer (css/custom.css).
+* Validation: Semantic HTML5 (0 W3C errors) and clean responsive layout without framework conflicts or horizontal scrollbars at 375px.
 
 ## 2. Team Composition & Page Distribution
-In compliance with the updated course specification for a three-student team, the project comprises **exactly 6 pages** (2 pages per author)[cite: 6, 7]:
+The site consists of 6 interconnected local HTML documents across 3 team members (2 pages per author):
 
-| Student Name | Role | Assigned Pages | Personal Stylesheet |
-| :--- | :--- | :--- | :--- |
-| **Nodir Muhammedov** | Team Lead / Architecture | `index.html`, `services.html`, `feedback.html` | `css/nodir.css`[cite: 6, 7] |
-| **Nurasyl Ilyas** | Frontend Developer | `barbers.html` (co-author feedback) | `css/student2.css`[cite: 6, 7] |
-| **Nurken Mamay** | Frontend Developer | `marketbar.html`, `careers.html` | `css/student3.css`[cite: 6, 7] |
-
-* Shared core stylesheet authored collaboratively: **`css/base.css`** (palette, typography, universal reset, header, nav, footer).
-
----
+* Nodir Muhammedov (Team Lead): index.html, services.html, feedback.html | Stylesheet: css/custom.css
+* Student 2 (Frontend Developer): barbers.html (co-author feedback) | Stylesheet: css/custom.css
+* Student 3 (Frontend Developer): marketbar.html, careers.html | Stylesheet: css/custom.css
 
 ## 3. Directory Structure
-```text
+
 barbershop-logovo/
-│
 ├── css/
-│   ├── base.css            # Shared site-wide palette, typography, header, nav, footer
-│   ├── nodir.css           # Personal styles: index, services, feedback
-│   ├── nurasyl.css        # Personal styles: barbers, schedules
-│   └── nurken.css        # Personal styles: marketbar, careers
+│   └── custom.css
 ├── images/
-│   ├── photo1.jpg          # Authentic photo: lounge seating & Edison lamps
-│   ├── photo2.jpg          # Authentic photo: cutting stations & hydraulic chairs
-│   ├── photo3.jpg          # Authentic photo: master holding Japanese shears
-│   └── photo4.jpg          # Authentic photo: MarketBar counter & beverage display
-├── index.html              # Home page & club concept
-├── services.html           # Price table & sanitation protocols
-├── feedback.html           # Quality assurance form
-├── barbers.html            # Master team & branch chronology
-├── marketbar.html          # Cosmetic apothecary & bar menu
-├── careers.html            # Academy application form
-├── checklist_css.md        # CSS selector, property, and layout checklist
-├── sketches/               # Hand-drawn layout sketches (signed, dated, photographed)
-├── before-after/           # Screenshots before CSS (HTML-only) and after styling
-├── ai_log.md               # AI consultation record
-└── README.md               # Master project documentation
+│   ├── photo1.jpg
+│   ├── photo2.jpg
+│   ├── photo3.jpg
+│   └── photo4.jpg
+├── screenshots/
+│   ├── desktop.png
+│   ├── tablet.png
+│   ├── mobile.png
+│   └── nav_collapsed.png
+├── index.html
+├── services.html
+├── feedback.html
+├── barbers.html
+├── marketbar.html
+├── careers.html
+├── css_cleanup.md
+├── ai_log.md
+└── README.md
 
-4. Key Architectural Implementations (Assignment 2)
-A. Color Palette (5 Colors Strictly Enforced in base.css)
- #1a1a1a (Hex) — Deep graphite background.  
- #f4f1ea (Hex) — Linen white text for high contrast and readability.  
- #c59b27 (Hex) — Ochre gold brand accent.  
- rgba(0, 0, 0, 0.7) (RGBA) — Translucent card and header overlay.   
-   steelblue (Named) — Utility state and external link accent.
+## 4. Key Architectural Implementations (Assignment 3)
 
-B. Cascade & Priority Demonstrations
- Internal Style Block: Located in <head> of services.html (specificity 0-0-1) overriding table text colors.   Inline Style Attribute: Located on <p> in index.html (specificity 1-0-0-0) overriding letter-spacing.   
- Single !important: Located in css/nodir.css inside .visually-hidden for accessible screen-reader clipping.   Specificity Experiment: Located in css/nodir.css lines 15–30 (blockquote vs .master-quote), demonstrating class 0-1-0 defeats type selector 0-0-1 without !important.   
-C. Layout Implementations
- Flexbox: Main navigation bar (display: flex, justify-content, align-items, gap) and feature cards container (flex-wrap, flex: 1 1 250px).   
- CSS Grid: Interior photo gallery using repeat(3, minmax(200px, 1fr)) and column spanning (grid-column: span 2).   
- Positioning: Demonstrated static (normal flow), relative (containing context), absolute (.badge-floating), and fixed (.floating-contact-btn).   
- Float & Clear: Floated interior photograph with text wrapping and explicit clear: both with rationale.   Centering: Margin auto (.site-header-inner), Flexbox (.action-btn), and Grid (.promo-center-box with place-items: center)[cite: 7].
-5. Validation
-HTML: All 6 files pass W3C Nu HTML Checker with 0 errors[cite: 6, 7].
-CSS: All 4 stylesheets pass W3C CSS Validation Service with 0 errors[cite: 7].
+### A. Container Strategy
+* container-fluid: Applied to header navigation and footer to span 100% of the viewport seamlessly across dark background bars.
+* container: Applied to main content blocks to establish standardized max-widths and prevent text stretching on ultra-wide desktop monitors.
+
+### B. Responsive Grid & Breakpoints
+* Multi-tier responsive grid rules applied to card decks and content: col-12 col-md-6 col-lg-4 (adapting across mobile 375px, tablet 768px, and desktop).
+* Nested row architecture demonstrated in index.html (row inside col-lg-8 managing two child col-md-6 specification cards).
+
+### C. Typography, Buttons & Utilities
+* Typography styled using Bootstrap display classes (display-5, lead, text-secondary, small).
+* Four distinct button variants implemented: primary filled (btn-gold), outline (btn-outline-gold), large size (btn-lg), and disabled state (disabled).
+* More than ten native utility classes utilized for layout rhythm: sticky-top, shadow, rounded, border, py-2, my-5, gap-3, d-flex, text-center, align-items-center.
+
+### D. Bootstrap Component Integration
+* Card Component (.card, .card-body): Integrated into service highlights and form wrappers, adapted to dark theme aesthetics via .card-dark.
+* Responsive Navbar (.navbar, .navbar-toggler, .collapse): Provides collapse toggler behavior on screens below 992px.
