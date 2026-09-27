@@ -11,8 +11,8 @@
 The site consists of 6 interconnected local HTML documents across 3 team members (2 pages per author):
 
 * Nodir Muhammedov (Team Lead): index.html, services.html, feedback.html | Stylesheet: css/custom.css
-* Student 2 (Frontend Developer): barbers.html (co-author feedback) | Stylesheet: css/custom.css
-* Student 3 (Frontend Developer): marketbar.html, careers.html | Stylesheet: css/custom.css
+* Nurassyl Ilyas (Frontend Developer): barbers.html (co-author feedback) | Stylesheet: css/custom.css
+* Nurken Mamay (Frontend Developer): marketbar.html, careers.html | Stylesheet: css/custom.css
 
 ## 3. Directory Structure
 
