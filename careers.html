@@ -1,95 +1,120 @@
 <!DOCTYPE html>
 <!-- Author: Nurken Mamay -->
+<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Career opportunities and barber academy admissions at Logovo Barbershop in Astana.">
     <meta name="author" content="Nurken Mamay">
-    <title>Careers &amp; Academy — Logovo Barbershop</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/nurken.css">
+    <title>Careers & Academy — Logovo Barbershop</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/custom.css">
 </head>
-<body>
-    <header>
-        <div class="site-header-inner">
-            <h1>Logovo Barbershop</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services &amp; Pricing</a></li>
-                    <li><a href="barbers.html">Barbers</a></li>
-                    <li><a href="feedback.html">Feedback</a></li>
-                    <li><a href="marketbar.html">MarketBar</a></li>
-                    <li><a href="careers.html">Careers</a></li>
-                </ul>
-            </nav>
-        </div>
+<body class="bg-black text-light">
+
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+            <div class="container-fluid px-3 px-md-4">
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCareers" aria-controls="navbarCareers" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse justify-content-end" id="navbarCareers">
+                    <ul class="navbar-nav gap-lg-2">
+                        <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="services.html">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html">Feedback</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main>
-        <section>
-            <h2 class="section-heading">Join the Logovo Team</h2>
-            <p>
-                Our team expands consistently across the capital. If you possess documented experience in classical men's grooming or wish to apprentice through our foundational internal academy, submit your credentials below.
-            </p>
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25">
+                    <h1 class="h3 fw-bold text-gold mb-2">Join the Logovo Cutting Roster</h1>
+                    <p class="text-secondary mb-4">
+                        We continuously add haircutting stations across our Astana locations. Submit your qualifications below.
+                    </p>
 
-            <!-- 
-                ASSIGNMENT COMMENT: This application form does not dispatch data across live networks
-                as server-side backend operations will be implemented later in the academic year.
-            -->
-            <form action="#" method="post">
-                <fieldset>
-                    <legend>Applicant Information</legend>
-                    <p>
-                        <label for="cand-name">Candidate Name:</label><br>
-                        <input type="text" id="cand-name" name="cand_name" placeholder="Daniyar Serikov" required>
-                    </p>
-                    <p>
-                        <label for="cand-phone">Contact Phone:</label><br>
-                        <input type="tel" id="cand-phone" name="cand_phone" placeholder="+7 (705) 111-22-33" required>
-                    </p>
-                    <p>
-                        <label for="cand-email">Email Address:</label><br>
-                        <input type="email" id="cand-email" name="cand_email" placeholder="daniyar@example.kz" required>
-                    </p>
-                    <p>
-                        <label for="cand-exp">Experience (Years):</label><br>
-                        <input type="number" id="cand-exp" name="cand_exp" min="0" max="25" value="1" required>
-                    </p>
-                    <p>
-                        <label for="cand-date">Earliest Start Date:</label><br>
-                        <input type="date" id="cand-date" name="cand_date" required>
-                    </p>
-                    <p>
-                        <label for="cand-role">Desired Track:</label><br>
-                        <select id="cand-role" name="cand_role" required>
-                            <option value="">-- Choose Position --</option>
-                            <option value="barber">Floor Barber</option>
-                            <option value="apprentice">Academy Apprentice</option>
-                            <option value="admin">Branch Administrator</option>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="cand-text">Portfolio Links &amp; Background:</label><br>
-                        <textarea id="cand-text" name="cand_text" rows="4" placeholder="Detail past certifications or work profiles..."></textarea>
-                    </p>
-                    <p>
-                        <input type="checkbox" id="cand-agree" name="cand_agree" required>
-                        <label for="cand-agree">I confirm that all disclosed qualifications are accurate</label>
-                    </p>
-                    <p>
-                        <button type="submit">Submit Application</button>
-                        <button type="reset">Reset</button>
-                    </p>
-                </fieldset>
-            </form>
-        </section>
+                    <!-- 
+                        ASSIGNMENT NOTE: Form data is handled locally without network submission
+                        as backend systems are introduced in future assignments.
+                    -->
+                    <form action="#" method="post">
+                        <fieldset class="mb-4">
+                            <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">Candidate Credentials</legend>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label for="cand-name" class="form-label text-light">Full Name:</label>
+                                    <input type="text" id="cand-name" name="cand_name" class="form-control bg-dark text-light border-secondary" placeholder="Daniyar Serikov" required>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="cand-phone" class="form-label text-light">Contact Phone:</label>
+                                    <input type="tel" id="cand-phone" name="cand_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (705) 111-22-33" required>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="cand-email" class="form-label text-light">Email Address:</label>
+                                    <input type="email" id="cand-email" name="cand_email" class="form-control bg-dark text-light border-secondary" placeholder="daniyar@example.kz" required>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <label for="cand-exp" class="form-label text-light">Experience (Years):</label>
+                                    <input type="number" id="cand-exp" name="cand_exp" class="form-control bg-dark text-light border-secondary" min="0" max="25" value="1" required>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <label for="cand-date" class="form-label text-light">Earliest Start Date:</label>
+                                    <input type="date" id="cand-date" name="cand_date" class="form-control bg-dark text-light border-secondary" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cand-role" class="form-label text-light">Desired Track:</label>
+                                    <select id="cand-role" name="cand_role" class="form-select bg-dark text-light border-secondary" required>
+                                        <option value="">-- Choose Track --</option>
+                                        <option value="barber">Senior Floor Barber</option>
+                                        <option value="apprentice">Academy Apprentice</option>
+                                        <option value="admin">Branch Floor Administrator</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cand-text" class="form-label text-light">Portfolio & Background:</label>
+                                    <textarea id="cand-text" name="cand_text" class="form-control bg-dark text-light border-secondary" rows="4" placeholder="Detail past salon experience or include social media profile links..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="cand-agree" name="cand_agree" required>
+                                        <label class="form-check-label text-secondary small" for="cand-agree">
+                                            I confirm that all disclosed qualifications are accurate
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-gold px-4 py-2">Submit Credentials</button>
+                            <button type="reset" class="btn btn-outline-secondary px-4 py-2">Reset</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>Human Resources: <a href="mailto:hr@logovo-astana.kz">hr@logovo-astana.kz</a></p>
-        <p>&copy; 2026 Logovo Barbershop. Career opportunities in Astana.</p>
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+        <div class="container">
+            <p class="mb-1 text-light">Human Resources: <a href="mailto:hr@logovo-astana.kz" class="text-gold text-decoration-none">hr@logovo-astana.kz</a></p>
+            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana • Careers.</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>
