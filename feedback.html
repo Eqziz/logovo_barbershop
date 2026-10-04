@@ -1,143 +1,242 @@
 <!DOCTYPE html>
-<!-- Author: Nurassyl Ilyas -->
-<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Customer quality assurance registry and service review portal for Logovo Barbershop in Astana.">
-    <meta name="author" content="Nurassyl Ilyas">
-    <title>Guest Feedback — Logovo Barbershop</title>
+    <title>Guest Feedback — Logovo Barbershop Astana</title>
     
     <!-- Bootstrap v5.3.3 CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Brand correction and JavaScript freeze layer -->
     <link rel="stylesheet" href="css/custom.css">
 </head>
-<body class="bg-black text-light">
+<body class="bg-black text-light" id="page-feedback">
 
-    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <!-- Unified Site Header & Responsive Navigation -->
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top" id="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black" aria-label="Main site navigation">
             <div class="container-fluid px-3 px-md-4">
-                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html" id="brand-link">Logovo Barbershop</a>
                 
-                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFeedback" aria-controls="navbarFeedback" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggle-btn">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarFeedback">
-                    <ul class="navbar-nav gap-lg-2">
-                        <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="services.html">Services & Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html">Barbers</a></li>
-                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="feedback.html">Feedback</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html">MarketBar</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="careers.html">Careers</a></li>
+                <div class="collapse navbar-collapse justify-content-end" id="navbar-main">
+                    <ul class="navbar-nav gap-lg-2" id="navbar-nav-list">
+                        <li class="nav-item"><a class="nav-link text-light" href="index.html" id="nav-link-home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="services.html" id="nav-link-services">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html" id="nav-link-barbers">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html" id="nav-link-marketbar">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="careers.html" id="nav-link-careers">Careers</a></li>
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" aria-current="page" href="feedback.html" id="nav-link-feedback">Feedback</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-5">
+    <!-- Main Content Container -->
+    <main class="container my-5" id="main-content">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                <!-- Card component enclosing the feedback form -->
-                <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25">
-                    <h1 class="h3 fw-bold text-gold mb-2">Client Quality Control Registry</h1>
-                    <p class="text-secondary mb-4">
-                        Your evaluation routes directly to executive administration. Please fill in the visit audit fields below.
+
+                <!-- Client Quality Control Form Section -->
+                <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25" id="feedback-form-section">
+                    <h1 class="h3 fw-bold text-gold mb-2" id="feedback-title">Client Quality Control Registry</h1>
+                    <p class="text-secondary mb-4" id="feedback-instruction">
+                        Your evaluation routes directly to executive administration. 
+                        <strong class="text-light">What happens next:</strong> Every audit submission is logged into our monthly service quality metrics. If your review indicates an issue requiring management attention, our customer relations lead will contact you within 24 hours to ensure complete resolution.
                     </p>
 
-                    <!-- 
-                        ASSIGNMENT NOTE: This form does not transmit data across a network 
-                        due to the absence of a server-side backend at this stage of the curriculum.
-                    -->
-                    <form action="#" method="post">
-                        <fieldset class="mb-4">
-                            <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">Client Identification</legend>
+                    <form action="feedback.html#feedback-confirmation-wrapper" method="post" id="form-feedback">
+                        <fieldset class="mb-4" id="fb-fieldset-client">
+                            <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">1. Client Identification</legend>
                             <div class="row g-3">
                                 <div class="col-12 col-md-6">
-                                    <label for="fb-name" class="form-label text-light">Your Name:</label>
-                                    <input type="text" id="fb-name" name="fb_name" class="form-control bg-dark text-light border-secondary" placeholder="Arman Kassymov" required>
+                                    <label for="fb-name-input" class="form-label text-light">Your Name:</label>
+                                    <input type="text" id="fb-name-input" name="fb_name" class="form-control bg-dark text-light border-secondary" placeholder="Arman Kassymov" required>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <label for="fb-phone" class="form-label text-light">Phone Number:</label>
-                                    <input type="tel" id="fb-phone" name="fb_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 000-00-00" required>
+                                    <label for="fb-phone-input" class="form-label text-light">Phone Number:</label>
+                                    <input type="tel" id="fb-phone-input" name="fb_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 000-00-00" required>
                                 </div>
                                 <div class="col-12">
-                                    <label for="fb-email" class="form-label text-light">Email Address:</label>
-                                    <input type="email" id="fb-email" name="fb_email" class="form-control bg-dark text-light border-secondary" placeholder="arman@example.kz" required>
+                                    <label for="fb-email-input" class="form-label text-light">Email Address:</label>
+                                    <input type="email" id="fb-email-input" name="fb_email" class="form-control bg-dark text-light border-secondary" placeholder="arman@example.kz" required>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <fieldset class="mb-4">
-                            <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">Visit Audit & Rating</legend>
+                        <fieldset class="mb-4" id="fb-fieldset-audit">
+                            <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">2. Visit Audit & Rating</legend>
                             <div class="row g-3">
                                 <div class="col-12 col-md-6">
-                                    <label for="fb-branch" class="form-label text-light">Astana Branch:</label>
-                                    <select id="fb-branch" name="fb_branch" class="form-select bg-dark text-light border-secondary" required>
+                                    <label for="fb-branch-select" class="form-label text-light">Astana Branch Visited:</label>
+                                    <select id="fb-branch-select" name="fb_branch" class="form-select bg-dark text-light border-secondary" required>
                                         <option value="">-- Choose Location --</option>
-                                        <option value="syganak">17/1 Syganak St</option>
-                                        <option value="kabanbay">58A Kabanbay Batyr Ave</option>
-                                        <option value="mangilik">38 Mangilik El Ave</option>
+                                        <option value="syganak" selected>17/1 Syganak St (Flagship)</option>
+                                        <option value="kabanbay">58A Kabanbay Batyr Ave (Studio)</option>
+                                        <option value="mangilik">38 Mangilik El Ave (Triumph)</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <label for="fb-date" class="form-label text-light">Visit Date:</label>
-                                    <input type="date" id="fb-date" name="fb_date" class="form-control bg-dark text-light border-secondary" required>
+                                    <label for="fb-date-input" class="form-label text-light">Visit Date:</label>
+                                    <input type="date" id="fb-date-input" name="fb_date" class="form-control bg-dark text-light border-secondary" value="2026-10-04" required>
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <label for="fb-rating" class="form-label text-light">Rating (1-5):</label>
-                                    <input type="number" id="fb-rating" name="fb_rating" class="form-control bg-dark text-light border-secondary" min="1" max="5" value="5" required>
+                                    <label for="fb-rating-input" class="form-label text-light">Rating (1-5):</label>
+                                    <input type="number" id="fb-rating-input" name="fb_rating" class="form-control bg-dark text-light border-secondary" min="1" max="5" value="5" required>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label text-light d-block">Would you recommend Logovo to colleagues?</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="recommend" id="rec-yes" value="yes" checked>
-                                        <label class="form-check-label text-secondary" for="rec-yes">Definitely Yes</label>
+                                        <input class="form-check-input" type="radio" name="recommend" id="fb-rec-yes" value="yes" checked>
+                                        <label class="form-check-label text-secondary" for="fb-rec-yes">Definitely Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="recommend" id="rec-maybe" value="maybe">
-                                        <label class="form-check-label text-secondary" for="rec-maybe">Undecided</label>
+                                        <input class="form-check-input" type="radio" name="recommend" id="fb-rec-maybe" value="maybe">
+                                        <label class="form-check-label text-secondary" for="fb-rec-maybe">Undecided</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="recommend" id="rec-no" value="no">
-                                        <label class="form-check-label text-secondary" for="rec-no">Have Complaints</label>
+                                        <input class="form-check-input" type="radio" name="recommend" id="fb-rec-no" value="no">
+                                        <label class="form-check-label text-secondary" for="fb-rec-no">Have Suggestions</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label for="fb-comments" class="form-label text-light">Comments & Impressions:</label>
-                                    <textarea id="fb-comments" name="fb_comments" class="form-control bg-dark text-light border-secondary" rows="4" placeholder="Share observations regarding haircut accuracy or lounge hospitality..." required></textarea>
+                                    <label for="fb-comments-input" class="form-label text-light">Comments & Impressions:</label>
+                                    <textarea id="fb-comments-input" name="fb_comments" class="form-control bg-dark text-light border-secondary" rows="4" placeholder="Share observations regarding haircut accuracy, hospitality bar, or master attention..." required></textarea>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="fb-agree" name="fb_agree" required>
-                                        <label class="form-check-label text-secondary small" for="fb-agree">
-                                            I authorize processing of this evaluation by the quality assurance team
+                                        <input class="form-check-input" type="checkbox" id="fb-agree-check" name="fb_agree" required checked>
+                                        <label class="form-check-label text-secondary small" for="fb-agree-check">
+                                            I authorize processing of this evaluation by the executive quality assurance team
                                         </label>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <div class="d-flex gap-3">
-                            <button type="submit" class="btn btn-gold px-4 py-2">Submit Audit</button>
-                            <button type="reset" class="btn btn-outline-secondary px-4 py-2">Reset Form</button>
+                        <div class="d-flex flex-wrap gap-3" id="fb-buttons-container">
+                            <button type="submit" class="btn btn-gold px-4 py-2" id="fb-submit-btn">Submit Audit</button>
+                            <button type="reset" class="btn btn-outline-secondary px-4 py-2" id="fb-reset-btn">Reset Form</button>
                         </div>
                     </form>
+
+                    <!-- Error message container for JS -->
+                    <div id="fb-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
+
+                    <!-- Visible Confirmation Voucher Area -->
+                    <div id="feedback-confirmation-wrapper" class="mt-4">
+                        <div class="confirmation-voucher shadow" id="feedback-confirmation-card">
+                            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
+                                <div>
+                                    <span class="badge bg-gold mb-1">Quality Assurance</span>
+                                    <h2 class="h5 text-gold mb-0">Audit Submission Acknowledged</h2>
+                                </div>
+                                <span class="status-badge-confirmed mt-2 mt-sm-0" id="fb-status-badge">Status: Logged to QA Registry</span>
+                            </div>
+
+                            <div class="voucher-divider"></div>
+
+                            <div class="row g-3 small">
+                                <div class="col-12 col-md-4">
+                                    <span class="text-secondary d-block">Audit Ticket ID:</span>
+                                    <strong class="text-gold" id="fb-ticket-code">AUDIT-2026-QA-582</strong>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <span class="text-secondary d-block">Branch Evaluated:</span>
+                                    <strong class="text-light" id="fb-voucher-branch">17/1 Syganak St (Flagship)</strong>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <span class="text-secondary d-block">Rating Recorded:</span>
+                                    <strong class="text-gold" id="fb-voucher-rating">5 / 5 Stars ★★★★★</strong>
+                                </div>
+                            </div>
+
+                            <div class="voucher-divider"></div>
+
+                            <p class="mb-0 text-secondary small" id="fb-voucher-notice">
+                                * Thank you for helping us maintain uncompromising grooming standards. Your feedback has been forwarded to the managing partners.
+                            </p>
+                        </div>
+                    </div>
                 </section>
+
+                <!-- Recent Verified Reviews Section -->
+                <section class="mt-5" id="recent-reviews-section">
+                    <h2 class="h4 fw-bold text-gold mb-3">Recent Verified Guest Impressions</h2>
+                    <div class="d-flex flex-column gap-3" id="reviews-list-container">
+                        <div class="card card-dark p-3 border border-secondary border-opacity-25" id="review-item-1">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong class="text-light">Alikhan S.</strong>
+                                <span class="text-gold small">★★★★★ (Syganak Flagship)</span>
+                            </div>
+                            <p class="text-secondary small mb-0">
+                                "Impeccable scissor work and authentic club atmosphere. Head Barber Azamat executed a crisp anatomical cut that lasted weeks."
+                            </p>
+                        </div>
+
+                        <div class="card card-dark p-3 border border-secondary border-opacity-25" id="review-item-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong class="text-light">Marat K.</strong>
+                                <span class="text-gold small">★★★★★ (Kabanbay Studio)</span>
+                            </div>
+                            <p class="text-secondary small mb-0">
+                                "Best hot towel straight razor shave in Astana. The argan beard conditioning oil left zero irritation. Highly recommended."
+                            </p>
+                        </div>
+
+                        <div class="card card-dark p-3 border border-secondary border-opacity-25" id="review-item-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong class="text-light">Timur B.</strong>
+                                <span class="text-gold small">★★★★★ (Triumph Club)</span>
+                            </div>
+                            <p class="text-secondary small mb-0">
+                                "Surgical fade accuracy, punctual scheduling, and fresh Colombian espresso served immediately upon entry."
+                            </p>
+                        </div>
+
+                        <!-- Empty hook container for JavaScript review insertions -->
+                        <div id="new-reviews-dynamic-target" class="empty-placeholder"></div>
+                    </div>
+                </section>
+
+                <!-- Interior Waiting Figure -->
+                <figure class="p-4 rounded bg-dark border border-secondary border-opacity-25 text-center my-4" id="feedback-figure">
+                    <img src="images/photo1.jpg" alt="Logovo Barbershop lounge waiting area" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50" id="feedback-figure-image">
+                    <figcaption class="text-secondary small" id="feedback-figure-caption">Syganak flagship hospitality lounge where guest feedback is reviewed weekly.</figcaption>
+                </figure>
             </div>
         </div>
     </main>
 
-    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+    <!-- Unified Site Footer -->
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center" id="site-footer">
         <div class="container">
-            <p class="mb-1 text-light">Quality Assurance Desk: <a href="mailto:care@logovo-astana.kz" class="text-gold text-decoration-none">care@logovo-astana.kz</a></p>
-            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana • Customer feedback portal.</p>
+            <div class="row g-3 text-center text-md-start mb-3 align-items-center">
+                <div class="col-12 col-md-4">
+                    <span class="fs-5 fw-bold text-gold d-block mb-1">Logovo Barbershop</span>
+                    <small class="text-secondary">Authentic Men's Club & Grooming Lounge in Astana</small>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <span class="d-block text-light small mb-1"><strong>Working Hours:</strong> Mon–Sun 10:00 – 22:00</span>
+                    <span class="d-block small text-secondary">Flagship: 17/1 Syganak St, Astana</span>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end">
+                    <a href="tel:+77012181919" class="text-gold text-decoration-none fw-bold d-block mb-1" id="footer-phone-link">+7 (701) 218-19-19</a>
+                    <a href="mailto:info@logovo-astana.kz" class="text-secondary small text-decoration-none d-block" id="footer-email-link">info@logovo-astana.kz</a>
+                </div>
+            </div>
+            <hr class="border-secondary border-opacity-25 my-3">
+            <p class="mb-2 text-secondary small">Find our lounges on maps: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-underline" id="footer-2gis-link">Logovo Barbershop on 2GIS Astana</a></p>
+            <p class="small text-muted mb-0" id="footer-copyright">© 2026 Logovo Barbershop Astana. All rights reserved. Quality certified.</p>
         </div>
     </footer>
 
+    <!-- Bootstrap v5.3.3 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>

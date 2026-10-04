@@ -1,54 +1,55 @@
 <!DOCTYPE html>
-<!-- Author: Nodir Muhammedov -->
-<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Official price list and service specifications for Logovo Barbershop in Astana: haircuts, beard shaping, and royal shaving.">
-    <meta name="author" content="Nodir Muhammedov">
-    <title>Services & Pricing — Logovo Barbershop</title>
+    <meta name="description" content="Official price list and appointment booking for Logovo Barbershop in Astana: haircuts, beard shaping, and royal shaving.">
+    <title>Services & Pricing — Logovo Barbershop Astana</title>
     
     <!-- Bootstrap v5.3.3 CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Brand correction layer loaded after Bootstrap -->
+    <!-- Brand correction and JavaScript freeze layer -->
     <link rel="stylesheet" href="css/custom.css">
 </head>
-<body class="bg-black text-light">
+<body class="bg-black text-light" id="page-services">
 
-    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <!-- Unified Site Header & Responsive Navigation -->
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top" id="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black" aria-label="Main site navigation">
             <div class="container-fluid px-3 px-md-4">
-                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html" id="brand-link">Logovo Barbershop</a>
                 
-                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarServices" aria-controls="navbarServices" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggle-btn">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarServices">
-                    <ul class="navbar-nav gap-lg-2">
-                        <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="services.html">Services & Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html">Barbers</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html">Feedback</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html">MarketBar</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="careers.html">Careers</a></li>
+                <div class="collapse navbar-collapse justify-content-end" id="navbar-main">
+                    <ul class="navbar-nav gap-lg-2" id="navbar-nav-list">
+                        <li class="nav-item"><a class="nav-link text-light" href="index.html" id="nav-link-home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" aria-current="page" href="services.html" id="nav-link-services">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html" id="nav-link-barbers">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html" id="nav-link-marketbar">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="careers.html" id="nav-link-careers">Careers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html" id="nav-link-feedback">Feedback</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-5">
-        <article class="mb-5">
-            <h1 class="display-6 fw-bold text-gold mb-3">Service Tariff & Duration Specs (2026)</h1>
+    <!-- Main Content Container -->
+    <main class="container my-5" id="main-content">
+
+        <!-- Page Introduction -->
+        <article class="mb-5" id="services-intro">
+            <h1 class="display-6 fw-bold text-gold mb-3" id="services-title">Service Tariff & Duration Specs (2026)</h1>
             <p class="lead text-secondary">
                 Every reservation includes an anatomical haircut consultation, a menthol wash cycle, and finishing matte clay styling.
             </p>
 
-            <!-- Bootstrap table component: table-dark, table-hover, table-striped with responsive container wrapper -->
-            <div class="table-responsive my-4 shadow rounded border border-secondary border-opacity-25">
-                <table class="table table-dark table-hover table-striped align-middle mb-0">
+            <!-- Bootstrap Responsive Table with Interactive Booking Actions -->
+            <div class="table-responsive my-4 shadow rounded border border-secondary border-opacity-25" id="service-tariff-table">
+                <table class="table table-dark table-hover table-striped align-middle mb-0" id="table-services">
                     <caption class="text-secondary px-3 py-2">Verified Service Rates — Logovo Barbershop Astana</caption>
                     <thead class="border-bottom border-warning">
                         <tr>
@@ -56,68 +57,320 @@
                             <th scope="col" class="text-gold py-3">Service Description</th>
                             <th scope="col" class="text-gold py-3 text-center">Duration</th>
                             <th scope="col" class="text-gold py-3 text-end px-3">Price (KZT)</th>
+                            <th scope="col" class="text-gold py-3 text-center px-3">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="services-table-body">
+                        <tr id="service-row-1">
                             <th scope="row" rowspan="2" class="align-middle px-3 text-light">Haircuts</th>
-                            <td>Signature Classic Scissor Cut</td>
-                            <td class="text-center text-secondary">50 min</td>
-                            <td class="text-end fw-bold text-gold px-3">7 000</td>
+                            <td>
+                                <strong class="text-light d-block" id="service-name-1">Signature Classic Scissor Cut</strong>
+                                <small class="text-secondary">Precision shears geometry tailored to skull anatomy.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-1">50 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-1">7 000</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-1">Book Service</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Skin Fade Precision Clipper Cut</td>
-                            <td class="text-center text-secondary">35 min</td>
-                            <td class="text-end fw-bold text-gold px-3">5 000</td>
+                        <tr id="service-row-2">
+                            <td>
+                                <strong class="text-light d-block" id="service-name-2">Skin Fade Precision Clipper Cut</strong>
+                                <small class="text-secondary">Seamless low, mid, or high taper skin transition.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-2">35 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-2">5 000</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-2">Book Service</a>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr id="service-row-3">
                             <th scope="row" rowspan="2" class="align-middle px-3 text-light">Beard & Shave</th>
-                            <td>Beard Sculpting & Hot Towel Treatment</td>
-                            <td class="text-center text-secondary">40 min</td>
-                            <td class="text-end fw-bold text-gold px-3">5 500</td>
+                            <td>
+                                <strong class="text-light d-block" id="service-name-3">Beard Sculpting & Hot Towel Treatment</strong>
+                                <small class="text-secondary">Edge perimeter definition with warm argan oil conditioning.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-3">40 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-3">5 500</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-3">Book Service</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Royal Straight-Razor Wet Shave</td>
-                            <td class="text-center text-secondary">45 min</td>
-                            <td class="text-end fw-bold text-gold px-3">6 500</td>
+                        <tr id="service-row-4">
+                            <td>
+                                <strong class="text-light d-block" id="service-name-4">Royal Straight-Razor Wet Shave</strong>
+                                <small class="text-secondary">Two lather cycles, hot herbal compression, and cold closure.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-4">45 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-4">6 500</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-4">Book Service</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row" class="align-middle px-3 text-light">Combination</th>
-                            <td>Father & Son Royal Package</td>
-                            <td class="text-center text-secondary">80 min</td>
-                            <td class="text-end fw-bold text-gold px-3">11 500</td>
+                        <tr id="service-row-5">
+                            <th scope="row" rowspan="2" class="align-middle px-3 text-light">Combo Deals</th>
+                            <td>
+                                <strong class="text-light d-block" id="service-name-5">Father & Son Royal Package</strong>
+                                <small class="text-secondary">Simultaneous twin stations for father and junior gentleman.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-5">80 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-5">11 500</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-5">Book Service</a>
+                            </td>
+                        </tr>
+                        <tr id="service-row-6">
+                            <td>
+                                <strong class="text-light d-block" id="service-name-6">Royal Full Care (Hair + Beard + Charcoal Detox)</strong>
+                                <small class="text-secondary">Comprehensive head-to-neck revival and pore cleanse.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="service-duration-6">75 min</td>
+                            <td class="text-end fw-bold text-gold px-3" id="service-price-6">12 000</td>
+                            <td class="text-center px-3">
+                                <a href="#booking-section" class="btn btn-sm btn-outline-gold select-service-btn" id="btn-select-service-6">Book Service</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
+            <!-- Price & Service Calculation Summary Area -->
+            <div class="summary-box my-4 shadow-sm" id="services-summary-container">
+                <div class="row align-items-center g-3">
+                    <div class="col-12 col-md-6">
+                        <span class="text-gold fw-bold text-uppercase small d-block mb-1">Estimated Appointment Summary</span>
+                        <div id="selected-services-list" class="empty-placeholder text-secondary small">
+                            Default Selected: Signature Classic Scissor Cut (50 min)
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 text-md-center">
+                        <small class="text-secondary d-block">Estimated Total:</small>
+                        <span id="summary-total-price" class="fs-4 fw-bold text-gold">7 000 KZT</span>
+                        <small class="text-secondary d-block" id="summary-total-duration">Est. Duration: 50 min</small>
+                    </div>
+                    <div class="col-12 col-md-3 text-md-end">
+                        <a href="#booking-section" class="btn btn-gold w-100" id="btn-scroll-to-booking">Proceed to Book</a>
+                    </div>
+                </div>
+            </div>
         </article>
 
-        <section class="p-4 p-md-5 rounded bg-dark border border-secondary border-opacity-25 shadow my-4">
+        <!-- Appointment Booking Form Section -->
+        <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25 my-5" id="booking-section">
+            <h2 class="h3 fw-bold text-gold mb-2" id="booking-heading">Reserve Your Chair at Logovo</h2>
+            <p class="text-secondary mb-4" id="booking-instruction">
+                Select your service, preferred master, branch location, and convenient time slot. 
+                <strong class="text-light">What happens next:</strong> Upon submitting your reservation, an instant confirmation voucher is generated below. Our floor administrator reviews the slot and dispatches an SMS confirmation to your contact phone within 15 minutes.
+            </p>
+
+            <form action="services.html#booking-confirmation-wrapper" method="post" id="form-booking">
+                
+                <fieldset class="mb-4" id="booking-fieldset-service">
+                    <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">1. Service & Master Preferences</legend>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4">
+                            <label for="booking-service-select" class="form-label text-light">Select Service:</label>
+                            <select id="booking-service-select" name="booking_service" class="form-select bg-dark text-light border-secondary" required>
+                                <option value="">-- Choose Service --</option>
+                                <option value="classic" selected>Signature Classic Scissor Cut (7 000 KZT)</option>
+                                <option value="fade">Skin Fade Precision Clipper Cut (5 000 KZT)</option>
+                                <option value="beard">Beard Sculpting & Hot Towel (5 500 KZT)</option>
+                                <option value="shave">Royal Straight-Razor Wet Shave (6 500 KZT)</option>
+                                <option value="father_son">Father & Son Royal Package (11 500 KZT)</option>
+                                <option value="full_care">Royal Full Care (12 000 KZT)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label for="booking-branch-select" class="form-label text-light">Club Branch:</label>
+                            <select id="booking-branch-select" name="booking_branch" class="form-select bg-dark text-light border-secondary" required>
+                                <option value="">-- Choose Branch --</option>
+                                <option value="syganak" selected>Syganak Flagship (17/1 Syganak St)</option>
+                                <option value="kabanbay">Kabanbay Studio (58A Kabanbay Batyr Ave)</option>
+                                <option value="triumph">Triumph Club (38 Mangilik El Ave)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label for="booking-barber-select" class="form-label text-light">Master Barber:</label>
+                            <select id="booking-barber-select" name="booking_barber" class="form-select bg-dark text-light border-secondary" required>
+                                <option value="">-- Choose Master --</option>
+                                <option value="any">First Available Master</option>
+                                <option value="azamat" selected>Azamat Tleubergenov (Chief Executive)</option>
+                                <option value="rustam">Rustam Bekov (Senior Barber)</option>
+                                <option value="daniyar">Daniyar Aliyev (Artisan Stylist)</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mb-4" id="booking-fieldset-datetime">
+                    <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">2. Date & Convenient Time Slot</legend>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label for="booking-date-input" class="form-label text-light">Preferred Date:</label>
+                            <input type="date" id="booking-date-input" name="booking_date" class="form-control bg-dark text-light border-secondary" value="2026-10-05" min="2026-10-04" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="booking-time-select" class="form-label text-light">Preferred Time Slot:</label>
+                            <select id="booking-time-select" name="booking_time" class="form-select bg-dark text-light border-secondary" required>
+                                <option value="">-- Choose Time Slot --</option>
+                                <option value="10:00">10:00 AM — Morning Slot</option>
+                                <option value="11:30" selected>11:30 AM — Midday Slot</option>
+                                <option value="13:00">01:00 PM — Afternoon Slot</option>
+                                <option value="14:30">02:30 PM — Afternoon Slot</option>
+                                <option value="16:00">04:00 PM — Tea Slot</option>
+                                <option value="17:30">05:30 PM — Evening Slot</option>
+                                <option value="19:00">07:00 PM — Evening Slot</option>
+                                <option value="20:30">08:30 PM — Late Evening Slot</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mb-4" id="booking-fieldset-guest">
+                    <legend class="h5 text-gold border-bottom border-secondary border-opacity-50 pb-2 mb-3">3. Guest Information & Confirmation</legend>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4">
+                            <label for="booking-name-input" class="form-label text-light">Guest Full Name:</label>
+                            <input type="text" id="booking-name-input" name="booking_name" class="form-control bg-dark text-light border-secondary" placeholder="Kaisar Nurlanov" required>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label for="booking-phone-input" class="form-label text-light">Contact Phone:</label>
+                            <input type="tel" id="booking-phone-input" name="booking_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label for="booking-email-input" class="form-label text-light">Email Address:</label>
+                            <input type="email" id="booking-email-input" name="booking_email" class="form-control bg-dark text-light border-secondary" placeholder="kaisar@example.kz" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="booking-notes-input" class="form-label text-light">Special Requests or Hair Profile:</label>
+                            <textarea id="booking-notes-input" name="booking_notes" class="form-control bg-dark text-light border-secondary" rows="2" placeholder="Mention skin sensitivity, desired fade level, or beverage preferences..."></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="booking-agree-check" name="booking_agree" required checked>
+                                <label class="form-check-label text-secondary small" for="booking-agree-check">
+                                    I confirm my reservation request and authorize SMS appointment notifications
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="d-flex flex-wrap gap-3" id="booking-buttons-container">
+                    <button type="submit" class="btn btn-gold px-4 py-2" id="booking-submit-btn">Submit Reservation</button>
+                    <button type="reset" class="btn btn-outline-secondary px-4 py-2" id="booking-reset-btn">Reset Form</button>
+                </div>
+            </form>
+
+            <!-- Error message container (ready for JavaScript validation injection) -->
+            <div id="booking-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
+
+            <!-- Visible Confirmation & Result Voucher Area -->
+            <div id="booking-confirmation-wrapper" class="mt-4">
+                <div class="confirmation-voucher shadow" id="booking-confirmation-card">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
+                        <div>
+                            <span class="badge bg-gold mb-1">Reservation Voucher</span>
+                            <h3 class="h5 text-gold mb-0">Booking Details & Check-In Voucher</h3>
+                        </div>
+                        <span class="status-badge-pending mt-2 mt-sm-0" id="booking-voucher-status">Status: Pending SMS Confirmation</span>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <div class="row g-3 small">
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Voucher Number:</span>
+                            <strong class="text-gold" id="booking-voucher-code">LGV-2026-BK-492</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Reserved Service:</span>
+                            <strong class="text-light" id="booking-voucher-service">Signature Classic Scissor Cut</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Assigned Master:</span>
+                            <strong class="text-light" id="booking-voucher-barber">Azamat Tleubergenov (Chief Executive)</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Club Branch:</span>
+                            <strong class="text-light" id="booking-voucher-branch">Syganak Flagship (17/1 Syganak St)</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Scheduled Slot:</span>
+                            <strong class="text-light" id="booking-voucher-datetime">October 5, 2026 at 11:30 AM</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Amount Due at Counter:</span>
+                            <strong class="text-gold fs-6" id="booking-voucher-amount">7 000 KZT</strong>
+                        </div>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <p class="mb-0 text-secondary small" id="booking-voucher-notice">
+                        * Please arrive 5 minutes prior to your time. Fresh espresso is served at our hospitality bar upon arrival. If you need to make changes, contact us directly at <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sanitation Protocols Section -->
+        <section class="p-4 p-md-5 rounded bg-dark border border-secondary border-opacity-25 shadow my-4" id="sanitation-section">
             <div class="row align-items-center g-4">
                 <div class="col-12 col-md-7">
-                    <h2 class="h4 text-gold mb-3">Sanitation Protocols</h2>
+                    <h2 class="h4 text-gold mb-3" id="sanitation-title">Sanitation Protocols & Sterility Standards</h2>
                     <dl class="row mb-0">
                         <dt class="col-sm-4 text-light">Dry-Heat 180°C</dt>
                         <dd class="col-sm-8 text-secondary">Full autoclave thermal decontamination of metal instruments before every service appointment.</dd>
                         
                         <dt class="col-sm-4 text-light">Single-Use Strips</dt>
                         <dd class="col-sm-8 text-secondary">Individual disposable cape neck strips and razor blades are opened in front of each guest.</dd>
+                        
+                        <dt class="col-sm-4 text-light">Hospital-Grade</dt>
+                        <dd class="col-sm-8 text-secondary">Barbicide and multi-spectrum disinfectants applied across chairs and station tops between clients.</dd>
                     </dl>
                 </div>
                 <div class="col-12 col-md-5 text-center">
-                    <img src="images/photo3.jpg" alt="Master barber preparing cutting station" class="img-fluid rounded shadow border border-secondary border-opacity-50">
+                    <figure class="mb-0">
+                        <img src="images/photo3.jpg" alt="Master barber preparing cutting station" class="img-fluid rounded shadow border border-secondary border-opacity-50" id="sanitation-image">
+                        <figcaption class="text-secondary small mt-2">Station Disinfection & Tool Preparation</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+    <!-- Unified Site Footer -->
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center" id="site-footer">
         <div class="container">
-            <p class="mb-1 text-light">17/1 Syganak St, Astana | Price Inquiries: <a href="mailto:service@logovo-astana.kz" class="text-gold text-decoration-none">service@logovo-astana.kz</a></p>
-            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana • Quality certified.</p>
+            <div class="row g-3 text-center text-md-start mb-3 align-items-center">
+                <div class="col-12 col-md-4">
+                    <span class="fs-5 fw-bold text-gold d-block mb-1">Logovo Barbershop</span>
+                    <small class="text-secondary">Authentic Men's Club & Grooming Lounge in Astana</small>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <span class="d-block text-light small mb-1"><strong>Working Hours:</strong> Mon–Sun 10:00 – 22:00</span>
+                    <span class="d-block small text-secondary">Flagship: 17/1 Syganak St, Astana</span>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end">
+                    <a href="tel:+77012181919" class="text-gold text-decoration-none fw-bold d-block mb-1" id="footer-phone-link">+7 (701) 218-19-19</a>
+                    <a href="mailto:info@logovo-astana.kz" class="text-secondary small text-decoration-none d-block" id="footer-email-link">info@logovo-astana.kz</a>
+                </div>
+            </div>
+            <hr class="border-secondary border-opacity-25 my-3">
+            <p class="mb-2 text-secondary small">Find our lounges on maps: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-underline" id="footer-2gis-link">Logovo Barbershop on 2GIS Astana</a></p>
+            <p class="small text-muted mb-0" id="footer-copyright">© 2026 Logovo Barbershop Astana. All rights reserved. Quality certified.</p>
         </div>
     </footer>
 
+    <!-- Bootstrap v5.3.3 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>

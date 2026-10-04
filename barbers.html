@@ -1,52 +1,154 @@
 <!DOCTYPE html>
-<!-- Author: Nurassyl Ilyas -->
-<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Master artisan roster and branch chronology of Logovo Barbershop in Astana.">
-    <meta name="author" content="Nurassyl Ilyas">
-    <title>Artisan Team — Logovo Barbershop</title>
+    <meta name="description" content="Master artisan roster, branch chronology, and direct consultation for Logovo Barbershop in Astana.">
+    <title>Barbers & Masters — Logovo Barbershop Astana</title>
     
+    <!-- Bootstrap v5.3.3 CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Brand correction and JavaScript freeze layer -->
     <link rel="stylesheet" href="css/custom.css">
 </head>
-<body class="bg-black text-light">
+<body class="bg-black text-light" id="page-barbers">
 
-    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <!-- Unified Site Header & Responsive Navigation -->
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top" id="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black" aria-label="Main site navigation">
             <div class="container-fluid px-3 px-md-4">
-                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html" id="brand-link">Logovo Barbershop</a>
                 
-                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBarbers" aria-controls="navbarBarbers" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggle-btn">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarBarbers">
-                    <ul class="navbar-nav gap-lg-2">
-                        <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="services.html">Services & Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="barbers.html">Barbers</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html">Feedback</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html">MarketBar</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="careers.html">Careers</a></li>
+                <div class="collapse navbar-collapse justify-content-end" id="navbar-main">
+                    <ul class="navbar-nav gap-lg-2" id="navbar-nav-list">
+                        <li class="nav-item"><a class="nav-link text-light" href="index.html" id="nav-link-home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="services.html" id="nav-link-services">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" aria-current="page" href="barbers.html" id="nav-link-barbers">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="marketbar.html" id="nav-link-marketbar">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="careers.html" id="nav-link-careers">Careers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html" id="nav-link-feedback">Feedback</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-5">
-        <section class="mb-5">
-            <h1 class="display-6 fw-bold text-gold mb-3">Master Artisans of the Logovo Network</h1>
+    <!-- Main Content Container -->
+    <main class="container my-5" id="main-content">
+
+        <!-- Heading & Filter Controls -->
+        <section class="mb-5" id="barbers-intro-section">
+            <h1 class="display-6 fw-bold text-gold mb-3" id="barbers-title">Master Artisans of the Logovo Network</h1>
             <p class="lead text-secondary">
-                Our senior cutters possess accredited certifications in classical scissor work and open-blade wet shaving.
+                Our senior cutters possess accredited certifications in classical scissor work, geometric clipper fades, and open-blade wet shaving.
             </p>
 
+            <!-- Interactive Barber Search and Filter Area -->
+            <div class="card card-dark p-3 p-md-4 my-4 shadow-sm border border-secondary border-opacity-25" id="barbers-filter-card">
+                <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-4">
+                        <label for="barber-search-input" class="form-label text-light small">Search Master:</label>
+                        <input type="text" id="barber-search-input" class="form-control bg-dark text-light border-secondary" placeholder="Search by master name or specialty...">
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="barber-filter-branch" class="form-label text-light small">Filter Branch:</label>
+                        <select id="barber-filter-branch" class="form-select bg-dark text-light border-secondary">
+                            <option value="all" selected>All Astana Branches</option>
+                            <option value="syganak">Syganak Flagship (17/1 Syganak St)</option>
+                            <option value="kabanbay">Kabanbay Studio (58A Kabanbay Batyr Ave)</option>
+                            <option value="triumph">Triumph Club (38 Mangilik El Ave)</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="barber-filter-tier" class="form-label text-light small">Artisan Tier:</label>
+                        <select id="barber-filter-tier" class="form-select bg-dark text-light border-secondary">
+                            <option value="all" selected>All Qualification Tiers</option>
+                            <option value="chief">Chief Executive Barber</option>
+                            <option value="senior">Senior Floor Barber</option>
+                            <option value="first">First-Category Cutter</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex gap-2">
+                        <button type="button" class="btn btn-gold w-100" id="barber-filter-btn">Filter</button>
+                        <button type="button" class="btn btn-outline-secondary" id="barber-reset-btn">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Master Barber Profiles Deck -->
+            <div class="row g-4 my-3" id="barbers-roster-container">
+                <!-- Master 1: Azamat -->
+                <div class="col-12 col-md-6 col-lg-4" id="barber-azamat">
+                    <div class="card card-dark h-100 p-4 border border-secondary border-opacity-25 shadow-sm d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="badge bg-gold mb-2 text-uppercase fw-bold" id="badge-azamat">Chief Executive Barber</span>
+                            <h2 class="h4 text-gold mb-1" id="name-azamat">Azamat Tleubergenov</h2>
+                            <p class="text-secondary small mb-2">Flagship Floor: 17/1 Syganak St</p>
+                            <p class="text-light small mb-3"><strong>Experience:</strong> 9 Years Accredited Mastery</p>
+                            <p class="text-secondary small mb-3">
+                                <strong>Specialties:</strong> Anatomical Scissor Architecture, Royal Straight-Razor Wet Shaving, Beard Silhouette Restyling.
+                            </p>
+                            <p class="text-secondary small mb-0">
+                                Chief mentor of the Logovo Apprenticeship program. Specializes in classic Anglo-European cuts and hot towel treatments.
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="services.html#booking-section" class="btn btn-gold w-100" id="btn-book-azamat">Book Chair with Azamat</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master 2: Rustam -->
+                <div class="col-12 col-md-6 col-lg-4" id="barber-rustam">
+                    <div class="card card-dark h-100 p-4 border border-secondary border-opacity-25 shadow-sm d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="badge bg-secondary mb-2 text-uppercase fw-bold text-light" id="badge-rustam">Senior Floor Barber</span>
+                            <h2 class="h4 text-gold mb-1" id="name-rustam">Rustam Bekov</h2>
+                            <p class="text-secondary small mb-2">Studio Floor: 58A Kabanbay Batyr Ave</p>
+                            <p class="text-light small mb-3"><strong>Experience:</strong> 6 Years Professional Practice</p>
+                            <p class="text-secondary small mb-3">
+                                <strong>Specialties:</strong> High-Precision Skin Tapers, Clipper Fade Blending, Razor Edge Beard Sculpting.
+                            </p>
+                            <p class="text-secondary small mb-0">
+                                Master of clean gradient work and modern textured styles. Experienced in beard density treatment and hot herbal compresses.
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="services.html#booking-section" class="btn btn-gold w-100" id="btn-book-rustam">Book Chair with Rustam</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master 3: Daniyar -->
+                <div class="col-12 col-md-6 col-lg-4" id="barber-daniyar">
+                    <div class="card card-dark h-100 p-4 border border-secondary border-opacity-25 shadow-sm d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="badge bg-secondary mb-2 text-uppercase fw-bold text-light" id="badge-daniyar">First-Category Cutter</span>
+                            <h2 class="h4 text-gold mb-1" id="name-daniyar">Daniyar Aliyev</h2>
+                            <p class="text-secondary small mb-2">Club Floor: 38 Mangilik El Ave</p>
+                            <p class="text-light small mb-3"><strong>Experience:</strong> 4 Years Certified Practice</p>
+                            <p class="text-secondary small mb-3">
+                                <strong>Specialties:</strong> Textured Scissor Crops, Classic Pompadours, Grey Beard Camouflage Tinting.
+                            </p>
+                            <p class="text-secondary small mb-0">
+                                Graduate of the Logovo Academy 2024 honors cohort. Focuses on razor finishes and customized pomade styling.
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="services.html#booking-section" class="btn btn-gold w-100" id="btn-book-daniyar">Book Chair with Daniyar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qualification Hierarchy & Expansion Details -->
             <div class="row g-4 my-4">
                 <div class="col-12 col-md-6">
-                    <div class="card card-dark p-4 h-100 shadow border border-secondary border-opacity-25">
+                    <div class="card card-dark p-4 h-100 shadow border border-secondary border-opacity-25" id="card-expansion-sequence">
                         <h2 class="h5 text-gold mb-3">Historical Expansion Sequence</h2>
                         <ol type="I" class="text-secondary ps-3 mb-0">
                             <li class="mb-2"><strong class="text-light">Syganak Lounge</strong> (17/1 Syganak St) — Network Flagship Lounge</li>
@@ -57,7 +159,7 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <div class="card card-dark p-4 h-100 shadow border border-secondary border-opacity-25">
+                    <div class="card card-dark p-4 h-100 shadow border border-secondary border-opacity-25" id="card-qualification-hierarchy">
                         <h2 class="h5 text-gold mb-3">Artisan Qualification Hierarchy</h2>
                         <ul class="text-secondary ps-3 mb-0">
                             <li class="mb-2">
@@ -80,19 +182,139 @@
             </div>
         </section>
 
-        <figure class="p-4 rounded bg-dark border border-secondary border-opacity-25 text-center my-4">
-            <img src="images/photo3.jpg" alt="Head barber sanitizing precision tools" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50">
-            <figcaption class="text-secondary small">Head Barber Azamat inspecting Japanese steel shears at the Syganak branch.</figcaption>
+        <!-- Direct Master Consultation / Question Form Section -->
+        <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25 my-5" id="barber-inquiry-section">
+            <h2 class="h3 fw-bold text-gold mb-2" id="inquiry-heading">Consult a Master Barber Directly</h2>
+            <p class="text-secondary mb-4" id="inquiry-instruction">
+                Have questions regarding hair density, beard growth routines, or sensitive skin shaving rituals before booking? Submit your question below. 
+                <strong class="text-light">What happens next:</strong> Our senior barber team reviews consultation inquiries daily at 15:00 and sends personalized grooming recommendations via WhatsApp or email within 24 hours.
+            </p>
+
+            <form action="barbers.html#inquiry-confirmation-wrapper" method="post" id="form-barber-inquiry">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="inquiry-barber-select" class="form-label text-light">Direct Question To:</label>
+                        <select id="inquiry-barber-select" name="inquiry_barber" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">-- Choose Master Barber --</option>
+                            <option value="azamat" selected>Head Barber Azamat Tleubergenov (Flagship)</option>
+                            <option value="rustam">Senior Barber Rustam Bekov (Kabanbay)</option>
+                            <option value="daniyar">First-Category Cutter Daniyar Aliyev (Triumph)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="inquiry-topic-select" class="form-label text-light">Consultation Topic:</label>
+                        <select id="inquiry-topic-select" name="inquiry_topic" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">-- Choose Consultation Topic --</option>
+                            <option value="haircut" selected>Anatomical Haircut Shape Recommendation</option>
+                            <option value="beard">Beard Sculpting & Conditioning Oils Routine</option>
+                            <option value="shave">Straight-Razor Wet Shaving for Sensitive Skin</option>
+                            <option value="styling">Product Selection (Pomade vs Clay vs Matte Paste)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="inquiry-name-input" class="form-label text-light">Your Name:</label>
+                        <input type="text" id="inquiry-name-input" name="inquiry_name" class="form-control bg-dark text-light border-secondary" placeholder="Ilyas Sadykov" required>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="inquiry-contact-input" class="form-label text-light">Contact (Phone or Email):</label>
+                        <input type="text" id="inquiry-contact-input" name="inquiry_contact" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 555-44-33 or ilyas@example.kz" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="inquiry-text-input" class="form-label text-light">Your Question or Description:</label>
+                        <textarea id="inquiry-text-input" name="inquiry_text" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Describe hair type, previous salon challenges, or desired grooming outcome..." required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="inquiry-agree-check" name="inquiry_agree" required checked>
+                            <label class="form-check-label text-secondary small" for="inquiry-agree-check">
+                                I authorize the Logovo master barber team to contact me with grooming advice
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 mt-4" id="inquiry-buttons-container">
+                    <button type="submit" class="btn btn-gold px-4 py-2" id="inquiry-submit-btn">Send Consultation Inquiry</button>
+                    <button type="reset" class="btn btn-outline-secondary px-4 py-2" id="inquiry-reset-btn">Reset</button>
+                </div>
+            </form>
+
+            <!-- Error message container for JS -->
+            <div id="inquiry-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
+
+            <!-- Visible Confirmation Voucher Area -->
+            <div id="inquiry-confirmation-wrapper" class="mt-4">
+                <div class="confirmation-voucher shadow" id="inquiry-confirmation-card">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
+                        <div>
+                            <span class="badge bg-gold mb-1">Inquiry Registered</span>
+                            <h3 class="h5 text-gold mb-0">Master Consultation Ticket</h3>
+                        </div>
+                        <span class="status-badge-pending mt-2 mt-sm-0" id="inquiry-status-badge">Status: Queued for Master Review</span>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <div class="row g-3 small">
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Ticket ID:</span>
+                            <strong class="text-gold" id="inquiry-ticket-code">INQ-2026-AZM-104</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Designated Master:</span>
+                            <strong class="text-light" id="inquiry-voucher-barber">Head Barber Azamat Tleubergenov</strong>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <span class="text-secondary d-block">Expected Response Time:</span>
+                            <strong class="text-light" id="inquiry-voucher-timing">Within 24 Hours (Next Day 15:00)</strong>
+                        </div>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <p class="mb-0 text-secondary small" id="inquiry-voucher-notice">
+                        * Thank you for consulting Logovo. Your inquiry has been routed to the master's tablet. Urgent inquiries may be directed to <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Figure Image of Master at Work -->
+        <figure class="p-4 rounded bg-dark border border-secondary border-opacity-25 text-center my-4" id="barber-figure">
+            <img src="images/photo3.jpg" alt="Head barber sanitizing precision tools" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50" id="barber-figure-image">
+            <figcaption class="text-secondary small" id="barber-figure-caption">Head Barber Azamat inspecting Japanese steel shears at the Syganak branch cutting floor.</figcaption>
         </figure>
     </main>
 
-    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+    <!-- Unified Site Footer -->
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center" id="site-footer">
         <div class="container">
-            <p class="mb-1 text-light">Artisan Roster Desk: <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a></p>
-            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana • Staff directory § 2.</p>
+            <div class="row g-3 text-center text-md-start mb-3 align-items-center">
+                <div class="col-12 col-md-4">
+                    <span class="fs-5 fw-bold text-gold d-block mb-1">Logovo Barbershop</span>
+                    <small class="text-secondary">Authentic Men's Club & Grooming Lounge in Astana</small>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <span class="d-block text-light small mb-1"><strong>Working Hours:</strong> Mon–Sun 10:00 – 22:00</span>
+                    <span class="d-block small text-secondary">Flagship: 17/1 Syganak St, Astana</span>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end">
+                    <a href="tel:+77012181919" class="text-gold text-decoration-none fw-bold d-block mb-1" id="footer-phone-link">+7 (701) 218-19-19</a>
+                    <a href="mailto:info@logovo-astana.kz" class="text-secondary small text-decoration-none d-block" id="footer-email-link">info@logovo-astana.kz</a>
+                </div>
+            </div>
+            <hr class="border-secondary border-opacity-25 my-3">
+            <p class="mb-2 text-secondary small">Find our lounges on maps: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-underline" id="footer-2gis-link">Logovo Barbershop on 2GIS Astana</a></p>
+            <p class="small text-muted mb-0" id="footer-copyright">© 2026 Logovo Barbershop Astana. All rights reserved. Quality certified.</p>
         </div>
     </footer>
 
+    <!-- Bootstrap v5.3.3 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>

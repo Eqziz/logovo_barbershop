@@ -1,97 +1,292 @@
 <!DOCTYPE html>
-<!-- Author: Nurken Mamay -->
-<!-- Bootstrap Version: 5.3.3 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Logovo MarketBar: Premium grooming apothecary, organic oils, and lounge beverages in Astana.">
-    <meta name="author" content="Nurken Mamay">
-    <title>MarketBar & Grooming — Logovo Barbershop</title>
+    <title>MarketBar & Lounge — Logovo Barbershop Astana</title>
     
+    <!-- Bootstrap v5.3.3 CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Brand correction and JavaScript freeze layer -->
     <link rel="stylesheet" href="css/custom.css">
 </head>
-<body class="bg-black text-light">
+<body class="bg-black text-light" id="page-marketbar">
 
-    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <!-- Unified Site Header & Responsive Navigation -->
+    <header class="border-bottom border-warning border-opacity-25 bg-black py-2 sticky-top" id="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black" aria-label="Main site navigation">
             <div class="container-fluid px-3 px-md-4">
-                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html">Logovo Barbershop</a>
+                <a class="navbar-brand fs-3 fw-bold text-gold" href="index.html" id="brand-link">Logovo Barbershop</a>
                 
-                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMarket" aria-controls="navbarMarket" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggle-btn">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarMarket">
-                    <ul class="navbar-nav gap-lg-2">
-                        <li class="nav-item"><a class="nav-link text-light" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="services.html">Services & Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html">Barbers</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html">Feedback</a></li>
-                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" href="marketbar.html">MarketBar</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="careers.html">Careers</a></li>
+                <div class="collapse navbar-collapse justify-content-end" id="navbar-main">
+                    <ul class="navbar-nav gap-lg-2" id="navbar-nav-list">
+                        <li class="nav-item"><a class="nav-link text-light" href="index.html" id="nav-link-home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="services.html" id="nav-link-services">Services & Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="barbers.html" id="nav-link-barbers">Barbers</a></li>
+                        <li class="nav-item"><a class="nav-link active text-gold fw-semibold" aria-current="page" href="marketbar.html" id="nav-link-marketbar">MarketBar</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="careers.html" id="nav-link-careers">Careers</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="feedback.html" id="nav-link-feedback">Feedback</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-5">
-        <section class="mb-5">
-            <h1 class="display-6 fw-bold text-gold mb-3">Hospitality Bar & Home Care Dispensary</h1>
+    <!-- Main Content Container -->
+    <main class="container my-5" id="main-content">
+
+        <!-- Page Introduction -->
+        <section class="mb-5" id="market-intro-section">
+            <h1 class="display-6 fw-bold text-gold mb-3" id="market-title">Hospitality Bar & Home Care Dispensary</h1>
             <p class="lead text-secondary">
-                Maintain sharp salon definition between visits with our curated apothecary cosmetics, or enjoy our craft beverage menu.
+                Maintain sharp salon definition between visits with our curated apothecary cosmetics, or unwind at our craft beverage bar.
             </p>
 
-            <div class="table-responsive my-4 shadow rounded border border-secondary border-opacity-25">
-                <table class="table table-dark table-hover table-striped align-middle mb-0">
-                    <caption class="text-secondary px-3 py-2">Apothecary Products & Lounge Beverage Tariff</caption>
+            <!-- Product Catalog Table with Direct Order Buttons -->
+            <div class="table-responsive my-4 shadow rounded border border-secondary border-opacity-25" id="apothecary-catalog">
+                <table class="table table-dark table-hover table-striped align-middle mb-0" id="table-market">
+                    <caption class="text-secondary px-3 py-2">Apothecary Products & Lounge Beverage Tariff — Logovo Astana</caption>
                     <thead class="border-bottom border-warning">
                         <tr>
                             <th scope="col" class="text-gold py-3 px-3">Category</th>
                             <th scope="col" class="text-gold py-3">Product Item</th>
                             <th scope="col" class="text-gold py-3 text-center">Volume</th>
                             <th scope="col" class="text-gold py-3 text-end px-3">Price (KZT)</th>
+                            <th scope="col" class="text-gold py-3 text-center px-3">Reservation</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row" class="align-middle px-3 text-light">Styling</th>
-                            <td>Extreme Hold Matte Finish Clay</td>
-                            <td class="text-center text-secondary">100 ml</td>
-                            <td class="text-end fw-bold text-gold px-3">7 500</td>
+                    <tbody id="market-table-body">
+                        <tr id="market-row-1">
+                            <th scope="row" rowspan="2" class="align-middle px-3 text-light">Styling</th>
+                            <td>
+                                <strong class="text-light d-block" id="product-name-1">Extreme Hold Matte Finish Clay</strong>
+                                <small class="text-secondary">Beeswax and volcanic clay base for strong re-workable texture.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-1">100 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-1">7 500</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-1">Reserve Item</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row" class="align-middle px-3 text-light">Beard Care</th>
-                            <td>Argan & Cedar Wood Conditioning Oil</td>
-                            <td class="text-center text-secondary">50 ml</td>
-                            <td class="text-end fw-bold text-gold px-3">6 000</td>
+                        <tr id="market-row-2">
+                            <td>
+                                <strong class="text-light d-block" id="product-name-2">Botanical Tea Tree Clarifying Shampoo</strong>
+                                <small class="text-secondary">Sulfate-free scalp tonic with eucalyptus and tea tree extracts.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-2">250 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-2">5 200</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-2">Reserve Item</a>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row" class="align-middle px-3 text-light">Lounge Bar</th>
-                            <td>Double Shot Colombian Roast Espresso</td>
-                            <td class="text-center text-secondary">60 ml</td>
-                            <td class="text-end fw-bold text-gold px-3">1 000</td>
+                        <tr id="market-row-3">
+                            <th scope="row" rowspan="2" class="align-middle px-3 text-light">Beard & Shave</th>
+                            <td>
+                                <strong class="text-light d-block" id="product-name-3">Argan & Cedar Wood Conditioning Oil</strong>
+                                <small class="text-secondary">Softens stiff facial whiskers and prevents dry skin itching.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-3">50 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-3">6 000</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-3">Reserve Item</a>
+                            </td>
+                        </tr>
+                        <tr id="market-row-4">
+                            <td>
+                                <strong class="text-light d-block" id="product-name-4">Sandalwood Soothing Aftershave Balm</strong>
+                                <small class="text-secondary">Alcohol-free soothing aloe lotion for post-blade recovery.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-4">100 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-4">5 800</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-4">Reserve Item</a>
+                            </td>
+                        </tr>
+                        <tr id="market-row-5">
+                            <th scope="row" rowspan="2" class="align-middle px-3 text-light">Lounge Bar</th>
+                            <td>
+                                <strong class="text-light d-block" id="product-name-5">Double Shot Colombian Roast Espresso</strong>
+                                <small class="text-secondary">Freshly ground specialty arabica beans pulled at 9 bars.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-5">60 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-5">1 000</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-5">Reserve Item</a>
+                            </td>
+                        </tr>
+                        <tr id="market-row-6">
+                            <td>
+                                <strong class="text-light d-block" id="product-name-6">Cold-Pressed Tonic & Bergamot Beverage</strong>
+                                <small class="text-secondary">Botanical carbonated elixir with citrus and cinchona bark.</small>
+                            </td>
+                            <td class="text-center text-secondary" id="product-vol-6">330 ml</td>
+                            <td class="text-end fw-bold text-gold px-3" id="product-price-6">1 200</td>
+                            <td class="text-center px-3">
+                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-6">Reserve Item</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <figure class="p-4 rounded bg-dark border border-secondary border-opacity-25 text-center my-4">
-            <img src="images/photo4.jpg" alt="Logovo Barbershop hospitality bar counter" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50">
-            <figcaption class="text-secondary small">Handcrafted hospitality bar counter at our Syganak flagship lounge.</figcaption>
+        <!-- Dispensary Pre-Order & Reservation Form Section -->
+        <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25 my-5" id="order-reserve-section">
+            <h2 class="h3 fw-bold text-gold mb-2" id="order-heading">Dispensary Pre-Order & Desk Pickup</h2>
+            <p class="text-secondary mb-4" id="order-instruction">
+                Reserve your favorite styling cosmetics or bar beverages for swift pickup during your next haircut. 
+                <strong class="text-light">What happens next:</strong> Selected items are held at your designated branch dispensary desk for 48 hours. An instant reservation code is issued below; present the voucher upon visit to inspect, collect, and settle payment.
+            </p>
+
+            <form action="marketbar.html#order-confirmation-wrapper" method="post" id="form-market-order">
+                <div class="row g-3">
+                    <div class="col-12 col-md-5">
+                        <label for="order-product-select" class="form-label text-light">Select Item:</label>
+                        <select id="order-product-select" name="order_product" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">-- Choose Product Item --</option>
+                            <option value="clay" selected>Extreme Hold Matte Finish Clay (7 500 KZT)</option>
+                            <option value="shampoo">Botanical Tea Tree Clarifying Shampoo (5 200 KZT)</option>
+                            <option value="oil">Argan & Cedar Wood Conditioning Oil (6 000 KZT)</option>
+                            <option value="balm">Sandalwood Soothing Aftershave Balm (5 800 KZT)</option>
+                            <option value="espresso">Double Shot Colombian Roast Espresso (1 000 KZT)</option>
+                            <option value="tonic">Cold-Pressed Tonic & Bergamot Beverage (1 200 KZT)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label for="order-quantity-input" class="form-label text-light">Quantity:</label>
+                        <input type="number" id="order-quantity-input" name="order_quantity" class="form-control bg-dark text-light border-secondary" min="1" max="10" value="1" required>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="order-branch-select" class="form-label text-light">Pickup Branch:</label>
+                        <select id="order-branch-select" name="order_branch" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">-- Choose Pickup Branch --</option>
+                            <option value="syganak" selected>Syganak Flagship (17/1 Syganak St)</option>
+                            <option value="kabanbay">Kabanbay Studio (58A Kabanbay Batyr Ave)</option>
+                            <option value="triumph">Triumph Club (38 Mangilik El Ave)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="order-name-input" class="form-label text-light">Customer Full Name:</label>
+                        <input type="text" id="order-name-input" name="order_name" class="form-control bg-dark text-light border-secondary" placeholder="Miras Ospanov" required>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="order-phone-input" class="form-label text-light">Contact Phone:</label>
+                        <input type="tel" id="order-phone-input" name="order_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 987-65-43" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="order-notes-input" class="form-label text-light">Pickup Notes or Packaging Request:</label>
+                        <textarea id="order-notes-input" name="order_notes" class="form-control bg-dark text-light border-secondary" rows="2" placeholder="Mention gift packaging, scheduled haircut timing, or travel container request..."></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="order-agree-check" name="order_agree" required checked>
+                            <label class="form-check-label text-secondary small" for="order-agree-check">
+                                I confirm my reservation and agree to pick up within 48 hours
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator & Subtotal Box -->
+                <div class="summary-box my-4" id="order-summary-box">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary small">Total Estimated Amount at Counter:</span>
+                        <span id="order-total-price" class="fs-4 fw-bold text-gold">7 500 KZT</span>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3" id="order-buttons-container">
+                    <button type="submit" class="btn btn-gold px-4 py-2" id="order-submit-btn">Confirm Reservation</button>
+                    <button type="reset" class="btn btn-outline-secondary px-4 py-2" id="order-reset-btn">Reset</button>
+                </div>
+            </form>
+
+            <!-- Error message container for JS -->
+            <div id="order-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
+
+            <!-- Visible Confirmation Voucher Area -->
+            <div id="order-confirmation-wrapper" class="mt-4">
+                <div class="confirmation-voucher shadow" id="order-confirmation-card">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
+                        <div>
+                            <span class="badge bg-gold mb-1">Dispensary Hold</span>
+                            <h3 class="h5 text-gold mb-0">Product Pre-Order Pickup Voucher</h3>
+                        </div>
+                        <span class="status-badge-pending mt-2 mt-sm-0" id="order-status-badge">Status: Reserved for 48 Hours</span>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <div class="row g-3 small">
+                        <div class="col-12 col-md-3">
+                            <span class="text-secondary d-block">Reservation Code:</span>
+                            <strong class="text-gold" id="order-voucher-code">MKT-2026-RES-712</strong>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <span class="text-secondary d-block">Reserved Product:</span>
+                            <strong class="text-light" id="order-voucher-item">Extreme Hold Matte Finish Clay (100 ml)</strong>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <span class="text-secondary d-block">Pickup Desk:</span>
+                            <strong class="text-light" id="order-voucher-branch">Syganak Flagship (17/1 Syganak St)</strong>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <span class="text-secondary d-block">Amount Due at Desk:</span>
+                            <strong class="text-gold fs-6" id="order-voucher-price">7 500 KZT</strong>
+                        </div>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <p class="mb-0 text-secondary small" id="order-voucher-notice">
+                        * Please quote voucher code <strong>MKT-2026-RES-712</strong> to the club administrator upon your visit. Items will remain safely packaged in your name.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lounge Bar Atmosphere Figure -->
+        <figure class="p-4 rounded bg-dark border border-secondary border-opacity-25 text-center my-4" id="lounge-bar-menu">
+            <img src="images/photo4.jpg" alt="Logovo Barbershop hospitality bar counter" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50" id="market-figure-image">
+            <figcaption class="text-secondary small" id="market-figure-caption">Handcrafted hospitality bar counter at our Syganak flagship lounge.</figcaption>
         </figure>
     </main>
 
-    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center">
+    <!-- Unified Site Footer -->
+    <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center" id="site-footer">
         <div class="container">
-            <p class="mb-1 text-light">Dispensary Inquiries: <a href="mailto:market@logovo-astana.kz" class="text-gold text-decoration-none">market@logovo-astana.kz</a></p>
-            <p class="small text-muted mb-0">© 2026 Logovo Barbershop. Astana • Market & Lounge.</p>
+            <div class="row g-3 text-center text-md-start mb-3 align-items-center">
+                <div class="col-12 col-md-4">
+                    <span class="fs-5 fw-bold text-gold d-block mb-1">Logovo Barbershop</span>
+                    <small class="text-secondary">Authentic Men's Club & Grooming Lounge in Astana</small>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <span class="d-block text-light small mb-1"><strong>Working Hours:</strong> Mon–Sun 10:00 – 22:00</span>
+                    <span class="d-block small text-secondary">Flagship: 17/1 Syganak St, Astana</span>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end">
+                    <a href="tel:+77012181919" class="text-gold text-decoration-none fw-bold d-block mb-1" id="footer-phone-link">+7 (701) 218-19-19</a>
+                    <a href="mailto:info@logovo-astana.kz" class="text-secondary small text-decoration-none d-block" id="footer-email-link">info@logovo-astana.kz</a>
+                </div>
+            </div>
+            <hr class="border-secondary border-opacity-25 my-3">
+            <p class="mb-2 text-secondary small">Find our lounges on maps: <a href="https://2gis.kz" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-underline" id="footer-2gis-link">Logovo Barbershop on 2GIS Astana</a></p>
+            <p class="small text-muted mb-0" id="footer-copyright">© 2026 Logovo Barbershop Astana. All rights reserved. Quality certified.</p>
         </div>
     </footer>
 
+    <!-- Bootstrap v5.3.3 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9b8A0KBhlZJ19bTFm-cAG3blBRBfQ7HXhRkpYkJC" crossorigin="anonymous"></script>
 </body>
 </html>
