@@ -25,3 +25,21 @@
   - Verified mobile responsive layout with 0 horizontal scrollbar at 375px.
   - Created high-resolution desktop and mobile viewport screenshots in `screenshots/`.
   - Tagged frozen commit with git tag `midterm`.
+
+---
+
+## Session: Assignment 4–5 — JavaScript Fundamentals, Data Arrays, DOM, Events & Complete Form Validation
+* **Date**: October 15, 2026
+* **Query / Topic**: Modular JavaScript architecture under strict HTML/CSS freeze, implementation of realistic data arrays (≥ 6 objects with ≥ 4 properties), multi-control filtering and search with dynamic empty states, live calculation and selection flows, single card rendering functions, and robust client-side form validation with field-level accessible error feedback and demonstration vouchers.
+* **AI Assistance Scope**:
+  - Explained architectural separation between shared utilities (`js/main.js`) and page-specific controllers (`services.js`, `barbers.js`, `feedback.js`, `marketbar.js`, `careers.js`).
+  - Guided structure of reusable helper functions with parameters, return values, and nested function invocations.
+  - Clarified security requirements: prohibiting `innerHTML` for any user-provided strings and enforcing safe `textContent` DOM insertion.
+  - Formulated combined validation business rules (e.g. Master Azamat resident exclusively at Syganak; Candidate experience vs Senior/Apprentice track; Rating vs detailed critique length).
+  - Outlined requirements for Functionality Plan and JavaScript checklist with exact line mappings.
+* **Student Verification & Defense Readiness**:
+  - Verified strict mode compliance (`'use strict';`), zero `var`, zero loose equalities (`==`/`!=`), and zero `document.write()`.
+  - Verified all forms produce accessible field-level error messages, focus the first invalid input, and clear outdated errors.
+  - Verified all successful submissions generate realistic demonstration vouchers with `Math.random()` reference tokens and explicit front-end simulation disclaimers.
+  - Confirmed 0 browser console errors across all 6 pages.
+  - Tagged milestone commits under `assignment-4` and `assignment-5`.

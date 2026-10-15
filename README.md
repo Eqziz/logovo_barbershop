@@ -177,3 +177,33 @@ Prior to freezing the repository, a thorough multi-device audit was executed acr
 * **Local Images**: 4 authentic high-resolution local photography assets (`photo1.jpg` through `photo4.jpg`), all valid with descriptive `alt` attributes.
 * **Screenshots**: High-resolution desktop (1280px) and mobile (375px) captures stored in `screenshots/` directory for all pages.
 * **Git Freeze Tag**: Frozen under git tag `midterm`.
+
+---
+
+## 9. Assignment 4–5 Functionality Plan & Individual Contributions
+
+In accordance with front-end engineering requirements, every student implemented at least two substantial features on their assigned pages, alongside shared site-wide utilities:
+
+| Page | Visitor Goal | Planned Function | Expected Result | Responsible Student |
+| :--- | :--- | :--- | :--- | :--- |
+| **All Pages** | Recognize site status and active location | `setupDemonstrationNotice()` & `syncNavigation()` in `js/main.js` | Injects accessible academic demonstration banner into footer; highlights current nav link with gold active state. | **Entire Team (Shared)** |
+| `services.html` | Estimate total grooming investment and duration | `calculateServiceEstimate()` & `updateEstimateSummary()` in `js/services.js` | Real-time calculation of service fee and duration from data array (`SERVICES_DATA`); updates summary widget and highlights table row. | **Nodir Muhammedov (Team Lead)** |
+| `services.html` | Schedule a confirmed master haircut slot | `validateBookingForm()` & `renderConfirmationVoucher()` in `js/services.js` | Validates trimmed name, phone regex (+7...), future date (< 60 days), and combined Master-Branch compatibility rule; generates demo voucher with `Math.random()` reference. | **Nodir Muhammedov (Team Lead)** |
+| `barbers.html` | Discover skilled artisans matching criteria | `renderBarbersRoster()` & `getFilteredBarbers()` in `js/barbers.js` | Dynamically renders barber profile cards from `BARBERS_DATA` via DOM methods; filters by keyword, branch, and tier with result count and empty state card. | **Nurassyl Ilyas (Frontend Dev)** |
+| `barbers.html` | Request expert haircut or beard consultation | `validateInquiryForm()` & `renderInquiryTicket()` in `js/barbers.js` | Validates master, topic, contact, and detailed text (> 10 chars); outputs official consultation ticket voucher with 24h turnaround indicator. | **Nurassyl Ilyas (Frontend Dev)** |
+| `feedback.html` | Audit visit and inspect verified client impressions | `renderReviewsList()`, `setupCharacterCounter()` & `validateFeedbackForm()` in `js/feedback.js` | Live character counter on comments textarea; validates rating and critique depth; prepends newly submitted review card to DOM list using same render function. | **Nurassyl Ilyas (Frontend Dev)** |
+| `marketbar.html` | Pre-order styling cosmetics for counter pickup | `calculateOrderTotal()`, `validateMarketOrderForm()` & `renderOrderVoucher()` in `js/marketbar.js` | Multiplies unit price by validated quantity (1–10); validates customer credentials; generates 48-hour dispensary hold voucher. | **Nurken Mamay (Frontend Dev)** |
+| `careers.html` | Submit professional credentials for open tracks | `setupVacancyTrackSelectors()` & `validateCareersForm()` in `js/careers.js` | Auto-selects track on button click; validates experience vs track combined rule (≥ 3 yrs for Senior Barber, ≤ 1 yr for Apprentice); outputs HR dossier voucher. | **Nurken Mamay (Frontend Dev)** |
+
+---
+
+## 10. JavaScript Architecture & Compliance Checklist
+
+* **HTML/CSS Freeze**: Zero interface elements were added or removed in HTML files; only `<script defer>` tags were introduced. Zero CSS rules were created or altered.
+* **Strict Mode & Modern Syntax**: All modules enforce `'use strict';`, use `const` by default and `let` only for mutating state. Zero `var`, zero loose equality (`==`/`!=`), zero `document.write()`.
+* **Safe DOM Insertion**: Strict prohibition of `innerHTML` for user-provided data. All names, notes, and dynamic strings are rendered through `textContent`.
+* **State Classes**: Utilizes pre-frozen CSS classes (`.is-hidden`, `.is-active`, `.selected-state`, `.is-error`, `.text-error`, `.status-badge-confirmed`) through `element.classList`.
+* **Milestone Git Tags**:
+  - `midterm`: Initial frozen HTML5/CSS3 baseline.
+  - `assignment-4`: Core data arrays, algorithmic traversal, filtering, and calculation functions.
+  - `assignment-5`: Full DOM manipulation, dynamic empty states, event listeners, and field-level form validation.
