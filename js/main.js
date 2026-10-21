@@ -211,3 +211,4 @@ window.Logovo = (function () {
 document.addEventListener('DOMContentLoaded', function () {
     window.Logovo.initShared();
 });
+

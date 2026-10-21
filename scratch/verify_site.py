@@ -60,3 +60,4 @@ for dl in dead_links:
 
 if not script_errors and not hash_links and not dead_links:
     print("SITE INTEGRITY VERIFIED: 0 broken links, 0 broken scripts, 0 placeholder hashes!")
+

@@ -37,3 +37,4 @@
 | **Combined Rule: Rating & Feedback**| `feedback.js` | Lines 212–219 | Requires at least 30 characters of constructive critique for low ratings (≤ 2 stars). |
 | **Accessible Error Presentation** | All JS files | Throughout | Inserts specific `.text-error` beside invalid fields and focuses first invalid field. |
 | **Demonstration Disclaimer** | All JS files | In all vouchers & notices | States: *"Demonstration Request Only: No real booking, payment, or order is created."* |
+
