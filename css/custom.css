@@ -84,6 +84,14 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     z-index: 1030;
 }
 
+/* Portrait figure image viewport containment */
+#barber-figure-image {
+    max-height: 55vh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
 /* Form input focus styling */
 .form-control:focus,
 .form-select:focus {
