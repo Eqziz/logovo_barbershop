@@ -207,3 +207,50 @@ In accordance with front-end engineering requirements, every student implemented
   - `midterm`: Initial frozen HTML5/CSS3 baseline.
   - `assignment-4`: Core data arrays, algorithmic traversal, filtering, and calculation functions.
   - `assignment-5`: Full DOM manipulation, dynamic empty states, event listeners, and field-level form validation.
+  - `jquery-final`: Complete pure-jQuery architecture, delegated event handlers, DOM effects, and comparison baseline.
+
+---
+
+## 11. Final Milestone: jQuery Integration & Architecture
+
+This milestone represents the final stage before project defense, transitioning all interactive behaviors from vanilla DOM operations to idiomatic **jQuery v3.7.1**:
+
+### A. CDN Integration & Lifecycle
+jQuery v3.7.1 is linked via the official CDN prior to Bootstrap and custom page scripts. All code is encapsulated within `$(function () { ... })` (`$(document).ready` shorthand), ensuring the DOM is fully constructed in memory before elements are selected or listeners attached.
+
+### B. Three Rewritten Features vs. `old-js-version.js`
+The original plain-JavaScript implementations are preserved in `old-js-version.js` (unlinked) for side-by-side defense evaluation:
+
+| Feature | Vanilla JavaScript Baseline (`old-js-version.js`) | Modernized jQuery Implementation (`js/*.js`) | Comparative Verdict & Benefits |
+| :--- | :--- | :--- | :--- |
+| **1. Form Validation** | Manual `document.getElementById`, verbose null checks, and loop-based error removal (`querySelectorAll`). | Expressive chained selectors: `$('#name').addClass('is-error')`, traversal `$form.find('.is-error').removeClass()`, and `$input.siblings().fadeOut()`. | **Substantially shorter (-35% lines)** and clearer. Eliminates boilerplate DOM traversal and null checks. |
+| **2. Card Generation** | 65 lines of repetitive `document.createElement()`, property assignments, and nested `appendChild()` calls. | Declarative jQuery element construction: `$('<div class="col-12...">').append(...).appendTo('#container')`. | **50% fewer lines**, mirrors actual HTML hierarchy, significantly lower DOM manipulation overhead. |
+| **3. State Toggling & Effects** | Abrupt `classList.remove('is-hidden')` and `element.scrollIntoView()` causing visual snapping. | Smooth animated transitions: `$voucher.slideDown(400, callback)` with scroll animation in completion callback. | **Superior UX and perceived quality**, converting instant popping into smooth visual disclosures. |
+
+### C. Selectors, Traversal and Chaining
+* **Selectors**: ID (`#form-booking`), Class (`.select-service-btn`), Element (`tr`, `p`), Attribute (`select[name="booking_service"]`), Filters (`:first`, `:checked`, `:selected`).
+* **Traversal**: `.find()` (scoped descendant search), `.closest()` (nearest ancestor row/card), `.parent()` (immediate container), `.siblings()` (adjacent elements), `.each()` (collection iteration).
+* **Chaining Demonstration**:
+  ```javascript
+  // Traversal & Chaining:
+  // 1. $(this) -> clicked button
+  // 2. .closest('tr') -> traverses up to the table row container
+  // 3. .addClass('selected-state') -> highlights active service row
+  // 4. .siblings('tr') -> traverses sideways to all other service rows
+  // 5. .removeClass('selected-state') -> un-highlights inactive rows
+  $(this).closest('tr').addClass('selected-state').siblings('tr').removeClass('selected-state');
+  ```
+
+### D. Manipulation & Form Properties
+* **`.text()` vs. `.html()`**: `.text()` strictly escapes all entities to prevent XSS from customer inputs; `.html()` is used only where trusted markup tags (`<strong>`, `<span>`) are required.
+* **`.attr()` vs. `.prop()`**: `.prop('checked')` inspects the live boolean state of checkboxes; `.attr('checked')` reads only the initial HTML attribute string.
+* **Delegated Event Handlers**:
+  ```javascript
+  // Delegated binding through existing parent:
+  $('#barbers-roster-container').on('click', '.btn-book-chair', handler);
+  ```
+  *Why required*: Direct binding (`$('.btn-book-chair').on('click')`) only binds elements existing at page load. Dynamic cards rendered later by JavaScript do not receive direct listeners; delegation to a static ancestor captures bubbling events reliably.
+
+### E. Effects and Browser vs. Server Validation
+* **Effects**: `.slideDown(400, callback)`, `.fadeOut(200, callback)`, `.fadeIn(250)`.
+* **Validation Philosophy**: Browser validation provides immediate user feedback and guides input formatting. It **never replaces server-side validation**, as client scripts can be disabled or bypassed via raw HTTP tools (curl/Postman). Server validation is the sole guarantor of data integrity.
