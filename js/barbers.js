@@ -1,12 +1,16 @@
 /**
  * Logovo Barbershop Astana — Barbers Roster & Consultation Module
- * WEB Technologies 1 — Assignment 4 & 5
+ * WEB Technologies 1 — Assignment 4 (jQuery Migration)
  * Responsible Student: Nurassyl Ilyas (Frontend Developer)
  * Assigned Pages: barbers.html, feedback.html
+ *
+ * Using jQuery v3.7.1 via official CDN.
+ * The $(function () { ... }) construct defers script execution until the browser has
+ * completely parsed the DOM, ensuring elements like #barbers-roster-container exist when targeted.
  */
 'use strict';
 
-(function () {
+(function ($) {
     // -------------------------------------------------------------------------
     // 1. Core Barbers Data Array (6 objects with 7 meaningful properties each)
     // -------------------------------------------------------------------------
@@ -79,161 +83,115 @@
         }
     ];
 
-    // -------------------------------------------------------------------------
-    // 2. Reusable DOM Rendering Functions
-    // -------------------------------------------------------------------------
+    /* ==========================================================================
+       FEATURE 2 REWRITTEN: Dynamic Card & DOM Generation from Array
+       Replaces: plainJsCreateBarberCard & plainJsRenderBarbersRoster from old-js-version.js
+       
+       COMPARISON COMMENT:
+       Plain JS required 65 lines of repetitive document.createElement(), setting className/textContent, and nested appendChild() calls.
+       jQuery replaces this by chaining and building the card hierarchy ($('<div class="col-12...">').append(...).appendTo('#barbers-roster-container')).
+       Verdict: The jQuery version is substantially shorter (-50% lines), much easier to visualize as an HTML tree, and reduces DOM manipulation overhead.
+       ========================================================================== */
 
     /**
-     * Renders a single barber profile card element using native DOM methods
+     * Renders a single barber profile card element using jQuery element creation & chaining
+     * Uses .text() to safely escape dynamic text against XSS
      * @param {Object} barber - Barber data object
-     * @returns {HTMLElement} Column element wrapping the card
+     * @returns {jQuery} Constructed column jQuery object
      */
     function createBarberCard(barber) {
-        const col = document.createElement('div');
-        col.className = 'col-12 col-md-6 col-lg-4';
-        col.id = 'barber-' + barber.id;
-
-        const card = document.createElement('div');
-        card.className = 'card card-dark h-100 p-4 border border-secondary border-opacity-25 shadow-sm d-flex flex-column justify-content-between';
-
-        const contentDiv = document.createElement('div');
-
-        // Badge
-        const badge = document.createElement('span');
-        badge.className = barber.tier === 'chief' 
-            ? 'badge bg-gold mb-2 text-uppercase fw-bold' 
+        const badgeClass = barber.tier === 'chief'
+            ? 'badge bg-gold mb-2 text-uppercase fw-bold'
             : 'badge bg-secondary mb-2 text-uppercase fw-bold text-light';
-        badge.textContent = barber.tierLabel;
 
-        // Name
-        const nameHeading = document.createElement('h2');
-        nameHeading.className = 'h4 text-gold mb-1';
-        nameHeading.textContent = barber.name;
+        // Chain 1: Build outer column and card container with ID and classes
+        const $col = $('<div class="col-12 col-md-6 col-lg-4"></div>').attr('id', 'barber-' + barber.id);
+        const $card = $('<div class="card card-dark h-100 p-4 border border-secondary border-opacity-25 shadow-sm d-flex flex-column justify-content-between"></div>');
 
-        // Floor / Location
-        const locationP = document.createElement('p');
-        locationP.className = 'text-secondary small mb-2';
-        locationP.textContent = 'Floor: ' + barber.branchLabel;
+        // Content section
+        const $content = $('<div></div>')
+            .append($('<span></span>').attr('class', badgeClass).text(barber.tierLabel))
+            .append($('<h2 class="h4 text-gold mb-1"></h2>').text(barber.name))
+            .append($('<p class="text-secondary small mb-2"></p>').text('Floor: ' + barber.branchLabel))
+            .append(
+                $('<p class="text-light small mb-3"></p>')
+                    .append('<strong>Experience: </strong>')
+                    .append(document.createTextNode(barber.experienceYears + ' Years Professional Mastery'))
+            )
+            .append(
+                $('<p class="text-secondary small mb-3"></p>')
+                    .append('<strong>Specialties: </strong>')
+                    .append(document.createTextNode(barber.specialties))
+            )
+            .append($('<p class="text-secondary small mb-0"></p>').text(barber.bio));
 
-        // Experience
-        const expP = document.createElement('p');
-        expP.className = 'text-light small mb-3';
-        const expStrong = document.createElement('strong');
-        expStrong.textContent = 'Experience: ';
-        expP.appendChild(expStrong);
-        expP.appendChild(document.createTextNode(barber.experienceYears + ' Years Professional Mastery'));
+        // Action button section with delegated hook class .btn-book-chair
+        const $action = $('<div class="mt-4"></div>').append(
+            $('<a href="services.html#booking-section" class="btn btn-gold w-100 btn-book-chair"></a>')
+                .attr('data-barber-id', barber.id)
+                .text('Book Chair with ' + barber.name.split(' ')[0])
+        );
 
-        // Specialties
-        const specP = document.createElement('p');
-        specP.className = 'text-secondary small mb-3';
-        const specStrong = document.createElement('strong');
-        specStrong.textContent = 'Specialties: ';
-        specP.appendChild(specStrong);
-        specP.appendChild(document.createTextNode(barber.specialties));
-
-        // Bio
-        const bioP = document.createElement('p');
-        bioP.className = 'text-secondary small mb-0';
-        bioP.textContent = barber.bio;
-
-        contentDiv.appendChild(badge);
-        contentDiv.appendChild(nameHeading);
-        contentDiv.appendChild(locationP);
-        contentDiv.appendChild(expP);
-        contentDiv.appendChild(specP);
-        contentDiv.appendChild(bioP);
-
-        // Action button container
-        const actionDiv = document.createElement('div');
-        actionDiv.className = 'mt-4';
-
-        const bookBtn = document.createElement('a');
-        bookBtn.href = 'services.html#booking-section';
-        bookBtn.className = 'btn btn-gold w-100';
-        bookBtn.textContent = 'Book Chair with ' + barber.name.split(' ')[0];
-
-        actionDiv.appendChild(bookBtn);
-
-        card.appendChild(contentDiv);
-        card.appendChild(actionDiv);
-        col.appendChild(card);
-
-        return col;
+        $card.append($content).append($action);
+        $col.append($card);
+        return $col;
     }
 
     /**
-     * Renders the complete roster into the target DOM container
-     * Handles empty state if filtered array is empty
+     * Renders the complete roster into #barbers-roster-container with jQuery .empty() & .append()
+     * Handles empty state with an accessible card when 0 items match
      * @param {Array} list - Array of barber objects
      */
     function renderBarbersRoster(list) {
-        const container = document.getElementById('barbers-roster-container');
-        if (!container) return;
+        const $container = $('#barbers-roster-container');
+        if (!$container.length) return;
 
-        // Clear existing content safely
-        container.textContent = '';
+        // Clear existing cards cleanly
+        $container.empty();
 
         if (!list || list.length === 0) {
-            const emptyCol = document.createElement('div');
-            emptyCol.className = 'col-12';
+            // Empty state constructed and appended via jQuery
+            const $emptyCol = $('<div class="col-12"></div>');
+            const $emptyCard = $('<div class="card card-dark p-5 text-center border border-secondary border-opacity-25 rounded"></div>')
+                .append('<div class="fs-1 text-secondary mb-2">✂</div>')
+                .append('<h3 class="h5 text-gold mb-2">No Master Artisans Match Your Search Criteria</h3>')
+                .append('<p class="text-secondary mb-4 small">Try adjusting branch location, qualification tier, or keyword spelling.</p>')
+                .append(
+                    $('<button type="button" class="btn btn-outline-gold align-self-center">Reset All Filters</button>')
+                        .on('click', resetFilters)
+                );
 
-            const emptyCard = document.createElement('div');
-            emptyCard.className = 'card card-dark p-5 text-center border border-secondary border-opacity-25 rounded';
-
-            const emptyIcon = document.createElement('div');
-            emptyIcon.className = 'fs-1 text-secondary mb-2';
-            emptyIcon.textContent = '✂';
-
-            const emptyTitle = document.createElement('h3');
-            emptyTitle.className = 'h5 text-gold mb-2';
-            emptyTitle.textContent = 'No Master Artisans Match Your Search Criteria';
-
-            const emptyDesc = document.createElement('p');
-            emptyDesc.className = 'text-secondary mb-4 small';
-            emptyDesc.textContent = 'Try adjusting branch location, qualification tier, or keyword spelling.';
-
-            const resetBtn = document.createElement('button');
-            resetBtn.type = 'button';
-            resetBtn.className = 'btn btn-outline-gold align-self-center';
-            resetBtn.textContent = 'Reset All Filters';
-            resetBtn.addEventListener('click', resetFilters);
-
-            emptyCard.appendChild(emptyIcon);
-            emptyCard.appendChild(emptyTitle);
-            emptyCard.appendChild(emptyDesc);
-            emptyCard.appendChild(resetBtn);
-            emptyCol.appendChild(emptyCard);
-            container.appendChild(emptyCol);
+            $emptyCol.append($emptyCard).appendTo($container);
+            updateResultCounter(0, BARBERS_DATA.length);
             return;
         }
 
-        // Render cards
-        for (let i = 0; i < list.length; i++) {
-            const cardElement = createBarberCard(list[i]);
-            container.appendChild(cardElement);
-        }
+        // Traversal with $.each() to append each constructed card
+        $.each(list, function (index, barber) {
+            const $card = createBarberCard(barber);
+            $container.append($card);
+        });
+
+        // Effect: subtle fade-in of rendered cards
+        $container.hide().fadeIn(250);
 
         updateResultCounter(list.length, BARBERS_DATA.length);
     }
 
     /**
-     * Displays a dynamic counter feedback indicator
-     * @param {number} matchingCount - Count of matching items
-     * @param {number} totalCount - Total items in array
+     * Updates dynamic counter feedback indicator using jQuery .text()
      */
     function updateResultCounter(matchingCount, totalCount) {
-        let counterEl = document.getElementById('barbers-result-counter');
-        const filterCard = document.getElementById('barbers-filter-card');
+        let $counter = $('#barbers-result-counter');
+        const $filterCard = $('#barbers-filter-card');
 
-        if (!counterEl && filterCard) {
-            counterEl = document.createElement('div');
-            counterEl.id = 'barbers-result-counter';
-            counterEl.className = 'text-secondary small mt-2';
-            filterCard.appendChild(counterEl);
+        if (!$counter.length && $filterCard.length) {
+            $counter = $('<div id="barbers-result-counter" class="text-secondary small mt-2"></div>');
+            $filterCard.append($counter);
         }
 
-        if (counterEl) {
-            counterEl.textContent = 'Showing ' + matchingCount + ' of ' + totalCount + ' master artisans in Astana network.';
+        if ($counter.length) {
+            $counter.text('Showing ' + matchingCount + ' of ' + totalCount + ' master artisans in Astana network.');
         }
     }
 
@@ -241,261 +199,227 @@
     // 3. Multi-Criteria Filtering Logic
     // -------------------------------------------------------------------------
 
-    /**
-     * Filters barbers array by keyword, branch, and tier
-     * Uses operations that filter, transform, and evaluate logical conditions
-     * @returns {Array} Filtered list of barbers
-     */
     function getFilteredBarbers() {
-        const searchInput = document.getElementById('barber-search-input');
-        const branchSelect = document.getElementById('barber-filter-branch');
-        const tierSelect = document.getElementById('barber-filter-tier');
+        const keyword = $.trim($('#barber-search-input').val()).toLowerCase();
+        const branchFilter = $('#barber-filter-branch').val() || 'all';
+        const tierFilter = $('#barber-filter-tier').val() || 'all';
 
-        const keyword = searchInput ? searchInput.value.trim().toLowerCase() : '';
-        const branchFilter = branchSelect ? branchSelect.value : 'all';
-        const tierFilter = tierSelect ? tierSelect.value : 'all';
+        return BARBERS_DATA.filter(function (barber) {
+            const matchesKeyword = keyword === '' ||
+                barber.name.toLowerCase().indexOf(keyword) !== -1 ||
+                barber.specialties.toLowerCase().indexOf(keyword) !== -1 ||
+                barber.bio.toLowerCase().indexOf(keyword) !== -1;
 
-        const filtered = BARBERS_DATA.filter(function (barber) {
-            // Keyword match
-            const matchesKeyword = keyword === '' || 
-                barber.name.toLowerCase().includes(keyword) || 
-                barber.specialties.toLowerCase().includes(keyword) || 
-                barber.bio.toLowerCase().includes(keyword);
-
-            // Branch match
             const matchesBranch = branchFilter === 'all' || barber.branch === branchFilter;
-
-            // Tier match
             const matchesTier = tierFilter === 'all' || barber.tier === tierFilter;
 
             return matchesKeyword && matchesBranch && matchesTier;
         });
-
-        return filtered;
     }
 
     function applyFilters() {
-        const matchingBarbers = getFilteredBarbers();
-        renderBarbersRoster(matchingBarbers);
+        const filtered = getFilteredBarbers();
+        renderBarbersRoster(filtered);
     }
 
     function resetFilters() {
-        const searchInput = document.getElementById('barber-search-input');
-        const branchSelect = document.getElementById('barber-filter-branch');
-        const tierSelect = document.getElementById('barber-filter-tier');
-
-        if (searchInput) searchInput.value = '';
-        if (branchSelect) branchSelect.value = 'all';
-        if (tierSelect) tierSelect.value = 'all';
-
+        $('#barber-search-input').val('');
+        $('#barber-filter-branch').val('all');
+        $('#barber-filter-tier').val('all');
         renderBarbersRoster(BARBERS_DATA);
     }
 
     // -------------------------------------------------------------------------
-    // 4. Consultation Inquiry Form Validation (#form-barber-inquiry)
+    // 4. Consultation Inquiry Form Validation
     // -------------------------------------------------------------------------
 
-    function validateInquiryForm(form) {
-        window.Logovo.clearFormErrors(form);
+    function validateInquiryForm($form) {
+        window.Logovo.clearFormErrors($form);
 
         let isValid = true;
-        let firstInvalidField = null;
+        let $firstInvalid = null;
         const errorList = [];
 
-        // 1. Barber Select
-        const barberSelect = document.getElementById('inquiry-barber-select');
-        if (!barberSelect || barberSelect.value.trim() === '') {
-            window.Logovo.setFieldError(barberSelect, 'Please select a designated barber.');
+        // 1. Barber Selection
+        const $barberSelect = $('#inquiry-barber-select');
+        if ($.trim($barberSelect.val()) === '') {
+            window.Logovo.setFieldError($barberSelect, 'Please select a designated barber.');
             errorList.push('Barber selection is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || barberSelect;
+            $firstInvalid = $firstInvalid || $barberSelect;
         }
 
-        // 2. Topic Select
-        const topicSelect = document.getElementById('inquiry-topic-select');
-        if (!topicSelect || topicSelect.value.trim() === '') {
-            window.Logovo.setFieldError(topicSelect, 'Please choose a consultation topic.');
+        // 2. Topic Selection
+        const $topicSelect = $('#inquiry-topic-select');
+        if ($.trim($topicSelect.val()) === '') {
+            window.Logovo.setFieldError($topicSelect, 'Please choose a consultation topic.');
             errorList.push('Consultation topic is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || topicSelect;
+            $firstInvalid = $firstInvalid || $topicSelect;
         }
 
-        // 3. Name (Trimmed text, min 3 chars)
-        const nameInput = document.getElementById('inquiry-name-input');
-        const trimmedName = window.Logovo.sanitize(nameInput ? nameInput.value : '');
+        // 3. Name (Trimmed, min 3 chars)
+        const $nameInput = $('#inquiry-name-input');
+        const trimmedName = $.trim($nameInput.val());
         if (trimmedName.length < 3) {
-            window.Logovo.setFieldError(nameInput, 'Name must contain at least 3 characters.');
+            window.Logovo.setFieldError($nameInput, 'Name must contain at least 3 characters.');
             errorList.push('Name must be at least 3 characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || nameInput;
+            $firstInvalid = $firstInvalid || $nameInput;
         }
 
-        // 4. Contact (Phone or Email)
-        const contactInput = document.getElementById('inquiry-contact-input');
-        const contactVal = window.Logovo.sanitize(contactInput ? contactInput.value : '');
-        const isPhoneValid = window.Logovo.isValidPhone(contactVal);
-        const isEmailValid = window.Logovo.isValidEmail(contactVal);
+        // 4. Contact (Phone or Email format)
+        const $contactInput = $('#inquiry-contact-input');
+        const contactVal = $.trim($contactInput.val());
+        const isPhone = window.Logovo.isValidPhone(contactVal);
+        const isEmail = window.Logovo.isValidEmail(contactVal);
 
-        if (!isPhoneValid && !isEmailValid) {
-            window.Logovo.setFieldError(contactInput, 'Enter a valid telephone number (+7...) or valid email address.');
+        if (!isPhone && !isEmail) {
+            window.Logovo.setFieldError($contactInput, 'Enter a valid telephone number (+7...) or valid email address.');
             errorList.push('A valid phone number or email is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || contactInput;
+            $firstInvalid = $firstInvalid || $contactInput;
         }
 
         // 5. Description Text (Min 10 characters)
-        const textInput = document.getElementById('inquiry-text-input');
-        const trimmedText = window.Logovo.sanitize(textInput ? textInput.value : '');
-        if (trimmedText.length < 10) {
-            window.Logovo.setFieldError(textInput, 'Please provide more details (at least 10 characters).');
+        const $textInput = $('#inquiry-text-input');
+        if ($.trim($textInput.val()).length < 10) {
+            window.Logovo.setFieldError($textInput, 'Please provide more details (at least 10 characters).');
             errorList.push('Question details must be at least 10 characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || textInput;
+            $firstInvalid = $firstInvalid || $textInput;
         }
 
-        // 6. Agreement
-        const agreeCheck = document.getElementById('inquiry-agree-check');
-        if (!agreeCheck || !agreeCheck.checked) {
-            window.Logovo.setFieldError(agreeCheck, 'Please authorize contact for grooming advice.');
+        // 6. Agreement Checkbox via .prop('checked')
+        const $agreeCheck = $('#inquiry-agree-check');
+        if (!$agreeCheck.prop('checked')) {
+            window.Logovo.setFieldError($agreeCheck, 'Please authorize contact for grooming advice.');
             errorList.push('Contact authorization is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || agreeCheck;
+            $firstInvalid = $firstInvalid || $agreeCheck;
         }
 
-        // Error Container
-        const errorContainer = document.getElementById('inquiry-error-container');
-        if (errorContainer) {
-            if (!isValid) {
-                errorContainer.classList.remove('is-hidden');
-                errorContainer.textContent = '';
+        // Error Summary Container with jQuery slideDown effect
+        const $errorContainer = $('#inquiry-error-container');
+        if (!isValid) {
+            $errorContainer.empty().removeClass('is-hidden').hide();
+            const $heading = $('<strong class="d-block mb-1">Please correct the following inquiry fields:</strong>');
+            const $ul = $('<ul class="mb-0 ps-3 small"></ul>');
 
-                const heading = document.createElement('strong');
-                heading.className = 'd-block mb-1';
-                heading.textContent = 'Please correct the following inquiry fields:';
-                errorContainer.appendChild(heading);
+            $.each(errorList, function (i, err) {
+                $('<li></li>').text(err).appendTo($ul);
+            });
 
-                const ul = document.createElement('ul');
-                ul.className = 'mb-0 ps-3 small';
-                errorList.forEach(function (err) {
-                    const li = document.createElement('li');
-                    li.textContent = err;
-                    ul.appendChild(li);
-                });
-                errorContainer.appendChild(ul);
+            $errorContainer.append($heading).append($ul).slideDown(300);
 
-                if (firstInvalidField) {
-                    firstInvalidField.focus();
-                }
-            } else {
-                errorContainer.classList.add('is-hidden');
-                errorContainer.textContent = '';
+            if ($firstInvalid) {
+                $firstInvalid.focus();
             }
+        } else {
+            $errorContainer.fadeOut(200, function () {
+                $(this).addClass('is-hidden').empty();
+            });
         }
 
         return isValid;
     }
 
+    /**
+     * Renders consultation ticket voucher with jQuery .slideDown() animation
+     */
     function renderInquiryTicket(details) {
-        const card = document.getElementById('inquiry-confirmation-card');
-        const wrapper = document.getElementById('inquiry-confirmation-wrapper');
-        if (!card || !wrapper) return;
-
-        const ticketCode = document.getElementById('inquiry-ticket-code');
-        const barberNameEl = document.getElementById('inquiry-voucher-barber');
-        const timingEl = document.getElementById('inquiry-voucher-timing');
-        const statusBadge = document.getElementById('inquiry-status-badge');
-        const noticeP = document.getElementById('inquiry-voucher-notice');
+        const $card = $('#inquiry-confirmation-card');
+        const $wrapper = $('#inquiry-confirmation-wrapper');
+        if (!$card.length || !$wrapper.length) return;
 
         const referenceCode = window.Logovo.generateReference('INQ');
-        if (ticketCode) ticketCode.textContent = referenceCode;
-        if (barberNameEl) barberNameEl.textContent = details.barberName;
-        if (timingEl) timingEl.textContent = 'Within 24 Hours (Next Day 15:00)';
+        $('#inquiry-ticket-code').text(referenceCode);
+        $('#inquiry-voucher-barber').text(details.barberName);
+        $('#inquiry-voucher-timing').text('Within 24 Hours (Next Day 15:00)');
 
-        if (statusBadge) {
-            statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-            statusBadge.textContent = 'Status: Ticket Queued (Demo)';
-        }
+        $('#inquiry-status-badge')
+            .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
+            .text('Status: Ticket Queued (Demo)');
 
-        if (noticeP) {
-            noticeP.textContent = '';
-            const noticeSpan = document.createElement('span');
-            noticeSpan.className = 'text-warning d-block fw-semibold mb-1';
-            noticeSpan.textContent = '★ Demonstration Notice: No real consultation inquiry was transmitted to a server.';
-            
-            const detailSpan = document.createElement('span');
-            detailSpan.className = 'd-block';
-            detailSpan.textContent = 'Client ' + details.clientName + ', your question on "' + details.topic + '" has been logged with code ' + referenceCode + '.';
+        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No real consultation inquiry was transmitted to a server.</span>' +
+            '<span class="d-block">Client ' + $('<div>').text(details.clientName).html() + ', your question on "<strong>' + $('<div>').text(details.topic).html() + '</strong>" has been logged with code <strong>' + referenceCode + '</strong>.</span>';
+        $('#inquiry-voucher-notice').html(noticeHtml);
 
-            noticeP.appendChild(noticeSpan);
-            noticeP.appendChild(detailSpan);
-        }
+        $card.addClass('card-dark-highlight');
 
-        card.classList.add('card-dark-highlight');
-        wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Effect: slideDown with duration and callback
+        $wrapper.hide().removeClass('is-hidden').slideDown(400, function () {
+            $('html, body').animate({
+                scrollTop: $wrapper.offset().top - 80
+            }, 300);
+        });
     }
 
     // -------------------------------------------------------------------------
-    // 5. Initialization
+    // 5. Initialization & Event Delegation
     // -------------------------------------------------------------------------
     function initBarbersPage() {
-        // Initial render with all 6 barbers
         renderBarbersRoster(BARBERS_DATA);
 
-        // Filter Controls Listeners
-        const searchInput = document.getElementById('barber-search-input');
-        const branchSelect = document.getElementById('barber-filter-branch');
-        const tierSelect = document.getElementById('barber-filter-tier');
-        const filterBtn = document.getElementById('barber-filter-btn');
-        const resetBtn = document.getElementById('barber-reset-btn');
+        // Filter events using .on()
+        $('#barber-search-input').on('input', applyFilters);
+        $('#barber-filter-branch').on('change', applyFilters);
+        $('#barber-filter-tier').on('change', applyFilters);
+        $('#barber-filter-btn').on('click', applyFilters);
+        $('#barber-reset-btn').on('click', resetFilters);
 
-        if (searchInput) {
-            searchInput.addEventListener('input', applyFilters);
-        }
-        if (branchSelect) {
-            branchSelect.addEventListener('change', applyFilters);
-        }
-        if (tierSelect) {
-            tierSelect.addEventListener('change', applyFilters);
-        }
-        if (filterBtn) {
-            filterBtn.addEventListener('click', applyFilters);
-        }
-        if (resetBtn) {
-            resetBtn.addEventListener('click', resetFilters);
-        }
+        // DELEGATED EVENT HANDLER:
+        // Binding directly to '.btn-book-chair' would fail because the barber cards are rendered dynamically via JavaScript.
+        // Elements created after initial page load do not have listeners attached directly.
+        // Delegating through existing ancestor $('#barbers-roster-container') intercepts bubbling clicks from any future dynamic card buttons.
+        $('#barbers-roster-container').on('click', '.btn-book-chair', function (event) {
+            // Using $(this) inside delegated handler
+            const barberId = $(this).attr('data-barber-id');
+            console.log('[Logovo Delegation] Delegated booking click for barber ID:', barberId);
+        });
 
-        // Consultation Form
-        const inquiryForm = document.getElementById('form-barber-inquiry');
-        if (inquiryForm) {
-            inquiryForm.addEventListener('submit', function (event) {
-                event.preventDefault();
+        // Form events
+        const $inquiryForm = $('#form-barber-inquiry');
 
-                if (validateInquiryForm(inquiryForm)) {
-                    const barberSelect = document.getElementById('inquiry-barber-select');
-                    const topicSelect = document.getElementById('inquiry-topic-select');
-                    const nameInput = document.getElementById('inquiry-name-input');
+        // Clear field error on typing
+        $inquiryForm.on('input change', '.is-error', function () {
+            $(this)
+                .removeClass('is-error')
+                .removeAttr('aria-invalid')
+                .siblings('.field-error-message')
+                .fadeOut(150, function () {
+                    $(this).remove();
+                });
+        });
 
-                    const details = {
-                        barberName: barberSelect.options[barberSelect.selectedIndex].text,
-                        topic: topicSelect.options[topicSelect.selectedIndex].text,
-                        clientName: window.Logovo.sanitize(nameInput.value)
-                    };
+        $inquiryForm.on('submit', function (event) {
+            // event.preventDefault() stops native browser submit
+            // Without it, the browser would reload the page and destroy all state.
+            event.preventDefault();
 
-                    renderInquiryTicket(details);
-                }
-            });
+            if (validateInquiryForm($inquiryForm)) {
+                const $barberSelect = $('#inquiry-barber-select');
+                const $topicSelect = $('#inquiry-topic-select');
+                const $nameInput = $('#inquiry-name-input');
 
-            inquiryForm.addEventListener('reset', function () {
-                setTimeout(function () {
-                    window.Logovo.clearFormErrors(inquiryForm);
-                }, 10);
-            });
-        }
+                const details = {
+                    barberName: $barberSelect.find('option:selected').text(),
+                    topic: $topicSelect.find('option:selected').text(),
+                    clientName: $.trim($nameInput.val())
+                };
+
+                renderInquiryTicket(details);
+            }
+        });
+
+        $inquiryForm.on('reset', function () {
+            setTimeout(function () {
+                window.Logovo.clearFormErrors($inquiryForm);
+            }, 10);
+        });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBarbersPage);
-    } else {
+    $(function () {
         initBarbersPage();
-    }
-})();
+    });
+})(jQuery);
