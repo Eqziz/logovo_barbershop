@@ -1,12 +1,16 @@
 /**
  * Logovo Barbershop Astana — Careers & Candidate Dossier Module
- * WEB Technologies 1 — Assignment 4 & 5
+ * WEB Technologies 1 — Assignment 4 (jQuery Migration)
  * Responsible Student: Nurken Mamay (Frontend Developer)
  * Assigned Pages: marketbar.html, careers.html
+ *
+ * Using jQuery v3.7.1 via official CDN.
+ * The $(function () { ... }) construct ensures DOM elements are completely parsed
+ * before binding listeners, eliminating race conditions during initial page load.
  */
 'use strict';
 
-(function () {
+(function ($) {
     // -------------------------------------------------------------------------
     // 1. Vacancies Reference Catalog Array
     // -------------------------------------------------------------------------
@@ -45,8 +49,8 @@
     // 2. Interactive Vacancy Card Selection
     // -------------------------------------------------------------------------
     function setupVacancyTrackSelectors() {
-        const roleSelect = document.getElementById('cand-role-select');
-        const formSection = document.getElementById('careers-form-section');
+        const $roleSelect = $('#cand-role-select');
+        const $formSection = $('#careers-form-section');
 
         const buttonMappings = [
             { btnId: 'btn-apply-barber', roleVal: 'barber', cardId: 'job-barber' },
@@ -54,28 +58,25 @@
             { btnId: 'btn-apply-admin', roleVal: 'admin', cardId: 'job-admin' }
         ];
 
-        buttonMappings.forEach(function (mapping) {
-            const btn = document.getElementById(mapping.btnId);
-            if (!btn) return;
+        $.each(buttonMappings, function (index, mapping) {
+            $('#' + mapping.btnId).on('click', function (event) {
+                event.preventDefault();
 
-            btn.addEventListener('click', function () {
-                if (roleSelect) {
-                    roleSelect.value = mapping.roleVal;
-                    // Trigger change to validate/update any UI
-                    const event = new Event('change');
-                    roleSelect.dispatchEvent(event);
+                if ($roleSelect.length) {
+                    $roleSelect.val(mapping.roleVal).trigger('change');
                 }
 
-                // Highlight chosen card
-                buttonMappings.forEach(function (m) {
-                    const c = document.getElementById(m.cardId);
-                    if (c) c.classList.remove('selected-state');
-                });
-                const activeCard = document.getElementById(mapping.cardId);
-                if (activeCard) activeCard.classList.add('selected-state');
+                // Traversal & Chaining: highlight chosen card and remove highlight from sibling cards
+                $('#' + mapping.cardId)
+                    .addClass('selected-state')
+                    .siblings('.col-12')
+                    .find('.card')
+                    .removeClass('selected-state');
 
-                if (formSection) {
-                    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if ($formSection.length) {
+                    $('html, body').animate({
+                        scrollTop: $formSection.offset().top - 40
+                    }, 300);
                 }
             });
         });
@@ -85,12 +86,6 @@
     // 3. Form Validation Flow (#form-careers)
     // -------------------------------------------------------------------------
 
-    /**
-     * Combined business rule: validates candidate experience against chosen track
-     * @param {string} roleKey - Selected role identifier
-     * @param {number} expYears - Experience in years
-     * @returns {Object} { isValid: boolean, message: string }
-     */
     function validateExperienceForTrack(roleKey, expYears) {
         if (roleKey === 'barber') {
             if (expYears < 3) {
@@ -117,181 +112,158 @@
         return { isValid: true, message: '' };
     }
 
-    function validateCareersForm(form) {
-        window.Logovo.clearFormErrors(form);
+    function validateCareersForm($form) {
+        window.Logovo.clearFormErrors($form);
 
         let isValid = true;
-        let firstInvalidField = null;
+        let $firstInvalid = null;
         const errorList = [];
 
         // 1. Full Name
-        const nameInput = document.getElementById('cand-name-input');
-        const trimmedName = window.Logovo.sanitize(nameInput ? nameInput.value : '');
+        const $nameInput = $('#cand-name-input');
+        const trimmedName = $.trim($nameInput.val());
         if (trimmedName.length < 3) {
-            window.Logovo.setFieldError(nameInput, 'Full name must contain at least 3 characters.');
+            window.Logovo.setFieldError($nameInput, 'Full name must contain at least 3 characters.');
             errorList.push('Full name must be at least 3 characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || nameInput;
+            $firstInvalid = $firstInvalid || $nameInput;
         }
 
-        // 2. Phone (+7...)
-        const phoneInput = document.getElementById('cand-phone-input');
-        const phoneVal = phoneInput ? phoneInput.value : '';
-        if (!window.Logovo.isValidPhone(phoneVal)) {
-            window.Logovo.setFieldError(phoneInput, 'Enter a valid Kazakhstan phone number (+7...).');
+        // 2. Phone
+        const $phoneInput = $('#cand-phone-input');
+        if (!window.Logovo.isValidPhone($phoneInput.val())) {
+            window.Logovo.setFieldError($phoneInput, 'Enter a valid Kazakhstan phone number (+7...).');
             errorList.push('Valid Kazakhstan telephone number is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || phoneInput;
+            $firstInvalid = $firstInvalid || $phoneInput;
         }
 
         // 3. Email
-        const emailInput = document.getElementById('cand-email-input');
-        const emailVal = emailInput ? emailInput.value : '';
-        if (!window.Logovo.isValidEmail(emailVal)) {
-            window.Logovo.setFieldError(emailInput, 'Enter a valid email address.');
+        const $emailInput = $('#cand-email-input');
+        if (!window.Logovo.isValidEmail($emailInput.val())) {
+            window.Logovo.setFieldError($emailInput, 'Enter a valid email address.');
             errorList.push('Valid email address is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || emailInput;
+            $firstInvalid = $firstInvalid || $emailInput;
         }
 
         // 4. Preferred Branch
-        const branchSelect = document.getElementById('cand-branch-select');
-        if (!branchSelect || branchSelect.value.trim() === '') {
-            window.Logovo.setFieldError(branchSelect, 'Please select a preferred club branch.');
+        const $branchSelect = $('#cand-branch-select');
+        if ($.trim($branchSelect.val()) === '') {
+            window.Logovo.setFieldError($branchSelect, 'Please select a preferred club branch.');
             errorList.push('Preferred branch is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || branchSelect;
+            $firstInvalid = $firstInvalid || $branchSelect;
         }
 
         // 5. Desired Track
-        const roleSelect = document.getElementById('cand-role-select');
-        if (!roleSelect || roleSelect.value.trim() === '') {
-            window.Logovo.setFieldError(roleSelect, 'Please select a desired career track.');
+        const $roleSelect = $('#cand-role-select');
+        const roleVal = $.trim($roleSelect.val());
+        if (roleVal === '') {
+            window.Logovo.setFieldError($roleSelect, 'Please select a desired career track.');
             errorList.push('Career track is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || roleSelect;
+            $firstInvalid = $firstInvalid || $roleSelect;
         }
 
-        // 6. Experience & Combined Experience vs Track Rule
-        const expInput = document.getElementById('cand-exp-input');
-        const expYears = parseInt(expInput ? expInput.value : '0', 10);
+        // 6. Experience & Combined Rule
+        const $expInput = $('#cand-exp-input');
+        const expYears = parseInt($expInput.val(), 10);
         if (isNaN(expYears) || expYears < 0 || expYears > 35) {
-            window.Logovo.setFieldError(expInput, 'Please enter a valid number of years of experience (0 to 35).');
+            window.Logovo.setFieldError($expInput, 'Please enter a valid number of years of experience (0 to 35).');
             errorList.push('Experience years must be between 0 and 35.');
             isValid = false;
-            firstInvalidField = firstInvalidField || expInput;
-        } else if (roleSelect && roleSelect.value.trim() !== '') {
-            const expValidation = validateExperienceForTrack(roleSelect.value, expYears);
+            $firstInvalid = $firstInvalid || $expInput;
+        } else if (roleVal !== '') {
+            const expValidation = validateExperienceForTrack(roleVal, expYears);
             if (!expValidation.isValid) {
-                window.Logovo.setFieldError(expInput, expValidation.message);
+                window.Logovo.setFieldError($expInput, expValidation.message);
                 errorList.push(expValidation.message);
                 isValid = false;
-                firstInvalidField = firstInvalidField || expInput;
+                $firstInvalid = $firstInvalid || $expInput;
             }
         }
 
         // 7. Earliest Start Date (Not in past)
-        const dateInput = document.getElementById('cand-date-input');
-        if (dateInput && dateInput.value) {
-            const startDate = new Date(dateInput.value + 'T00:00:00');
+        const $dateInput = $('#cand-date-input');
+        const dateVal = $dateInput.val();
+        if (dateVal) {
+            const startDate = new Date(dateVal + 'T00:00:00');
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             if (startDate < today) {
-                window.Logovo.setFieldError(dateInput, 'Start date cannot be in the past.');
+                window.Logovo.setFieldError($dateInput, 'Start date cannot be in the past.');
                 errorList.push('Earliest start date must be today or a future date.');
                 isValid = false;
-                firstInvalidField = firstInvalidField || dateInput;
+                $firstInvalid = $firstInvalid || $dateInput;
             }
         } else {
-            window.Logovo.setFieldError(dateInput, 'Please choose your earliest available start date.');
+            window.Logovo.setFieldError($dateInput, 'Please choose your earliest available start date.');
             errorList.push('Earliest start date is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || dateInput;
+            $firstInvalid = $firstInvalid || $dateInput;
         }
 
-        // 8. Agreement Checkbox
-        const agreeCheck = document.getElementById('cand-agree-check');
-        if (!agreeCheck || !agreeCheck.checked) {
-            window.Logovo.setFieldError(agreeCheck, 'Please confirm accuracy of disclosed credentials.');
+        // 8. Agreement Checkbox via .prop('checked')
+        const $agreeCheck = $('#cand-agree-check');
+        if (!$agreeCheck.prop('checked')) {
+            window.Logovo.setFieldError($agreeCheck, 'Please confirm accuracy of disclosed credentials.');
             errorList.push('Accuracy confirmation is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || agreeCheck;
+            $firstInvalid = $firstInvalid || $agreeCheck;
         }
 
-        // Handle error summary container
-        const errorContainer = document.getElementById('cand-error-container');
-        if (errorContainer) {
-            if (!isValid) {
-                errorContainer.classList.remove('is-hidden');
-                errorContainer.textContent = '';
+        // Error Container with slideDown effect
+        const $errorContainer = $('#cand-error-container');
+        if (!isValid) {
+            $errorContainer.empty().removeClass('is-hidden').hide();
+            const $heading = $('<strong class="d-block mb-1">Please correct the following dossier requirements:</strong>');
+            const $ul = $('<ul class="mb-0 ps-3 small"></ul>');
 
-                const heading = document.createElement('strong');
-                heading.className = 'd-block mb-1';
-                heading.textContent = 'Please correct the following dossier requirements:';
-                errorContainer.appendChild(heading);
+            $.each(errorList, function (i, err) {
+                $('<li></li>').text(err).appendTo($ul);
+            });
 
-                const ul = document.createElement('ul');
-                ul.className = 'mb-0 ps-3 small';
-                errorList.forEach(function (err) {
-                    const li = document.createElement('li');
-                    li.textContent = err;
-                    ul.appendChild(li);
-                });
-                errorContainer.appendChild(ul);
+            $errorContainer.append($heading).append($ul).slideDown(300);
 
-                if (firstInvalidField) {
-                    firstInvalidField.focus();
-                }
-            } else {
-                errorContainer.classList.add('is-hidden');
-                errorContainer.textContent = '';
+            if ($firstInvalid) {
+                $firstInvalid.focus();
             }
+        } else {
+            $errorContainer.fadeOut(200, function () {
+                $(this).addClass('is-hidden').empty();
+            });
         }
 
         return isValid;
     }
 
-    /**
-     * Renders HR confirmation voucher upon successful submission
-     * @param {Object} details - Candidate dossier details
-     */
     function renderCareersVoucher(details) {
-        const voucherCard = document.getElementById('careers-confirmation-card');
-        const voucherWrapper = document.getElementById('careers-confirmation-wrapper');
-        if (!voucherCard || !voucherWrapper) return;
-
-        const codeEl = document.getElementById('careers-dossier-code');
-        const trackEl = document.getElementById('careers-voucher-track');
-        const timelineEl = document.getElementById('careers-voucher-timeline');
-        const statusBadge = document.getElementById('careers-status-badge');
-        const noticeP = document.getElementById('careers-voucher-notice');
+        const $card = $('#careers-confirmation-card');
+        const $wrapper = $('#careers-confirmation-wrapper');
+        if (!$card.length || !$wrapper.length) return;
 
         const referenceCode = window.Logovo.generateReference('HR');
-        if (codeEl) codeEl.textContent = referenceCode;
-        if (trackEl) trackEl.textContent = details.trackName + ' (' + details.branchName + ')';
-        if (timelineEl) timelineEl.textContent = 'Within 3 Business Days';
+        $('#careers-dossier-code').text(referenceCode);
+        $('#careers-voucher-track').text(details.trackName + ' (' + details.branchName + ')');
+        $('#careers-voucher-timeline').text('Within 3 Business Days');
 
-        if (statusBadge) {
-            statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-            statusBadge.textContent = 'Status: Dossier in HR Review (Demo)';
-        }
+        $('#careers-status-badge')
+            .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
+            .text('Status: Dossier in HR Review (Demo)');
 
-        if (noticeP) {
-            noticeP.textContent = '';
-            const noticeSpan = document.createElement('span');
-            noticeSpan.className = 'text-warning d-block fw-semibold mb-1';
-            noticeSpan.textContent = '★ Demonstration Notice: No real employment application was submitted to an HR server.';
+        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No real employment application was submitted to an HR server.</span>' +
+            '<span class="d-block">Candidate ' + $('<div>').text(details.candidateName).html() + ', your credentials for ' + $('<div>').text(details.trackName).html() + ' have been registered under dossier code <strong>' + referenceCode + '</strong>.</span>';
+        $('#careers-voucher-notice').html(noticeHtml);
 
-            const candSpan = document.createElement('span');
-            candSpan.className = 'd-block';
-            candSpan.textContent = 'Candidate ' + details.candidateName + ', your credentials for ' + details.trackName + ' have been registered under dossier code ' + referenceCode + '.';
+        $card.addClass('card-dark-highlight');
 
-            noticeP.appendChild(noticeSpan);
-            noticeP.appendChild(candSpan);
-        }
-
-        voucherCard.classList.add('card-dark-highlight');
-        voucherWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Effect: slideDown with duration and callback
+        $wrapper.hide().removeClass('is-hidden').slideDown(400, function () {
+            $('html, body').animate({
+                scrollTop: $wrapper.offset().top - 80
+            }, 300);
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -300,37 +272,45 @@
     function initCareersPage() {
         setupVacancyTrackSelectors();
 
-        const form = document.getElementById('form-careers');
-        if (form) {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        const $form = $('#form-careers');
 
-                if (validateCareersForm(form)) {
-                    const nameInput = document.getElementById('cand-name-input');
-                    const roleSelect = document.getElementById('cand-role-select');
-                    const branchSelect = document.getElementById('cand-branch-select');
+        // Clear error on input
+        $form.on('input change', '.is-error', function () {
+            $(this)
+                .removeClass('is-error')
+                .removeAttr('aria-invalid')
+                .siblings('.field-error-message')
+                .fadeOut(150, function () {
+                    $(this).remove();
+                });
+        });
 
-                    const details = {
-                        candidateName: window.Logovo.sanitize(nameInput.value),
-                        trackName: roleSelect.options[roleSelect.selectedIndex].text,
-                        branchName: branchSelect.options[branchSelect.selectedIndex].text
-                    };
+        $form.on('submit', function (event) {
+            event.preventDefault();
 
-                    renderCareersVoucher(details);
-                }
-            });
+            if (validateCareersForm($form)) {
+                const $nameInput = $('#cand-name-input');
+                const $roleSelect = $('#cand-role-select');
+                const $branchSelect = $('#cand-branch-select');
 
-            form.addEventListener('reset', function () {
-                setTimeout(function () {
-                    window.Logovo.clearFormErrors(form);
-                }, 10);
-            });
-        }
+                const details = {
+                    candidateName: $.trim($nameInput.val()),
+                    trackName: $roleSelect.find('option:selected').text(),
+                    branchName: $branchSelect.find('option:selected').text()
+                };
+
+                renderCareersVoucher(details);
+            }
+        });
+
+        $form.on('reset', function () {
+            setTimeout(function () {
+                window.Logovo.clearFormErrors($form);
+            }, 10);
+        });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCareersPage);
-    } else {
+    $(function () {
         initCareersPage();
-    }
-})();
+    });
+})(jQuery);

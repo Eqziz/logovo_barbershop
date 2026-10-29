@@ -1,14 +1,18 @@
 /**
  * Logovo Barbershop Astana — Feedback & Quality Audit Module
- * WEB Technologies 1 — Assignment 4 & 5
+ * WEB Technologies 1 — Assignment 4 (jQuery Migration)
  * Responsible Student: Nurassyl Ilyas (Frontend Developer)
  * Assigned Pages: barbers.html, feedback.html
+ *
+ * Using jQuery v3.7.1 via official CDN.
+ * The $(function () { ... }) wrapper ensures that script execution occurs only after
+ * the complete HTML document structure is loaded, guaranteeing reliable element selection.
  */
 'use strict';
 
-(function () {
+(function ($) {
     // -------------------------------------------------------------------------
-    // 1. Initial Verified Reviews Data Array (At least 6 objects)
+    // 1. Initial Verified Reviews Data Array (6 objects with 6 meaningful properties)
     // -------------------------------------------------------------------------
     const REVIEWS_DATA = [
         {
@@ -68,275 +72,233 @@
     // -------------------------------------------------------------------------
 
     /**
-     * Creates a review card element using native DOM methods
-     * Uses textContent to safely insert user-generated content
+     * Creates a review card element using jQuery element construction & chaining
+     * Uses .text() to safely escape dynamic user text against XSS
      * @param {Object} review - Review data object
-     * @returns {HTMLElement} Card element
+     * @returns {jQuery} Constructed card jQuery element
      */
     function createReviewCard(review) {
-        const card = document.createElement('div');
-        card.className = 'card card-dark p-3 border border-secondary border-opacity-25 shadow-sm';
-        card.id = 'review-item-' + review.id;
+        const $card = $('<div class="card card-dark p-3 border border-secondary border-opacity-25 shadow-sm"></div>')
+            .attr('id', 'review-item-' + review.id);
 
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'd-flex justify-content-between align-items-center mb-2';
-
-        const authorStrong = document.createElement('strong');
-        authorStrong.className = 'text-light';
-        authorStrong.textContent = review.author;
-
-        const metaSpan = document.createElement('span');
-        metaSpan.className = 'text-gold small';
-        
         let stars = '';
         for (let i = 0; i < 5; i++) {
             stars += (i < review.rating) ? '★' : '☆';
         }
-        metaSpan.textContent = stars + ' (' + review.branch + ' • ' + review.date + ')';
 
-        headerDiv.appendChild(authorStrong);
-        headerDiv.appendChild(metaSpan);
+        const $header = $('<div class="d-flex justify-content-between align-items-center mb-2"></div>')
+            .append($('<strong class="text-light"></strong>').text(review.author))
+            .append($('<span class="text-gold small"></span>').text(stars + ' (' + review.branch + ' • ' + review.date + ')'));
 
-        const commentP = document.createElement('p');
-        commentP.className = 'text-secondary small mb-0';
-        commentP.textContent = '"' + review.comment + '"';
+        const $comment = $('<p class="text-secondary small mb-0"></p>').text('"' + review.comment + '"');
 
-        card.appendChild(headerDiv);
-        card.appendChild(commentP);
-
-        return card;
+        $card.append($header).append($comment);
+        return $card;
     }
 
     /**
-     * Renders reviews into the container
+     * Renders reviews into #reviews-list-container
      * @param {Array} list - Array of review objects
      */
     function renderReviewsList(list) {
-        const container = document.getElementById('reviews-list-container');
-        if (!container) return;
+        const $container = $('#reviews-list-container');
+        if (!$container.length) return;
 
-        // Clear existing static items safely
-        container.textContent = '';
+        // Clear existing static placeholder cards
+        $container.empty();
 
-        for (let i = 0; i < list.length; i++) {
-            const cardEl = createReviewCard(list[i]);
-            container.appendChild(cardEl);
-        }
+        $.each(list, function (index, review) {
+            const $card = createReviewCard(review);
+            $container.append($card);
+        });
     }
 
     // -------------------------------------------------------------------------
     // 3. Live Character Counter for Feedback Textarea
     // -------------------------------------------------------------------------
     function setupCharacterCounter() {
-        const textarea = document.getElementById('fb-comments-input');
-        if (!textarea) return;
+        const $textarea = $('#fb-comments-input');
+        if (!$textarea.length) return;
 
-        // Create character counter indicator element if not present
-        let counterEl = document.getElementById('fb-char-counter');
-        if (!counterEl) {
-            counterEl = document.createElement('div');
-            counterEl.id = 'fb-char-counter';
-            counterEl.className = 'text-secondary small text-end mt-1';
-            textarea.parentElement.appendChild(counterEl);
+        let $counter = $('#fb-char-counter');
+        if (!$counter.length) {
+            $counter = $('<div id="fb-char-counter" class="text-secondary small text-end mt-1"></div>');
+            $textarea.parent().append($counter);
         }
 
         function updateCounter() {
-            const currentLen = textarea.value.length;
-            counterEl.textContent = currentLen + ' / ' + MAX_COMMENT_LENGTH + ' characters';
+            const currentLen = $textarea.val().length;
+            $counter.text(currentLen + ' / ' + MAX_COMMENT_LENGTH + ' characters');
 
             if (currentLen > MAX_COMMENT_LENGTH) {
-                counterEl.className = 'text-error small text-end mt-1 fw-bold';
+                $counter.attr('class', 'text-error small text-end mt-1 fw-bold');
             } else if (currentLen >= MAX_COMMENT_LENGTH * 0.9) {
-                counterEl.className = 'text-warning small text-end mt-1';
+                $counter.attr('class', 'text-warning small text-end mt-1');
             } else {
-                counterEl.className = 'text-secondary small text-end mt-1';
+                $counter.attr('class', 'text-secondary small text-end mt-1');
             }
         }
 
-        textarea.addEventListener('input', updateCounter);
+        // Live input event binding via .on()
+        $textarea.on('input', updateCounter);
         updateCounter();
     }
 
     // -------------------------------------------------------------------------
     // 4. Feedback Audit Form Validation & Submission Flow
     // -------------------------------------------------------------------------
-    function validateFeedbackForm(form) {
-        window.Logovo.clearFormErrors(form);
+    function validateFeedbackForm($form) {
+        window.Logovo.clearFormErrors($form);
 
         let isValid = true;
-        let firstInvalidField = null;
+        let $firstInvalid = null;
         const errorList = [];
 
         // 1. Full Name
-        const nameInput = document.getElementById('fb-name-input');
-        const trimmedName = window.Logovo.sanitize(nameInput ? nameInput.value : '');
+        const $nameInput = $('#fb-name-input');
+        const trimmedName = $.trim($nameInput.val());
         if (trimmedName.length < 3) {
-            window.Logovo.setFieldError(nameInput, 'Full name must contain at least 3 characters.');
+            window.Logovo.setFieldError($nameInput, 'Full name must contain at least 3 characters.');
             errorList.push('Full name must be at least 3 characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || nameInput;
+            $firstInvalid = $firstInvalid || $nameInput;
         }
 
         // 2. Contact Phone or Email
-        const phoneInput = document.getElementById('fb-phone-input');
-        const phoneVal = window.Logovo.sanitize(phoneInput ? phoneInput.value : '');
-        if (!window.Logovo.isValidPhone(phoneVal)) {
-            window.Logovo.setFieldError(phoneInput, 'Enter a valid Kazakhstan phone number (+7...).');
-            errorList.push('Valid telephone number is required.');
+        const $phoneInput = $('#fb-phone-input');
+        const phoneVal = $.trim($phoneInput.val());
+        if (!window.Logovo.isValidPhone(phoneVal) && !window.Logovo.isValidEmail(phoneVal)) {
+            window.Logovo.setFieldError($phoneInput, 'Enter a valid Kazakhstan phone number (+7...) or email.');
+            errorList.push('Valid telephone number or email is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || phoneInput;
+            $firstInvalid = $firstInvalid || $phoneInput;
         }
 
         // 3. Branch Visited
-        const branchSelect = document.getElementById('fb-branch-select');
-        if (!branchSelect || branchSelect.value.trim() === '') {
-            window.Logovo.setFieldError(branchSelect, 'Please select the visited branch.');
+        const $branchSelect = $('#fb-branch-select');
+        if ($.trim($branchSelect.val()) === '') {
+            window.Logovo.setFieldError($branchSelect, 'Please select the visited branch.');
             errorList.push('Branch selection is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || branchSelect;
+            $firstInvalid = $firstInvalid || $branchSelect;
         }
 
         // 4. Visit Date (Not in future)
-        const dateInput = document.getElementById('fb-date-input');
-        if (dateInput && dateInput.value) {
-            const visitDate = new Date(dateInput.value + 'T00:00:00');
+        const $dateInput = $('#fb-date-input');
+        const dateVal = $dateInput.val();
+        if (dateVal) {
+            const visitDate = new Date(dateVal + 'T00:00:00');
             const today = new Date();
             today.setHours(23, 59, 59, 999);
             if (visitDate > today) {
-                window.Logovo.setFieldError(dateInput, 'Visit date cannot be in the future.');
+                window.Logovo.setFieldError($dateInput, 'Visit date cannot be in the future.');
                 errorList.push('Visit date must be in the past or today.');
                 isValid = false;
-                firstInvalidField = firstInvalidField || dateInput;
+                $firstInvalid = $firstInvalid || $dateInput;
             }
         } else {
-            window.Logovo.setFieldError(dateInput, 'Please specify your visit date.');
+            window.Logovo.setFieldError($dateInput, 'Please specify your visit date.');
             errorList.push('Visit date is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || dateInput;
+            $firstInvalid = $firstInvalid || $dateInput;
         }
 
         // 5. Rating (Integer between 1 and 5)
-        const ratingInput = document.getElementById('fb-rating-input');
-        const ratingVal = parseInt(ratingInput ? ratingInput.value : '0', 10);
+        const $ratingInput = $('#fb-rating-input');
+        const ratingVal = parseInt($ratingInput.val(), 10);
         if (isNaN(ratingVal) || ratingVal < 1 || ratingVal > 5) {
-            window.Logovo.setFieldError(ratingInput, 'Rating must be an integer between 1 and 5.');
+            window.Logovo.setFieldError($ratingInput, 'Rating must be an integer between 1 and 5.');
             errorList.push('Rating must be between 1 and 5.');
             isValid = false;
-            firstInvalidField = firstInvalidField || ratingInput;
+            $firstInvalid = $firstInvalid || $ratingInput;
         }
 
         // 6. Comments (Min 15 chars, Max 500 chars) & Combined Rule
-        const commentsInput = document.getElementById('fb-comments-input');
-        const trimmedComment = window.Logovo.sanitize(commentsInput ? commentsInput.value : '');
+        const $commentsInput = $('#fb-comments-input');
+        const trimmedComment = $.trim($commentsInput.val());
         if (trimmedComment.length < 15) {
-            window.Logovo.setFieldError(commentsInput, 'Please write at least 15 characters describing your impression.');
+            window.Logovo.setFieldError($commentsInput, 'Please write at least 15 characters describing your impression.');
             errorList.push('Comment must be at least 15 characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || commentsInput;
+            $firstInvalid = $firstInvalid || $commentsInput;
         } else if (trimmedComment.length > MAX_COMMENT_LENGTH) {
-            window.Logovo.setFieldError(commentsInput, 'Comment exceeds ' + MAX_COMMENT_LENGTH + ' characters.');
+            window.Logovo.setFieldError($commentsInput, 'Comment exceeds ' + MAX_COMMENT_LENGTH + ' characters.');
             errorList.push('Comment cannot exceed ' + MAX_COMMENT_LENGTH + ' characters.');
             isValid = false;
-            firstInvalidField = firstInvalidField || commentsInput;
+            $firstInvalid = $firstInvalid || $commentsInput;
         } else if (ratingVal <= 2 && trimmedComment.length < 30) {
-            // Combined rule: low rating requires more specific explanation
-            window.Logovo.setFieldError(commentsInput, 'For ratings of 2 or lower, please provide at least 30 characters detailing the issues encountered.');
+            window.Logovo.setFieldError($commentsInput, 'For ratings of 2 or lower, please provide at least 30 characters detailing the issues encountered.');
             errorList.push('Detailed constructive feedback is required for low ratings.');
             isValid = false;
-            firstInvalidField = firstInvalidField || commentsInput;
+            $firstInvalid = $firstInvalid || $commentsInput;
         }
 
-        // 7. Agreement Checkbox
-        const agreeCheck = document.getElementById('fb-agree-check');
-        if (!agreeCheck || !agreeCheck.checked) {
-            window.Logovo.setFieldError(agreeCheck, 'Please authorize feedback evaluation.');
+        // 7. Agreement Checkbox via .prop('checked')
+        const $agreeCheck = $('#fb-agree-check');
+        if (!$agreeCheck.prop('checked')) {
+            window.Logovo.setFieldError($agreeCheck, 'Please authorize feedback evaluation.');
             errorList.push('Evaluation authorization is required.');
             isValid = false;
-            firstInvalidField = firstInvalidField || agreeCheck;
+            $firstInvalid = $firstInvalid || $agreeCheck;
         }
 
-        // Handle error summary container
-        const errorContainer = document.getElementById('fb-error-container');
-        if (errorContainer) {
-            if (!isValid) {
-                errorContainer.classList.remove('is-hidden');
-                errorContainer.textContent = '';
+        // Error Summary Container with jQuery effect
+        const $errorContainer = $('#fb-error-container');
+        if (!isValid) {
+            $errorContainer.empty().removeClass('is-hidden').hide();
+            const $heading = $('<strong class="d-block mb-1">Please correct the following evaluation errors:</strong>');
+            const $ul = $('<ul class="mb-0 ps-3 small"></ul>');
 
-                const heading = document.createElement('strong');
-                heading.className = 'd-block mb-1';
-                heading.textContent = 'Please correct the following evaluation errors:';
-                errorContainer.appendChild(heading);
+            $.each(errorList, function (i, err) {
+                $('<li></li>').text(err).appendTo($ul);
+            });
 
-                const ul = document.createElement('ul');
-                ul.className = 'mb-0 ps-3 small';
-                errorList.forEach(function (err) {
-                    const li = document.createElement('li');
-                    li.textContent = err;
-                    ul.appendChild(li);
-                });
-                errorContainer.appendChild(ul);
+            $errorContainer.append($heading).append($ul).slideDown(300);
 
-                if (firstInvalidField) {
-                    firstInvalidField.focus();
-                }
-            } else {
-                errorContainer.classList.add('is-hidden');
-                errorContainer.textContent = '';
+            if ($firstInvalid) {
+                $firstInvalid.focus();
             }
+        } else {
+            $errorContainer.fadeOut(200, function () {
+                $(this).addClass('is-hidden').empty();
+            });
         }
 
         return isValid;
     }
 
     /**
-     * Renders audit voucher upon submission and adds review to list
+     * Renders audit voucher upon submission and prepends review to list using jQuery effects
      * @param {Object} details - Submission details
      */
     function renderFeedbackSuccess(details) {
-        const voucherCard = document.getElementById('feedback-confirmation-card');
-        const voucherWrapper = document.getElementById('feedback-confirmation-wrapper');
-        if (!voucherCard || !voucherWrapper) return;
-
-        const ticketCode = document.getElementById('fb-ticket-code');
-        const branchEl = document.getElementById('fb-voucher-branch');
-        const ratingEl = document.getElementById('fb-voucher-rating');
-        const statusBadge = document.getElementById('fb-status-badge');
-        const noticeP = document.getElementById('fb-voucher-notice');
+        const $voucherCard = $('#feedback-confirmation-card');
+        const $voucherWrapper = $('#feedback-confirmation-wrapper');
+        if (!$voucherCard.length || !$voucherWrapper.length) return;
 
         const referenceCode = window.Logovo.generateReference('QA');
-        if (ticketCode) ticketCode.textContent = referenceCode;
-        if (branchEl) branchEl.textContent = details.branchName;
-        
+        $('#fb-ticket-code').text(referenceCode);
+        $('#fb-voucher-branch').text(details.branchName);
+
         let stars = '';
         for (let i = 0; i < details.rating; i++) {
             stars += '★';
         }
-        if (ratingEl) ratingEl.textContent = details.rating + ' / 5 Stars ' + stars;
+        $('#fb-voucher-rating').text(details.rating + ' / 5 Stars ' + stars);
 
-        if (statusBadge) {
-            statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-            statusBadge.textContent = 'Status: Logged to QA Registry (Demo)';
-        }
+        $('#fb-status-badge')
+            .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
+            .text('Status: Logged to QA Registry (Demo)');
 
-        if (noticeP) {
-            noticeP.textContent = '';
-            const noticeSpan = document.createElement('span');
-            noticeSpan.className = 'text-warning d-block fw-semibold mb-1';
-            noticeSpan.textContent = '★ Demonstration Notice: No data was sent to a server. This is a front-end evaluation simulation.';
+        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No data was sent to a server. This is a front-end evaluation simulation.</span>' +
+            '<span class="d-block">Guest ' + $('<div>').text(details.author).html() + ', your impression has been registered and prepended to the public review list below.</span>';
+        $('#fb-voucher-notice').html(noticeHtml);
 
-            const thankSpan = document.createElement('span');
-            thankSpan.className = 'd-block';
-            thankSpan.textContent = 'Guest ' + details.author + ', your impression has been registered and prepended to the public review list below.';
+        $voucherCard.addClass('card-dark-highlight');
 
-            noticeP.appendChild(noticeSpan);
-            noticeP.appendChild(thankSpan);
-        }
-
-        voucherCard.classList.add('card-dark-highlight');
-
-        // Dynamically prepend new review card to reviews container
-        const reviewsContainer = document.getElementById('reviews-list-container');
-        if (reviewsContainer) {
+        // Dynamically prepend newly submitted review card into reviews list with .prependTo() and .fadeIn()
+        const $reviewsContainer = $('#reviews-list-container');
+        if ($reviewsContainer.length) {
             const newReviewObj = {
                 id: 'new-' + Date.now(),
                 author: details.author,
@@ -345,59 +307,74 @@
                 date: 'Just Now',
                 comment: details.comment
             };
-            const newCard = createReviewCard(newReviewObj);
-            newCard.classList.add('border-gold'); // highlight new submission
-            reviewsContainer.insertBefore(newCard, reviewsContainer.firstChild);
+            const $newCard = createReviewCard(newReviewObj)
+                .addClass('border-gold') // highlight new submission
+                .hide();
+
+            $reviewsContainer.prepend($newCard);
+            // Effect: fade in newly submitted card
+            $newCard.fadeIn(400);
         }
 
-        voucherWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Effect: slideDown with duration and completion scroll callback
+        $voucherWrapper.hide().removeClass('is-hidden').slideDown(400, function () {
+            $('html, body').animate({
+                scrollTop: $voucherWrapper.offset().top - 80
+            }, 300);
+        });
     }
 
     // -------------------------------------------------------------------------
     // 5. Initialization
     // -------------------------------------------------------------------------
     function initFeedbackPage() {
-        // Initial render of all 6 reviews
         renderReviewsList(REVIEWS_DATA);
-
-        // Setup character counter
         setupCharacterCounter();
 
-        // Form submission
-        const form = document.getElementById('form-feedback');
-        if (form) {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        const $form = $('#form-feedback');
 
-                if (validateFeedbackForm(form)) {
-                    const nameInput = document.getElementById('fb-name-input');
-                    const branchSelect = document.getElementById('fb-branch-select');
-                    const ratingInput = document.getElementById('fb-rating-input');
-                    const commentsInput = document.getElementById('fb-comments-input');
+        // Clear field error on typing
+        $form.on('input change', '.is-error', function () {
+            $(this)
+                .removeClass('is-error')
+                .removeAttr('aria-invalid')
+                .siblings('.field-error-message')
+                .fadeOut(150, function () {
+                    $(this).remove();
+                });
+        });
 
-                    const details = {
-                        author: window.Logovo.sanitize(nameInput.value),
-                        branchName: branchSelect.options[branchSelect.selectedIndex].text,
-                        rating: parseInt(ratingInput.value, 10),
-                        comment: window.Logovo.sanitize(commentsInput.value)
-                    };
+        // Form submit listener via .on()
+        $form.on('submit', function (event) {
+            // event.preventDefault() stops native submit reload
+            event.preventDefault();
 
-                    renderFeedbackSuccess(details);
-                }
-            });
+            if (validateFeedbackForm($form)) {
+                const $nameInput = $('#fb-name-input');
+                const $branchSelect = $('#fb-branch-select');
+                const $ratingInput = $('#fb-rating-input');
+                const $commentsInput = $('#fb-comments-input');
 
-            form.addEventListener('reset', function () {
-                setTimeout(function () {
-                    window.Logovo.clearFormErrors(form);
-                    setupCharacterCounter();
-                }, 10);
-            });
-        }
+                const details = {
+                    author: $.trim($nameInput.val()),
+                    branchName: $branchSelect.find('option:selected').text(),
+                    rating: parseInt($ratingInput.val(), 10),
+                    comment: $.trim($commentsInput.val())
+                };
+
+                renderFeedbackSuccess(details);
+            }
+        });
+
+        $form.on('reset', function () {
+            setTimeout(function () {
+                window.Logovo.clearFormErrors($form);
+                setupCharacterCounter();
+            }, 10);
+        });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFeedbackPage);
-    } else {
+    $(function () {
         initFeedbackPage();
-    }
-})();
+    });
+})(jQuery);
