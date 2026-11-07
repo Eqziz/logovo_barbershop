@@ -1,6 +1,6 @@
 /**
  * Logovo Barbershop Astana — Feedback & Quality Audit Module
- * WEB Technologies 1 — Assignment 4 (jQuery Migration)
+ * WEB Technologies 1 — Endterm Project (jQuery Module: Weeks 9–10)
  * Responsible Student: Nurassyl Ilyas (Frontend Developer)
  * Assigned Pages: barbers.html, feedback.html
  *
