@@ -1,6 +1,6 @@
 /**
  * Logovo Barbershop Astana — Services & Booking Interactive Module
- * WEB Technologies 1 — Assignment 4 (jQuery Migration)
+ * WEB Technologies 1 — Endterm Project (jQuery Module: Weeks 9–10)
  * Responsible Student: Nodir Muhammedov (Team Lead)
  * Assigned Pages: index.html, services.html
  *
