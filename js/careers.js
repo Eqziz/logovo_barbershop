@@ -1,6 +1,6 @@
 /**
  * Logovo Barbershop Astana — Careers & Candidate Dossier Module
- * WEB Technologies 1 — Assignment 4 (jQuery Migration)
+ * WEB Technologies 1 — Endterm Project (jQuery Module: Weeks 9–10)
  * Responsible Student: Nurken Mamay (Frontend Developer)
  * Assigned Pages: marketbar.html, careers.html
  *
