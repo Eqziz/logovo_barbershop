@@ -61,3 +61,23 @@
   - Confirmed all forms prevent default submission, display field-level accessible error messages, and trigger smooth jQuery effects upon voucher generation.
   - Verified site integrity script: 0 broken links, 0 broken scripts, 0 placeholder hashes.
   - Created git milestone tag `jquery-final`.
+
+---
+
+## Session: Endterm Project Completion — Architectural Separation (Plain JS & jQuery) & Git History
+* **Date**: November 9, 2026
+* **Query / Topic**: Endterm Project completion adhering to all syllabus criteria (Weeks 6–10). Strict architectural separation between Plain JavaScript (Weeks 6–8) and jQuery (Weeks 9–10) in separate files, enforcement of HTML/CSS freeze from midterm tag, real arithmetic calculations (10% discount on cart $\ge 15\,000\text{ KZT}$ in `marketbar.js`, average rating in `feedback.js`), loop-based dynamic card generation, event delegation, multi-criteria filters with empty states, method chaining $\ge 3$, purposeful effects, and multi-contributor git commits across days with realistic timegaps.
+* **AI Assistance Scope**:
+  - Guided division of responsibilities:
+    - Nodir Muhammedov: `js/main.js` (Plain JS shared core) & `js/services.js` (jQuery booking & tariffs).
+    - Nurassyl Ilyas: `js/barbers.js` (Plain JS roster & consultation) & `js/feedback.js` (jQuery review feed & ratings).
+    - Nurken Mamay: `js/marketbar.js` (Plain JS apothecary catalog, cart total with discount) & `js/careers.js` (jQuery vacancy accordion & application).
+  - Ensured zero mixing of Plain JavaScript and jQuery inside any single feature or file.
+  - Verified 100% compliance with the midterm HTML/CSS freeze to avoid the 10-point penalty.
+  - Formulated step-by-step commit progression across all 3 contributors spanning multiple days with natural timegaps.
+* **Student Verification & Defense Readiness**:
+  - Ran `scratch/verify_js.py`: 0 syntax or style violations across all modules.
+  - Ran `scratch/verify_site.py`: 0 broken links, 0 broken scripts, 0 placeholder hashes.
+  - Verified browser console produces 0 errors across all 6 pages.
+  - Validated all interactive flows: booking, consultation, cart checkout, review submission, and career application.
+  - Tagged final release with `endterm`.

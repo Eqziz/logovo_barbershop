@@ -2,7 +2,7 @@
 
 * **Team**: Nodir Muhammedov (Team Lead), Nurassyl Ilyas, Nurken Mamay
 * **Repository**: `logovo_barbershop`
-* **Milestone Tags**: `midterm` (frozen base), `assignment-4` (data, algorithms & logic), `assignment-5` (DOM & form validation), `jquery-final` (complete jQuery migration)
+* **Milestone Tags**: `midterm` (frozen base), `assignment-4` (data, algorithms & logic), `assignment-5` (DOM & form validation), `jquery-final` (complete jQuery migration), `endterm` (final submission)
 
 ---
 

@@ -197,60 +197,112 @@ In accordance with front-end engineering requirements, every student implemented
 
 ---
 
-## 10. JavaScript Architecture & Compliance Checklist
+## 10. JavaScript & jQuery Architecture: Endterm Milestone
 
-* **HTML/CSS Freeze**: Zero interface elements were added or removed in HTML files; only `<script defer>` tags were introduced. Zero CSS rules were created or altered.
-* **Strict Mode & Modern Syntax**: All modules enforce `'use strict';`, use `const` by default and `let` only for mutating state. Zero `var`, zero loose equality (`==`/`!=`), zero `document.write()`.
-* **Safe DOM Insertion**: Strict prohibition of `innerHTML` for user-provided data. All names, notes, and dynamic strings are rendered through `textContent`.
-* **State Classes**: Utilizes pre-frozen CSS classes (`.is-hidden`, `.is-active`, `.selected-state`, `.is-error`, `.text-error`, `.status-badge-confirmed`) through `element.classList`.
-* **Milestone Git Tags**:
-  - `midterm`: Initial frozen HTML5/CSS3 baseline.
-  - `assignment-4`: Core data arrays, algorithmic traversal, filtering, and calculation functions.
-  - `assignment-5`: Full DOM manipulation, dynamic empty states, event listeners, and field-level form validation.
-  - `jquery-final`: Complete pure-jQuery architecture, delegated event handlers, DOM effects, and comparison baseline.
+### A. Team Division & Technological Separation
+In compliance with the Endterm specification (**"Keep the two apart: a feature is either plain JavaScript or jQuery, never both, and keep them in separate files"**), each developer maintains distinct, un-mixed modules across the two paradigms:
+
+| Team Member | Role | Plain JavaScript Module (Weeks 6–8) | jQuery Module (Weeks 9–10) | Assigned HTML Pages |
+| :--- | :--- | :--- | :--- | :--- |
+| **Nodir Muhammedov** | Team Lead | `js/main.js` (Shared utilities, navigation sync, demo notice, regex validators) | `js/services.js` (Tariffs table traversal, method chaining, slideDown effects, booking form validation) | `index.html`, `services.html` |
+| **Nurassyl Ilyas** | Frontend Developer | `js/barbers.js` (Dynamic DOM card loop, multi-filter, experience stats, delegated booking listener) | `js/feedback.js` (Dynamic review feed, average rating calculation, slideDown animation, QA form validation) | `barbers.html`, `feedback.html` |
+| **Nurken Mamay** | Frontend Developer | `js/marketbar.js` (Catalog array, loop construction, cart total calculation with 10% discount condition) | `js/careers.js` (Vacancy accordion with slideToggle, traversal chaining, academy application form validation) | `marketbar.html`, `careers.html` |
 
 ---
 
-## 11. Final Milestone: jQuery Integration & Architecture
+### B. Plain JavaScript Features (Weeks 6–8)
 
-This milestone represents the final stage before project defense, transitioning all interactive behaviors from vanilla DOM operations to idiomatic **jQuery v3.7.1**:
+#### 1. Data in Arrays & Objects at Top of File
+- `js/barbers.js`: `BARBERS_DATA` contains 6 master barber objects with 7 meaningful attributes (`id`, `name`, `tier`, `branch`, `experienceYears`, `specialties`, `bio`).
+- `js/marketbar.js`: `PRODUCTS_DATA` contains 6 apothecary product objects (`id`, `name`, `category`, `volume`, `unitPrice`, `inStock`, `description`).
+- Zero cards or products are hardcoded in the HTML markup; everything is synthesized via loops.
 
-### A. CDN Integration & Lifecycle
-jQuery v3.7.1 is linked via the official CDN prior to Bootstrap and custom page scripts. All code is encapsulated within `$(function () { ... })` (`$(document).ready` shorthand), ensuring the DOM is fully constructed in memory before elements are selected or listeners attached.
+#### 2. Loop-Based DOM Construction & Reusable Functions
+- `createBarberCard(barber)` in `barbers.js`: constructs card markup using `document.createElement()`, `classList.add()`, and `appendChild()`.
+- `createProductCard(product)` in `marketbar.js`: dynamically builds catalog elements.
+- Reusable utility functions with parameters and return values called across multiple modules: `window.Logovo.formatPrice(amount)`, `window.Logovo.formatDuration(minutes)`, `window.Logovo.generateReference(prefix)`, `window.Logovo.isValidPhone(phone)`, `window.Logovo.isValidEmail(email)`.
 
-### B. Three Rewritten Features vs. `old-js-version.js`
-The original plain-JavaScript implementations are preserved in `old-js-version.js` (unlinked) for side-by-side defense evaluation:
+#### 3. Real Arithmetic Calculations & Conditions
+- **Cart Total & Discount Condition (`marketbar.js`)**:
+  - Accumulates item count and order subtotal dynamically.
+  - **Conditional Calculation**: If order total $\ge 15\,000\text{ KZT}$, a 10% club discount is computed dynamically:
+    $$\text{Discount} = \text{Subtotal} \times 0.10$$
+    $$\text{Final Total} = \text{Subtotal} - \text{Discount}$$
+- **Dynamic Statistics (`barbers.js`)**: Calculates active master count and average experience across the roster.
 
-| Feature | Vanilla JavaScript Baseline (`old-js-version.js`) | Modernized jQuery Implementation (`js/*.js`) | Comparative Verdict & Benefits |
-| :--- | :--- | :--- | :--- |
-| **1. Form Validation** | Manual `document.getElementById`, verbose null checks, and loop-based error removal (`querySelectorAll`). | Expressive chained selectors: `$('#name').addClass('is-error')`, traversal `$form.find('.is-error').removeClass()`, and `$input.siblings().fadeOut()`. | **Substantially shorter (-35% lines)** and clearer. Eliminates boilerplate DOM traversal and null checks. |
-| **2. Card Generation** | 65 lines of repetitive `document.createElement()`, property assignments, and nested `appendChild()` calls. | Declarative jQuery element construction: `$('<div class="col-12...">').append(...).appendTo('#container')`. | **50% fewer lines**, mirrors actual HTML hierarchy, significantly lower DOM manipulation overhead. |
-| **3. State Toggling & Effects** | Abrupt `classList.remove('is-hidden')` and `element.scrollIntoView()` causing visual snapping. | Smooth animated transitions: `$voucher.slideDown(400, callback)` with scroll animation in completion callback. | **Superior UX and perceived quality**, converting instant popping into smooth visual disclosures. |
+#### 4. Event Binding & Pure JS Delegation
+- No `onclick` attributes in HTML.
+- At least three event types utilized: `click`, `input`, `change`, `submit`.
+- **Pure JavaScript Event Delegation**:
+  - `barbers.js`: `#barbers-roster-container` listens for bubbling clicks on dynamically rendered `.btn-book-chair` elements using `event.target.closest('.btn-book-chair')`.
+  - `marketbar.js`: `#marketbar-catalog-container` listens for clicks on dynamic `+ Add to Order` buttons.
 
-### C. Selectors, Traversal and Chaining
-* **Selectors**: ID (`#form-booking`), Class (`.select-service-btn`), Element (`tr`, `p`), Attribute (`select[name="booking_service"]`), Filters (`:first`, `:checked`, `:selected`).
-* **Traversal**: `.find()` (scoped descendant search), `.closest()` (nearest ancestor row/card), `.parent()` (immediate container), `.siblings()` (adjacent elements), `.each()` (collection iteration).
-* **Chaining Demonstration**:
+#### 5. Plain JavaScript Form Validation
+- Prevents default submit (`event.preventDefault()`).
+- Trims values and inspects Kazakhstan phone regex (`/^(\+7|8|7)7\d{9}$/`) and email format.
+- Displays accessible inline errors via `.is-error` next to invalid fields; focuses the first invalid element; removes errors dynamically on `input` and `change`.
+- Generates a simulated confirmation voucher upon valid submission.
+
+---
+
+### C. jQuery Features (Weeks 9–10)
+
+#### 1. CDN Connection & DOM Ready Lifecycle
+- Linked via official CDN (`https://code.jquery.com/jquery-3.7.1.min.js`) before Bootstrap bundle and page scripts.
+- Execution safely deferred via `$(function () { ... })` (`$(document).ready` shorthand).
+
+#### 2. Selectors Variety
+- By ID: `$('#booking-form')`, `$('#services-table-body')`, `$('#feedback-form')`
+- By Class: `$('.service-row')`, `$('.btn-select-service')`, `$('.is-error')`
+- By Element: `$('tr')`, `$('option')`, `$('input')`
+- By Attribute: `$('select[name="booking_service"]')`, `$('#career-form [required]')`
+- By Filters: `:first` (first invalid field focus), `:checked` (branch radio selection), `:selected` (active dropdown option).
+
+#### 3. Traversal & Method Chaining ($\ge 3$ Methods)
+- **Chain 1 (`services.js`)**:
   ```javascript
-  // Traversal & Chaining:
-  // 1. $(this) -> clicked button
-  // 2. .closest('tr') -> traverses up to the table row container
-  // 3. .addClass('selected-state') -> highlights active service row
-  // 4. .siblings('tr') -> traverses sideways to all other service rows
-  // 5. .removeClass('selected-state') -> un-highlights inactive rows
-  $(this).closest('tr').addClass('selected-state').siblings('tr').removeClass('selected-state');
+  $(this)
+      .closest('tr')
+      .addClass('selected-state')
+      .siblings()
+      .removeClass('selected-state');
   ```
-
-### D. Manipulation & Form Properties
-* **`.text()` vs. `.html()`**: `.text()` strictly escapes all entities to prevent XSS from customer inputs; `.html()` is used only where trusted markup tags (`<strong>`, `<span>`) are required.
-* **`.attr()` vs. `.prop()`**: `.prop('checked')` inspects the live boolean state of checkboxes; `.attr('checked')` reads only the initial HTML attribute string.
-* **Delegated Event Handlers**:
+  *Explanation*: Traverses up to the ancestor table row `<tr>`, applies the active highlighted class, selects all sibling rows, and strips the highlight class from them.
+- **Chain 2 (`careers.js`)**:
   ```javascript
-  // Delegated binding through existing parent:
-  $('#barbers-roster-container').on('click', '.btn-book-chair', handler);
+  $(this)
+      .closest('.vacancy-card')
+      .find('.vacancy-details')
+      .slideToggle(300)
+      .closest('.vacancy-card')
+      .siblings()
+      .find('.vacancy-details')
+      .slideUp(250);
   ```
-  *Why required*: Direct binding (`$('.btn-book-chair').on('click')`) only binds elements existing at page load. Dynamic cards rendered later by JavaScript do not receive direct listeners; delegation to a static ancestor captures bubbling events reliably.
+  *Explanation*: Traverses up to the active vacancy card, toggles the details panel with a 300ms slide effect, moves to adjacent sibling vacancy cards, and folds their open detail panels.
 
-### E. Effects and Browser vs. Server Validation
-* **Effects**: `.slideDown(400, callback)`, `.fadeOut(200, callback)`, `.fadeIn(250)`.
-* **Validation Philosophy**: Browser validation provides immediate user feedback and guides input formatting. It **never replaces server-side validation**, as client scripts can be disabled or bypassed via raw HTTP tools (curl/Postman). Server validation is the sole guarantor of data integrity.
+#### 4. Purposeful jQuery Effects with Callbacks
+- `.slideDown(400, callback)`: Smoothly unfolds booking and feedback confirmation vouchers; scrolls the viewport to the voucher upon completion.
+- `.slideToggle(300)`: Interactive accordion disclosure on career vacancies.
+- `.fadeOut(200, callback)`: Smoothly fades out inline field error messages before removing them from the DOM.
+
+#### 5. Event Delegation with jQuery `.on()`
+- `services.js`: `$('#services-table-body').on('click', '.btn-select-service', handler)`
+- Catches bubbling clicks for dynamic tariff selections without re-attaching listeners.
+
+---
+
+### D. What Was Extended Since Previous Defenses
+- **Unified Endterm Single-Site Architecture**: Harmonized the 6 pages so a single visitor can navigate, browse dynamic cards, apply multi-criteria filters, calculate pricing with discounts, book appointments, submit reviews, and receive simulated confirmation vouchers with unique token references.
+- **Full Empty-State Handling**: If search or category filters yield zero items, an explicit, informative empty state banner is rendered rather than leaving a blank container.
+- **Strict Separation of Concerns**: Ensured 100% strict isolation: `barbers.js`, `marketbar.js`, and `main.js` run on pure Plain JavaScript; `services.js`, `feedback.js`, and `careers.js` run on pure jQuery. Zero cross-paradigm mixing inside any feature.
+- **Midterm Freeze Integrity**: Maintained 100% compliance with the midterm HTML/CSS freeze (0 new hand-written CSS rules, 0 new hand-written HTML elements after midterm tag).
+
+---
+
+### E. Milestone Git Tags
+* `midterm`: Initial semantic HTML5/CSS3 frozen baseline.
+* `assignment-4`: Core data arrays, algorithmic traversal, filtering, and calculation flows.
+* `assignment-5`: Native DOM generation, event listeners, and accessible field-level form validation.
+* `jquery-final`: Full jQuery integration, traversal, effects, and delegation.
+* `endterm`: Final project release integrating both Plain JavaScript and jQuery modules across the team.
