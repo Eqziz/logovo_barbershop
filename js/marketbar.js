@@ -71,7 +71,16 @@
     const BRANCHES_MAP = {
         'syganak': 'Syganak Flagship (17/1 Syganak St)',
         'kabanbay': 'Kabanbay Studio (58A Kabanbay Batyr Ave)',
-        'triumph': 'Triumph Club (38 Mangilik El Ave)'
+        'triumph': 'Triumph Club (51/1 Mangilik El Ave)',
+        'baitursynuly': 'Baitursynuly Branch (47 A. Baitursynuly St)',
+        'saryarka': 'Saryarka Lounge (42 Saryarka Ave)',
+        'abay': 'Abylai Khan Branch (20B Abylai Khan Ave)',
+        'turan': 'Turan Club (50/2 Turan Ave)',
+        'tolebi': 'Tole Bi Branch (44/1 Tole Bi St)',
+        'tarkhan': 'Tarkhan Lounge (2/6 Zh. Tarkhan St)',
+        'beybitshilik': 'Beybitshilik Branch (29 Beybitshilik St)',
+        'kosshygululy': 'Kosshygululy Studio (21 Sh. Kosshygululy St)',
+        'mukhamedkhanov': 'Mukhamedkhanov Club (20 K. Mukhamedkhanov St)'
     };
 
     // -------------------------------------------------------------------------
