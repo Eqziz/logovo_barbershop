@@ -1,5 +1,5 @@
 /**
- * Logovo Barbershop Astana — MarketBar & Dispensary Ordering Module
+ * Logovo Barbershop Astana — MarketBar & Shopping Cart Module
  * WEB Technologies 1 — Endterm Project (Plain JavaScript Module: Weeks 6–8)
  * Responsible Student: Nurken Mamay (Frontend Developer)
  * Assigned Pages: marketbar.html, careers.html
@@ -84,8 +84,9 @@
     };
 
     // -------------------------------------------------------------------------
-    // 2. Calculations & Selection Reusable Functions
+    // 2. Shopping Cart State & Management (Plain JavaScript)
     // -------------------------------------------------------------------------
+    let cart = [];
 
     /**
      * Finds a product by its unique identifier
@@ -104,65 +105,312 @@
     }
 
     /**
-     * Calculates total order amount based on item unit price and quantity
-     * Calls window.Logovo.formatPrice
+     * Adds an item to the shopping cart or increments its count
      * @param {string} productId - Product ID
-     * @param {number} quantity - Number of items
-     * @returns {Object} Calculation details
+     * @param {number} qty - Quantity to add
      */
-    function calculateOrderTotal(productId, quantity) {
+    function addToCart(productId, qty) {
         const product = findProductById(productId);
-        const validQty = Math.max(1, Math.min(10, parseInt(quantity, 10) || 1));
+        if (!product) return;
 
-        if (!product) {
-            return {
-                product: null,
-                quantity: validQty,
-                unitPrice: 0,
-                totalAmount: 0,
-                formattedTotal: window.Logovo.formatPrice(0)
-            };
+        const addQty = Math.max(1, Math.min(10, parseInt(qty, 10) || 1));
+        let existingItem = null;
+
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].id === product.id) {
+                existingItem = cart[i];
+                break;
+            }
         }
 
-        const totalAmount = product.unitPrice * validQty;
+        if (existingItem) {
+            existingItem.quantity = Math.min(10, existingItem.quantity + addQty);
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                volume: product.volume,
+                unitPrice: product.unitPrice,
+                quantity: addQty
+            });
+        }
+
+        renderCart();
+        highlightCatalogRow(product.id);
+    }
+
+    /**
+     * Updates an existing cart item's quantity
+     * @param {string} productId - Target product ID
+     * @param {number} newQty - New quantity
+     */
+    function updateCartItemQty(productId, newQty) {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].id === productId) {
+                if (newQty <= 0) {
+                    cart.splice(i, 1);
+                } else {
+                    cart[i].quantity = Math.min(10, newQty);
+                }
+                break;
+            }
+        }
+        renderCart();
+    }
+
+    /**
+     * Removes an item entirely from the cart
+     * @param {string} productId - Target product ID
+     */
+    function removeFromCart(productId) {
+        cart = cart.filter(function (item) {
+            return item.id !== productId;
+        });
+        renderCart();
+    }
+
+    /**
+     * Empties all items from the shopping cart
+     */
+    function clearCart() {
+        cart = [];
+        renderCart();
+    }
+
+    /**
+     * Calculates shopping cart totals with 10% club privilege discount condition
+     * @returns {Object} Calculated totals breakdown
+     */
+    function calculateCartTotals() {
+        let itemCount = 0;
+        let subtotal = 0;
+
+        for (let i = 0; i < cart.length; i++) {
+            itemCount += cart[i].quantity;
+            subtotal += cart[i].unitPrice * cart[i].quantity;
+        }
+
+        // Conditional Calculation: 10% discount for orders >= 15 000 KZT
+        let discount = 0;
+        if (subtotal >= 15000) {
+            discount = Math.round(subtotal * 0.10);
+        }
+
+        const finalTotal = Math.max(0, subtotal - discount);
+
         return {
-            product: product,
-            quantity: validQty,
-            unitPrice: product.unitPrice,
-            totalAmount: totalAmount,
-            formattedTotal: window.Logovo.formatPrice(totalAmount)
+            itemCount: itemCount,
+            subtotal: subtotal,
+            discount: discount,
+            finalTotal: finalTotal,
+            formattedSubtotal: window.Logovo.formatPrice(subtotal),
+            formattedDiscount: discount > 0 ? ('-10% Club Discount (' + window.Logovo.formatPrice(discount) + ')') : 'No Discount (0 KZT)',
+            formattedFinalTotal: window.Logovo.formatPrice(finalTotal)
         };
     }
 
     /**
-     * Updates the total price display in the summary box
+     * Renders shopping cart items dynamically using safe DOM methods (Zero raw HTML injection)
      */
-    function updateOrderDisplay() {
-        const productSelect = document.getElementById('order-product-select');
-        const quantityInput = document.getElementById('order-quantity-input');
-        const totalPriceEl = document.getElementById('order-total-price');
+    function renderCart() {
+        const container = document.getElementById('cart-items-container');
+        const badgeEl = document.getElementById('cart-count-badge');
+        const subtotalEl = document.getElementById('cart-subtotal-price');
+        const discountEl = document.getElementById('cart-discount-value');
+        const finalTotalEl = document.getElementById('cart-final-total');
+        const orderTotalEl = document.getElementById('order-total-price');
 
-        if (!productSelect || !totalPriceEl) return;
+        const totals = calculateCartTotals();
 
-        const prodId = productSelect.value;
-        const qty = quantityInput ? quantityInput.value : 1;
+        if (badgeEl) {
+            badgeEl.textContent = totals.itemCount + (totals.itemCount === 1 ? ' Item' : ' Items');
+        }
+        if (subtotalEl) {
+            subtotalEl.textContent = totals.formattedSubtotal;
+        }
+        if (discountEl) {
+            discountEl.textContent = totals.formattedDiscount;
+        }
+        if (finalTotalEl) {
+            finalTotalEl.textContent = totals.formattedFinalTotal;
+        }
+        if (orderTotalEl) {
+            orderTotalEl.textContent = totals.formattedFinalTotal;
+        }
 
-        const calc = calculateOrderTotal(prodId, qty);
-        totalPriceEl.textContent = calc.formattedTotal;
+        if (!container) return;
 
-        // Highlight table row
-        highlightCatalogRow(prodId);
+        // Clear existing items cleanly
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        // Empty state check
+        if (cart.length === 0) {
+            const emptyBox = document.createElement('div');
+            emptyBox.className = 'p-4 text-center border border-secondary border-opacity-25 rounded bg-black';
+            emptyBox.id = 'cart-empty-message';
+
+            const p = document.createElement('p');
+            p.className = 'text-secondary mb-0';
+            p.textContent = 'Your shopping cart is currently empty. Click ';
+
+            const strong = document.createElement('strong');
+            strong.textContent = '+ Add to Cart';
+            p.appendChild(strong);
+
+            const tail = document.createTextNode(' on any apothecary product or craft drink above.');
+            p.appendChild(tail);
+
+            emptyBox.appendChild(p);
+            container.appendChild(emptyBox);
+            return;
+        }
+
+        // Render Cart Items Table
+        const tableWrapper = document.createElement('div');
+        tableWrapper.className = 'table-responsive rounded border border-secondary border-opacity-25 shadow-sm';
+
+        const table = document.createElement('table');
+        table.className = 'table table-dark table-hover align-middle mb-0';
+
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+
+        const thItem = document.createElement('th');
+        thItem.scope = 'col';
+        thItem.className = 'text-gold py-2 px-3';
+        thItem.textContent = 'Item';
+
+        const thPrice = document.createElement('th');
+        thPrice.scope = 'col';
+        thPrice.className = 'text-gold py-2 text-end';
+        thPrice.textContent = 'Unit Price';
+
+        const thQty = document.createElement('th');
+        thQty.scope = 'col';
+        thQty.className = 'text-gold py-2 text-center';
+        thQty.textContent = 'Quantity';
+
+        const thSubtotal = document.createElement('th');
+        thSubtotal.scope = 'col';
+        thSubtotal.className = 'text-gold py-2 text-end px-3';
+        thSubtotal.textContent = 'Total';
+
+        const thAction = document.createElement('th');
+        thAction.scope = 'col';
+        thAction.className = 'text-gold py-2 text-center';
+        thAction.textContent = 'Action';
+
+        headerRow.appendChild(thItem);
+        headerRow.appendChild(thPrice);
+        headerRow.appendChild(thQty);
+        headerRow.appendChild(thSubtotal);
+        headerRow.appendChild(thAction);
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+
+        for (let i = 0; i < cart.length; i++) {
+            const item = cart[i];
+            const row = document.createElement('tr');
+
+            // Item Name & Volume
+            const tdItem = document.createElement('td');
+            tdItem.className = 'px-3';
+
+            const nameStrong = document.createElement('strong');
+            nameStrong.className = 'text-light d-block';
+            nameStrong.textContent = item.name;
+
+            const volSmall = document.createElement('small');
+            volSmall.className = 'text-secondary';
+            volSmall.textContent = item.volume;
+
+            tdItem.appendChild(nameStrong);
+            tdItem.appendChild(volSmall);
+
+            // Unit Price
+            const tdPrice = document.createElement('td');
+            tdPrice.className = 'text-end text-secondary';
+            tdPrice.textContent = window.Logovo.formatPrice(item.unitPrice);
+
+            // Quantity Controller (- Qty +)
+            const tdQty = document.createElement('td');
+            tdQty.className = 'text-center';
+
+            const qtyGroup = document.createElement('div');
+            qtyGroup.className = 'btn-group btn-group-sm';
+            qtyGroup.setAttribute('role', 'group');
+
+            const btnDec = document.createElement('button');
+            btnDec.type = 'button';
+            btnDec.className = 'btn btn-outline-secondary py-0 px-2';
+            btnDec.textContent = '−';
+            btnDec.setAttribute('data-action', 'decrease');
+            btnDec.setAttribute('data-id', item.id);
+            btnDec.setAttribute('aria-label', 'Decrease quantity');
+
+            const spanQty = document.createElement('span');
+            spanQty.className = 'btn btn-outline-secondary py-0 px-2 text-light disabled border-start-0 border-end-0';
+            spanQty.textContent = item.quantity;
+
+            const btnInc = document.createElement('button');
+            btnInc.type = 'button';
+            btnInc.className = 'btn btn-outline-secondary py-0 px-2';
+            btnInc.textContent = '+';
+            btnInc.setAttribute('data-action', 'increase');
+            btnInc.setAttribute('data-id', item.id);
+            btnInc.setAttribute('aria-label', 'Increase quantity');
+
+            qtyGroup.appendChild(btnDec);
+            qtyGroup.appendChild(spanQty);
+            qtyGroup.appendChild(btnInc);
+            tdQty.appendChild(qtyGroup);
+
+            // Total
+            const tdSub = document.createElement('td');
+            tdSub.className = 'text-end fw-bold text-gold px-3';
+            tdSub.textContent = window.Logovo.formatPrice(item.unitPrice * item.quantity);
+
+            // Remove Button
+            const tdAct = document.createElement('td');
+            tdAct.className = 'text-center';
+
+            const btnRemove = document.createElement('button');
+            btnRemove.type = 'button';
+            btnRemove.className = 'btn btn-outline-danger btn-sm py-0 px-2';
+            btnRemove.textContent = '✕';
+            btnRemove.setAttribute('data-action', 'remove');
+            btnRemove.setAttribute('data-id', item.id);
+            btnRemove.setAttribute('title', 'Remove item from cart');
+            btnRemove.setAttribute('aria-label', 'Remove ' + item.name);
+
+            tdAct.appendChild(btnRemove);
+
+            row.appendChild(tdItem);
+            row.appendChild(tdPrice);
+            row.appendChild(tdQty);
+            row.appendChild(tdSub);
+            row.appendChild(tdAct);
+            tbody.appendChild(row);
+        }
+
+        table.appendChild(tbody);
+        tableWrapper.appendChild(table);
+        container.appendChild(tableWrapper);
     }
 
     /**
-     * Highlights the corresponding table row in the catalog table
+     * Highlights corresponding row in catalog table
      * @param {string} productId - Selected product ID
      */
     function highlightCatalogRow(productId) {
         const rows = document.querySelectorAll('#table-market tbody tr');
-        rows.forEach(function (r) {
-            r.classList.remove('selected-state');
-        });
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].classList.remove('selected-state');
+        }
 
         const idMapping = {
             'clay': 'market-row-1',
@@ -192,26 +440,22 @@
         let firstInvalidField = null;
         const errorList = [];
 
-        // 1. Product Item Select
+        // 1. Verify Cart has items (or auto-add quick select if picked)
         const productSelect = document.getElementById('order-product-select');
-        if (!productSelect || productSelect.value.trim() === '') {
-            window.Logovo.setFieldError(productSelect, 'Please choose a product or beverage item.');
-            errorList.push('Product selection is required.');
-            isValid = false;
-            firstInvalidField = firstInvalidField || productSelect;
-        }
-
-        // 2. Quantity (Integer between 1 and 10)
         const quantityInput = document.getElementById('order-quantity-input');
-        const qtyVal = parseInt(quantityInput ? quantityInput.value : '0', 10);
-        if (isNaN(qtyVal) || qtyVal < 1 || qtyVal > 10) {
-            window.Logovo.setFieldError(quantityInput, 'Quantity must be an integer between 1 and 10.');
-            errorList.push('Quantity must be between 1 and 10.');
-            isValid = false;
-            firstInvalidField = firstInvalidField || quantityInput;
+
+        if (productSelect && productSelect.value.trim() !== '') {
+            const q = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
+            addToCart(productSelect.value, q);
+            productSelect.value = '';
         }
 
-        // 3. Pickup Branch
+        if (cart.length === 0) {
+            errorList.push('Your shopping cart is empty. Please click "+ Add to Cart" on at least one product.');
+            isValid = false;
+        }
+
+        // 2. Pickup Branch
         const branchSelect = document.getElementById('order-branch-select');
         if (!branchSelect || branchSelect.value.trim() === '') {
             window.Logovo.setFieldError(branchSelect, 'Please choose a pickup branch.');
@@ -220,7 +464,7 @@
             firstInvalidField = firstInvalidField || branchSelect;
         }
 
-        // 4. Customer Full Name (Trimmed, min 3 chars)
+        // 3. Customer Full Name (Trimmed, min 3 chars)
         const nameInput = document.getElementById('order-name-input');
         const trimmedName = window.Logovo.sanitize(nameInput ? nameInput.value : '');
         if (trimmedName.length < 3) {
@@ -230,7 +474,7 @@
             firstInvalidField = firstInvalidField || nameInput;
         }
 
-        // 5. Contact Telephone (+7...)
+        // 4. Contact Telephone (+7...)
         const phoneInput = document.getElementById('order-phone-input');
         const phoneVal = phoneInput ? phoneInput.value : '';
         if (!window.Logovo.isValidPhone(phoneVal)) {
@@ -240,7 +484,7 @@
             firstInvalidField = firstInvalidField || phoneInput;
         }
 
-        // 6. Agreement Checkbox
+        // 5. Agreement Checkbox
         const agreeCheck = document.getElementById('order-agree-check');
         if (!agreeCheck || !agreeCheck.checked) {
             window.Logovo.setFieldError(agreeCheck, 'Please confirm the 48-hour pickup reservation policy.');
@@ -263,11 +507,11 @@
 
                 const ul = document.createElement('ul');
                 ul.className = 'mb-0 ps-3 small';
-                errorList.forEach(function (err) {
+                for (let i = 0; i < errorList.length; i++) {
                     const li = document.createElement('li');
-                    li.textContent = err;
-                    errorUl.appendChild(li);
-                });
+                    li.textContent = errorList[i];
+                    ul.appendChild(li);
+                }
                 errorContainer.appendChild(ul);
 
                 if (firstInvalidField) {
@@ -296,11 +540,12 @@
         const branchEl = document.getElementById('order-voucher-branch');
         const priceEl = document.getElementById('order-voucher-price');
         const statusBadge = document.getElementById('order-status-badge');
-        const noticeP = document.getElementById('order-voucher-notice');
+        const noticeCodeEl = document.getElementById('order-voucher-notice-code');
 
         const referenceCode = window.Logovo.generateReference('RES');
         if (codeEl) codeEl.textContent = referenceCode;
-        if (itemEl) itemEl.textContent = details.itemName + ' (Qty: ' + details.quantity + ')';
+        if (noticeCodeEl) noticeCodeEl.textContent = referenceCode;
+        if (itemEl) itemEl.textContent = details.itemsSummary;
         if (branchEl) branchEl.textContent = details.branchName;
         if (priceEl) priceEl.textContent = details.formattedTotal;
 
@@ -309,59 +554,97 @@
             statusBadge.textContent = 'Status: Reserved for 48 Hours (Demo)';
         }
 
-        if (noticeP) {
-            noticeP.textContent = '';
-            const noticeSpan = document.createElement('span');
-            noticeSpan.className = 'text-warning d-block fw-semibold mb-1';
-            noticeSpan.textContent = '★ Demonstration Notice: No financial transaction took place and no inventory has been deducted.';
-
-            const pickSpan = document.createElement('span');
-            pickSpan.className = 'd-block';
-            pickSpan.textContent = 'Customer ' + details.customerName + ', your reserved items will be held at ' + details.branchName + ' for 48 hours under voucher code ' + referenceCode + '.';
-
-            noticeP.appendChild(noticeSpan);
-            noticeP.appendChild(pickSpan);
-        }
-
         voucherCard.classList.add('card-dark-highlight');
+        voucherWrapper.classList.remove('is-hidden');
         voucherWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Reset cart upon successful checkout
+        clearCart();
     }
 
     // -------------------------------------------------------------------------
-    // 4. Initialization & Event Binding
+    // 4. Initialization & Event Binding (Pure Plain JavaScript)
     // -------------------------------------------------------------------------
     function initMarketbarPage() {
-        const productSelect = document.getElementById('order-product-select');
-        const quantityInput = document.getElementById('order-quantity-input');
         const orderForm = document.getElementById('form-market-order');
+        const cartContainer = document.getElementById('cart-items-container');
+        const clearCartBtn = document.getElementById('btn-clear-cart');
+        const closeVoucherBtn = document.getElementById('btn-close-order-voucher');
+        const closeVoucherBottomBtn = document.getElementById('btn-close-order-voucher-bottom');
 
-        // Initial calculation
-        updateOrderDisplay();
+        // Initial default items for demonstration (e.g. 1 clay item)
+        addToCart('clay', 1);
 
-        if (productSelect) {
-            productSelect.addEventListener('change', updateOrderDisplay);
-        }
-
-        if (quantityInput) {
-            quantityInput.addEventListener('input', updateOrderDisplay);
-        }
-
-        // Table "Reserve Item" Button Click Listeners
-        const reserveButtons = document.querySelectorAll('.select-product-btn');
-        reserveButtons.forEach(function (button, index) {
-            button.addEventListener('click', function () {
-                const mappedProduct = PRODUCTS_DATA[index];
-                if (mappedProduct) {
-                    if (productSelect) {
-                        productSelect.value = mappedProduct.id;
+        // Catalog "+ Add to Cart" buttons
+        const addButtons = document.querySelectorAll('.btn-add-to-cart');
+        for (let i = 0; i < addButtons.length; i++) {
+            addButtons[i].addEventListener('click', function () {
+                const prodId = this.getAttribute('data-product-id');
+                if (prodId) {
+                    addToCart(prodId, 1);
+                    // Smoothly scroll down to cart to show addition
+                    const cartSection = document.getElementById('marketbar-cart-section');
+                    if (cartSection) {
+                        cartSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     }
-                    if (quantityInput) {
-                        quantityInput.value = 1;
-                    }
-                    updateOrderDisplay();
                 }
             });
-        });
+        }
+
+        // Cart items delegated buttons: increase, decrease, remove
+        if (cartContainer) {
+            cartContainer.addEventListener('click', function (event) {
+                const target = event.target;
+                const action = target.getAttribute('data-action');
+                const prodId = target.getAttribute('data-id');
+
+                if (!action || !prodId) return;
+
+                if (action === 'increase') {
+                    for (let i = 0; i < cart.length; i++) {
+                        if (cart[i].id === prodId) {
+                            updateCartItemQty(prodId, cart[i].quantity + 1);
+                            break;
+                        }
+                    }
+                } else if (action === 'decrease') {
+                    for (let j = 0; j < cart.length; j++) {
+                        if (cart[j].id === prodId) {
+                            updateCartItemQty(prodId, cart[j].quantity - 1);
+                            break;
+                        }
+                    }
+                } else if (action === 'remove') {
+                    removeFromCart(prodId);
+                }
+            });
+        }
+
+        // Clear Cart button
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', function () {
+                clearCart();
+            });
+        }
+
+        // Close Order Voucher buttons
+        function closeOrderVoucher() {
+            const voucherWrapper = document.getElementById('order-confirmation-wrapper');
+            if (voucherWrapper) {
+                voucherWrapper.classList.add('is-hidden');
+            }
+            const cartSection = document.getElementById('marketbar-cart-section');
+            if (cartSection) {
+                cartSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        if (closeVoucherBtn) {
+            closeVoucherBtn.addEventListener('click', closeOrderVoucher);
+        }
+        if (closeVoucherBottomBtn) {
+            closeVoucherBottomBtn.addEventListener('click', closeOrderVoucher);
+        }
 
         // Form submission
         if (orderForm) {
@@ -369,19 +652,21 @@
                 event.preventDefault();
 
                 if (validateMarketOrderForm(orderForm)) {
-                    const chosenProd = findProductById(productSelect.value);
-                    const qty = parseInt(quantityInput.value, 10);
                     const branchSelect = document.getElementById('order-branch-select');
                     const nameInput = document.getElementById('order-name-input');
+                    const totals = calculateCartTotals();
 
-                    const calc = calculateOrderTotal(productSelect.value, qty);
+                    const itemNames = [];
+                    for (let k = 0; k < cart.length; k++) {
+                        itemNames.push(cart[k].name + ' × ' + cart[k].quantity);
+                    }
+
                     const branchText = BRANCHES_MAP[branchSelect.value] || branchSelect.options[branchSelect.selectedIndex].text;
 
                     const details = {
-                        itemName: chosenProd ? chosenProd.name : 'Cosmetics Item',
-                        quantity: qty,
+                        itemsSummary: itemNames.join(', '),
                         branchName: branchText,
-                        formattedTotal: calc.formattedTotal,
+                        formattedTotal: totals.formattedFinalTotal,
                         customerName: window.Logovo.sanitize(nameInput.value)
                     };
 
@@ -392,9 +677,6 @@
             orderForm.addEventListener('reset', function () {
                 setTimeout(function () {
                     window.Logovo.clearFormErrors(orderForm);
-                    if (productSelect) productSelect.value = 'clay';
-                    if (quantityInput) quantityInput.value = 1;
-                    updateOrderDisplay();
                 }, 10);
             });
         }

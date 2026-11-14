@@ -286,14 +286,17 @@
             <div id="booking-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
 
             <!-- Visible Confirmation & Result Voucher Area -->
-            <div id="booking-confirmation-wrapper" class="mt-4">
+            <div id="booking-confirmation-wrapper" class="mt-4 is-hidden">
                 <div class="confirmation-voucher shadow" id="booking-confirmation-card">
                     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                         <div>
                             <span class="badge bg-gold mb-1">Reservation Voucher</span>
                             <h3 class="h5 text-gold mb-0">Booking Details & Check-In Voucher</h3>
                         </div>
-                        <span class="status-badge-pending mt-2 mt-sm-0" id="booking-voucher-status">Status: Pending SMS Confirmation</span>
+                        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+                            <span class="status-badge-pending" id="booking-voucher-status">Status: Pending SMS Confirmation</span>
+                            <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-booking-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
+                        </div>
                     </div>
 
                     <div class="voucher-divider"></div>
@@ -327,9 +330,14 @@
 
                     <div class="voucher-divider"></div>
 
-                    <p class="mb-0 text-secondary small" id="booking-voucher-notice">
+                    <p class="mb-3 text-secondary small" id="booking-voucher-notice">
                         * Please arrive 5 minutes prior to your time. Fresh espresso is served at our hospitality bar upon arrival. If you need to make changes, contact us directly at <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a>.
                     </p>
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
+                        <small class="text-secondary">Present this voucher code to the club administrator upon your visit.</small>
+                        <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-voucher-bottom">✕ Close Voucher / Book Another</button>
+                    </div>
                 </div>
             </div>
         </section>

@@ -74,7 +74,7 @@
                             <td class="text-center text-secondary" id="product-vol-1">100 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-1">7 500</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-1">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-1" data-product-id="clay">+ Add to Cart</button>
                             </td>
                         </tr>
                         <tr id="market-row-2">
@@ -85,7 +85,7 @@
                             <td class="text-center text-secondary" id="product-vol-2">250 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-2">5 200</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-2">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-2" data-product-id="shampoo">+ Add to Cart</button>
                             </td>
                         </tr>
                         <tr id="market-row-3">
@@ -97,7 +97,7 @@
                             <td class="text-center text-secondary" id="product-vol-3">50 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-3">6 000</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-3">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-3" data-product-id="oil">+ Add to Cart</button>
                             </td>
                         </tr>
                         <tr id="market-row-4">
@@ -108,7 +108,7 @@
                             <td class="text-center text-secondary" id="product-vol-4">100 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-4">5 800</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-4">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-4" data-product-id="balm">+ Add to Cart</button>
                             </td>
                         </tr>
                         <tr id="market-row-5">
@@ -120,7 +120,7 @@
                             <td class="text-center text-secondary" id="product-vol-5">60 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-5">1 000</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-5">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-5" data-product-id="espresso">+ Add to Cart</button>
                             </td>
                         </tr>
                         <tr id="market-row-6">
@@ -131,7 +131,7 @@
                             <td class="text-center text-secondary" id="product-vol-6">330 ml</td>
                             <td class="text-end fw-bold text-gold px-3" id="product-price-6">1 200</td>
                             <td class="text-center px-3">
-                                <a href="#order-reserve-section" class="btn btn-sm btn-outline-gold select-product-btn" id="btn-select-product-6">Reserve Item</a>
+                                <button type="button" class="btn btn-sm btn-gold select-product-btn btn-add-to-cart" id="btn-select-product-6" data-product-id="tonic">+ Add to Cart</button>
                             </td>
                         </tr>
                     </tbody>
@@ -139,21 +139,61 @@
             </div>
         </section>
 
+        <!-- Interactive Shopping Cart Section -->
+        <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25 my-5" id="marketbar-cart-section">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 pb-2 border-bottom border-secondary border-opacity-50">
+                <div>
+                    <h2 class="h3 fw-bold text-gold mb-1" id="cart-heading">Your Shopping Cart</h2>
+                    <p class="text-secondary small mb-0">Choose items above with "+ Add to Cart". Adjust quantities below and proceed to desk pickup checkout.</p>
+                </div>
+                <span class="badge bg-gold fs-6 mt-2 mt-sm-0" id="cart-count-badge">0 Items</span>
+            </div>
+
+            <!-- Dynamic Cart Items Container -->
+            <div id="cart-items-container" class="my-3">
+                <div class="p-4 text-center border border-secondary border-opacity-25 rounded bg-black" id="cart-empty-message">
+                    <p class="text-secondary mb-0">Your shopping cart is currently empty. Click <strong>+ Add to Cart</strong> on any apothecary product or craft drink above.</p>
+                </div>
+            </div>
+
+            <!-- Cart Pricing Breakdown -->
+            <div class="summary-box my-3" id="cart-summary-box">
+                <div class="row g-2 align-items-center">
+                    <div class="col-12 col-md-4">
+                        <span class="text-secondary small d-block">Items Subtotal:</span>
+                        <strong class="text-light fs-5" id="cart-subtotal-price">0 KZT</strong>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <span class="text-secondary small d-block">Club Privilege (Orders ≥ 15 000 KZT):</span>
+                        <strong class="text-success-custom fs-6" id="cart-discount-value">No Discount (0 KZT)</strong>
+                    </div>
+                    <div class="col-12 col-md-4 text-md-end">
+                        <span class="text-secondary small d-block">Total Due at Desk:</span>
+                        <strong class="text-gold fs-4" id="cart-final-total">0 KZT</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mt-3">
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-clear-cart">Clear Cart</button>
+                <a href="#order-reserve-section" class="btn btn-gold px-4 py-2" id="btn-proceed-checkout">Proceed to Checkout ↓</a>
+            </div>
+        </section>
+
         <!-- Dispensary Pre-Order & Reservation Form Section -->
         <section class="card card-dark p-4 p-md-5 shadow border border-secondary border-opacity-25 my-5" id="order-reserve-section">
-            <h2 class="h3 fw-bold text-gold mb-2" id="order-heading">Dispensary Pre-Order & Desk Pickup</h2>
+            <h2 class="h3 fw-bold text-gold mb-2" id="order-heading">Dispensary Desk Pickup & Checkout</h2>
             <p class="text-secondary mb-4" id="order-instruction">
-                Reserve your favorite styling cosmetics or bar beverages for swift pickup during your next haircut. 
-                <strong class="text-light">What happens next:</strong> Selected items are held at your designated branch dispensary desk for 48 hours. An instant reservation code is issued below; present the voucher upon visit to inspect, collect, and settle payment.
+                Confirm your reservation details below. Your selected cart items will be securely held for 48 hours at your chosen branch dispensary desk. Settle payment upon pickup at the counter.
             </p>
 
             <form action="marketbar.html#order-confirmation-wrapper" method="post" id="form-market-order">
                 <div class="row g-3">
                     <div class="col-12 col-md-5">
-                        <label for="order-product-select" class="form-label text-light">Select Item:</label>
-                        <select id="order-product-select" name="order_product" class="form-select bg-dark text-light border-secondary" required>
-                            <option value="">-- Choose Product Item --</option>
-                            <option value="clay" selected>Extreme Hold Matte Finish Clay (7 500 KZT)</option>
+                        <label for="order-product-select" class="form-label text-light">Quick-Add Additional Item (Optional):</label>
+                        <select id="order-product-select" name="order_product" class="form-select bg-dark text-light border-secondary">
+                            <option value="">-- Or Pick Extra Item to Add --</option>
+                            <option value="clay">Extreme Hold Matte Finish Clay (7 500 KZT)</option>
                             <option value="shampoo">Botanical Tea Tree Clarifying Shampoo (5 200 KZT)</option>
                             <option value="oil">Argan & Cedar Wood Conditioning Oil (6 000 KZT)</option>
                             <option value="balm">Sandalwood Soothing Aftershave Balm (5 800 KZT)</option>
@@ -163,8 +203,8 @@
                     </div>
 
                     <div class="col-12 col-md-3">
-                        <label for="order-quantity-input" class="form-label text-light">Quantity:</label>
-                        <input type="number" id="order-quantity-input" name="order_quantity" class="form-control bg-dark text-light border-secondary" min="1" max="10" value="1" required>
+                        <label for="order-quantity-input" class="form-label text-light">Quick-Add Qty:</label>
+                        <input type="number" id="order-quantity-input" name="order_quantity" class="form-control bg-dark text-light border-secondary" min="1" max="10" value="1">
                     </div>
 
                     <div class="col-12 col-md-4">
@@ -214,13 +254,13 @@
                 <!-- Calculator & Subtotal Box -->
                 <div class="summary-box my-4" id="order-summary-box">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-secondary small">Total Estimated Amount at Counter:</span>
-                        <span id="order-total-price" class="fs-4 fw-bold text-gold">7 500 KZT</span>
+                        <span class="text-secondary small">Total Amount Payable at Pickup Desk:</span>
+                        <span id="order-total-price" class="fs-4 fw-bold text-gold">0 KZT</span>
                     </div>
                 </div>
 
                 <div class="d-flex flex-wrap gap-3" id="order-buttons-container">
-                    <button type="submit" class="btn btn-gold px-4 py-2" id="order-submit-btn">Confirm Reservation</button>
+                    <button type="submit" class="btn btn-gold px-4 py-2" id="order-submit-btn">Confirm Order Reservation</button>
                     <button type="reset" class="btn btn-outline-secondary px-4 py-2" id="order-reset-btn">Reset</button>
                 </div>
             </form>
@@ -229,14 +269,17 @@
             <div id="order-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
 
             <!-- Visible Confirmation Voucher Area -->
-            <div id="order-confirmation-wrapper" class="mt-4">
+            <div id="order-confirmation-wrapper" class="mt-4 is-hidden">
                 <div class="confirmation-voucher shadow" id="order-confirmation-card">
                     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                         <div>
                             <span class="badge bg-gold mb-1">Dispensary Hold</span>
                             <h3 class="h5 text-gold mb-0">Product Pre-Order Pickup Voucher</h3>
                         </div>
-                        <span class="status-badge-pending mt-2 mt-sm-0" id="order-status-badge">Status: Reserved for 48 Hours</span>
+                        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+                            <span class="status-badge-pending" id="order-status-badge">Status: Reserved for 48 Hours</span>
+                            <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-order-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
+                        </div>
                     </div>
 
                     <div class="voucher-divider"></div>
@@ -247,8 +290,8 @@
                             <strong class="text-gold" id="order-voucher-code">MKT-2026-RES-712</strong>
                         </div>
                         <div class="col-12 col-md-3">
-                            <span class="text-secondary d-block">Reserved Product:</span>
-                            <strong class="text-light" id="order-voucher-item">Extreme Hold Matte Finish Clay (100 ml)</strong>
+                            <span class="text-secondary d-block">Reserved Items:</span>
+                            <strong class="text-light" id="order-voucher-item">No items selected</strong>
                         </div>
                         <div class="col-12 col-md-3">
                             <span class="text-secondary d-block">Pickup Desk:</span>
@@ -256,15 +299,20 @@
                         </div>
                         <div class="col-12 col-md-3">
                             <span class="text-secondary d-block">Amount Due at Desk:</span>
-                            <strong class="text-gold fs-6" id="order-voucher-price">7 500 KZT</strong>
+                            <strong class="text-gold fs-6" id="order-voucher-price">0 KZT</strong>
                         </div>
                     </div>
 
                     <div class="voucher-divider"></div>
 
-                    <p class="mb-0 text-secondary small" id="order-voucher-notice">
-                        * Please quote voucher code <strong>MKT-2026-RES-712</strong> to the club administrator upon your visit. Items will remain safely packaged in your name.
+                    <p class="mb-3 text-secondary small" id="order-voucher-notice">
+                        * Please quote voucher code <strong id="order-voucher-notice-code">MKT-2026-RES-712</strong> to the club administrator upon your visit. Items will remain safely packaged in your name.
                     </p>
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
+                        <small class="text-secondary">Present this voucher code to the club administrator upon your visit.</small>
+                        <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-order-voucher-bottom">✕ Close Voucher / New Order</button>
+                    </div>
                 </div>
             </div>
         </section>

@@ -564,6 +564,18 @@
                 $serviceSelect.val('classic');
             }, 10);
         });
+
+        // Event 6: 'click' on close reservation voucher buttons
+        $('#btn-close-booking-voucher, #btn-close-voucher-bottom').on('click', function () {
+            const $voucherWrapper = $('#booking-confirmation-wrapper');
+            $voucherWrapper.slideUp(350, function () {
+                $voucherWrapper.addClass('is-hidden');
+            });
+            const bookingSection = document.getElementById('booking-section');
+            if (bookingSection) {
+                bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
     }
 
     // Initialize on DOM ready
