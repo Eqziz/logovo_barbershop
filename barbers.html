@@ -270,14 +270,17 @@
             <div id="inquiry-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
 
             <!-- Visible Confirmation Voucher Area -->
-            <div id="inquiry-confirmation-wrapper" class="mt-4">
+            <div id="inquiry-confirmation-wrapper" class="mt-4 is-hidden">
                 <div class="confirmation-voucher shadow" id="inquiry-confirmation-card">
                     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                         <div>
                             <span class="badge bg-gold mb-1">Inquiry Registered</span>
                             <h3 class="h5 text-gold mb-0">Master Consultation Ticket</h3>
                         </div>
-                        <span class="status-badge-pending mt-2 mt-sm-0" id="inquiry-status-badge">Status: Queued for Master Review</span>
+                        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+                            <span class="status-badge-pending" id="inquiry-status-badge">Status: Queued for Master Review</span>
+                            <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-inquiry-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
+                        </div>
                     </div>
 
                     <div class="voucher-divider"></div>
@@ -299,22 +302,17 @@
 
                     <div class="voucher-divider"></div>
 
-                    <p class="mb-0 text-secondary small" id="inquiry-voucher-notice">
+                    <p class="mb-3 text-secondary small" id="inquiry-voucher-notice">
                         * Thank you for consulting Logovo. Your inquiry has been routed to the master's tablet. Urgent inquiries may be directed to <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a>.
                     </p>
+
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25 flex-wrap gap-2">
+                        <small class="text-secondary">Present this ticket code to the master barber upon your appointment.</small>
+                        <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-inquiry-voucher-bottom">✕ Close Voucher / New Inquiry</button>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Figure Image of Master at Work -->
-        <div class="row justify-content-center my-4">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <figure class="p-3 p-md-4 rounded bg-dark border border-secondary border-opacity-25 text-center mb-0" id="barber-figure">
-                    <img src="images/photo3.jpg" alt="Head barber sanitizing precision tools" class="img-fluid rounded shadow mb-3 border border-secondary border-opacity-50" id="barber-figure-image" style="max-height: 55vh; width: auto; max-width: 100%; object-fit: contain;">
-                    <figcaption class="text-secondary small" id="barber-figure-caption">Head Barber Azamat inspecting Japanese steel shears at the Syganak branch cutting floor.</figcaption>
-                </figure>
-            </div>
-        </div>
     </main>
 
     <!-- Unified Site Footer -->

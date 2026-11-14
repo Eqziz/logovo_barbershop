@@ -431,6 +431,7 @@
         }
 
         card.classList.add('card-dark-highlight');
+        wrapper.classList.remove('is-hidden');
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -490,6 +491,27 @@
                     window.Logovo.clearFormErrors(inquiryForm);
                 }, 10);
             });
+        }
+
+        // Close / hide inquiry voucher listener
+        function hideInquiryVoucher() {
+            const wrapper = document.getElementById('inquiry-confirmation-wrapper');
+            if (wrapper) {
+                wrapper.classList.add('is-hidden');
+            }
+            const formSection = document.getElementById('barber-inquiry-section');
+            if (formSection) {
+                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        const closeInquiryBtn = document.getElementById('btn-close-inquiry-voucher');
+        const closeInquiryBtnBottom = document.getElementById('btn-close-inquiry-voucher-bottom');
+        if (closeInquiryBtn) {
+            closeInquiryBtn.addEventListener('click', hideInquiryVoucher);
+        }
+        if (closeInquiryBtnBottom) {
+            closeInquiryBtnBottom.addEventListener('click', hideInquiryVoucher);
         }
     }
 

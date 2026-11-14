@@ -372,6 +372,16 @@
                 setupCharacterCounter();
             }, 10);
         });
+
+        // Close/hide confirmation voucher
+        $('#btn-close-feedback-voucher, #btn-close-feedback-voucher-bottom').on('click', function () {
+            $('#feedback-confirmation-wrapper').slideUp(350, function () {
+                $(this).addClass('is-hidden');
+            });
+            $('html, body').animate({
+                scrollTop: $('#feedback-form-section').offset().top - 40
+            }, 300);
+        });
     }
 
     $(function () {

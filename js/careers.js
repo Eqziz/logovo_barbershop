@@ -308,6 +308,16 @@
                 window.Logovo.clearFormErrors($form);
             }, 10);
         });
+
+        // Close/hide application dossier voucher
+        $('#btn-close-careers-voucher, #btn-close-careers-voucher-bottom').on('click', function () {
+            $('#careers-confirmation-wrapper').slideUp(350, function () {
+                $(this).addClass('is-hidden');
+            });
+            $('html, body').animate({
+                scrollTop: $('#careers-form-section').offset().top - 40
+            }, 300);
+        });
     }
 
     $(function () {

@@ -142,14 +142,17 @@
                     <div id="fb-error-container" class="alert-error-box is-hidden mt-3" role="alert"></div>
 
                     <!-- Visible Confirmation Voucher Area -->
-                    <div id="feedback-confirmation-wrapper" class="mt-4">
+                    <div id="feedback-confirmation-wrapper" class="mt-4 is-hidden">
                         <div class="confirmation-voucher shadow" id="feedback-confirmation-card">
                             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                                 <div>
                                     <span class="badge bg-gold mb-1">Quality Assurance</span>
                                     <h2 class="h5 text-gold mb-0">Audit Submission Acknowledged</h2>
                                 </div>
-                                <span class="status-badge-confirmed mt-2 mt-sm-0" id="fb-status-badge">Status: Logged to QA Registry</span>
+                                <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+                                    <span class="status-badge-confirmed" id="fb-status-badge">Status: Logged to QA Registry</span>
+                                    <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-feedback-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
+                                </div>
                             </div>
 
                             <div class="voucher-divider"></div>
@@ -171,9 +174,14 @@
 
                             <div class="voucher-divider"></div>
 
-                            <p class="mb-0 text-secondary small" id="fb-voucher-notice">
+                            <p class="mb-3 text-secondary small" id="fb-voucher-notice">
                                 * Thank you for helping us maintain uncompromising grooming standards. Your feedback has been forwarded to the managing partners.
                             </p>
+
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25 flex-wrap gap-2">
+                                <small class="text-secondary">Your feedback helps improve our service standards.</small>
+                                <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-feedback-voucher-bottom">✕ Close Voucher / New Review</button>
+                            </div>
                         </div>
                     </div>
                 </section>
