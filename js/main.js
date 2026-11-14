@@ -362,6 +362,10 @@ window.Logovo = (function () {
             nameSpan.className = 'd-none d-sm-inline';
             nameSpan.textContent = profile.name;
             profileBtn.appendChild(nameSpan);
+            profileBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                openLoginModal();
+            });
 
             // Log out button
             const logoutBtn = document.createElement('button');
@@ -388,6 +392,10 @@ window.Logovo = (function () {
             loginBtn.setAttribute('data-bs-toggle', 'modal');
             loginBtn.setAttribute('data-bs-target', '#login-profile-modal');
             loginBtn.textContent = 'Log In / Profile';
+            loginBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                openLoginModal();
+            });
             authContainer.appendChild(loginBtn);
         }
     }
@@ -433,6 +441,44 @@ window.Logovo = (function () {
     }
 
     /**
+     * Opens the login/profile modal safely across all environments
+     */
+    function openLoginModal() {
+        const modalEl = document.getElementById('login-profile-modal');
+        if (!modalEl) return;
+
+        updateModalViews();
+
+        if (window.bootstrap && window.bootstrap.Modal) {
+            try {
+                let instance = window.bootstrap.Modal.getInstance(modalEl);
+                if (!instance) {
+                    instance = new window.bootstrap.Modal(modalEl);
+                }
+                instance.show();
+                return;
+            } catch (e) {
+                // Continue to native DOM modal display
+            }
+        }
+
+        // Native DOM fallback
+        modalEl.classList.add('show');
+        modalEl.style.display = 'block';
+        modalEl.removeAttribute('aria-hidden');
+        modalEl.setAttribute('aria-modal', 'true');
+
+        let backdrop = document.getElementById('modal-custom-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.id = 'modal-custom-backdrop';
+            backdrop.className = 'modal-backdrop fade show';
+            document.body.appendChild(backdrop);
+        }
+        document.body.classList.add('modal-open');
+    }
+
+    /**
      * Dismisses the login/profile modal safely
      */
     function closeLoginModal() {
@@ -440,16 +486,32 @@ window.Logovo = (function () {
         if (!modalEl) return;
 
         if (window.bootstrap && window.bootstrap.Modal) {
-            const instance = window.bootstrap.Modal.getInstance(modalEl);
-            if (instance) {
-                instance.hide();
-                return;
+            try {
+                const instance = window.bootstrap.Modal.getInstance(modalEl);
+                if (instance) {
+                    instance.hide();
+                }
+            } catch (e) {
+                // Continue to native DOM hide
             }
         }
-        const closeBtn = modalEl.querySelector('[data-bs-dismiss="modal"]');
-        if (closeBtn) {
-            closeBtn.click();
+
+        modalEl.classList.remove('show');
+        modalEl.style.display = 'none';
+        modalEl.setAttribute('aria-hidden', 'true');
+        modalEl.removeAttribute('aria-modal');
+
+        const backdrop = document.getElementById('modal-custom-backdrop');
+        if (backdrop && backdrop.parentNode) {
+            backdrop.parentNode.removeChild(backdrop);
         }
+        const bsBackdrops = document.querySelectorAll('.modal-backdrop');
+        for (let i = 0; i < bsBackdrops.length; i++) {
+            if (bsBackdrops[i].parentNode) {
+                bsBackdrops[i].parentNode.removeChild(bsBackdrops[i]);
+            }
+        }
+        document.body.classList.remove('modal-open');
     }
 
     /**
@@ -603,6 +665,30 @@ window.Logovo = (function () {
                 closeLoginModal();
             });
         }
+
+        // Delegated clicks for login/profile modal trigger and dismiss
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+            if (!target) return;
+
+            const trigger = target.closest('#btn-header-login, #btn-header-profile, [data-bs-target="#login-profile-modal"]');
+            if (trigger) {
+                event.preventDefault();
+                openLoginModal();
+                return;
+            }
+
+            const dismiss = target.closest('[data-bs-dismiss="modal"]');
+            if (dismiss && target.closest('#login-profile-modal')) {
+                event.preventDefault();
+                closeLoginModal();
+                return;
+            }
+
+            if (target.id === 'login-profile-modal' || target.id === 'modal-custom-backdrop') {
+                closeLoginModal();
+            }
+        });
     }
 
     /**
