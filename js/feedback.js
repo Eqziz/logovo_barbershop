@@ -154,24 +154,29 @@
         let $firstInvalid = null;
         const errorList = [];
 
-        // 1. Full Name
-        const $nameInput = $('#fb-name-input');
-        const trimmedName = $.trim($nameInput.val());
-        if (trimmedName.length < 3) {
-            window.Logovo.setFieldError($nameInput, 'Full name must contain at least 3 characters.');
-            errorList.push('Full name must be at least 3 characters.');
-            isValid = false;
-            $firstInvalid = $firstInvalid || $nameInput;
-        }
+        // Check if anonymous review mode is active (R4)
+        const isAnonymous = $('#fb-anonymous-toggle').prop('checked');
 
-        // 2. Contact Phone or Email
-        const $phoneInput = $('#fb-phone-input');
-        const phoneVal = $.trim($phoneInput.val());
-        if (!window.Logovo.isValidPhone(phoneVal) && !window.Logovo.isValidEmail(phoneVal)) {
-            window.Logovo.setFieldError($phoneInput, 'Enter a valid Kazakhstan phone number (+7...) or email.');
-            errorList.push('Valid telephone number or email is required.');
-            isValid = false;
-            $firstInvalid = $firstInvalid || $phoneInput;
+        if (!isAnonymous) {
+            // 1. Full Name
+            const $nameInput = $('#fb-name-input');
+            const trimmedName = $.trim($nameInput.val());
+            if (trimmedName.length < 3) {
+                window.Logovo.setFieldError($nameInput, 'Full name must contain at least 3 characters.');
+                errorList.push('Full name must be at least 3 characters.');
+                isValid = false;
+                $firstInvalid = $firstInvalid || $nameInput;
+            }
+
+            // 2. Contact Phone or Email
+            const $phoneInput = $('#fb-phone-input');
+            const phoneVal = $.trim($phoneInput.val());
+            if (!window.Logovo.isValidPhone(phoneVal) && !window.Logovo.isValidEmail(phoneVal)) {
+                window.Logovo.setFieldError($phoneInput, 'Enter a valid Kazakhstan phone number (+7...) or email.');
+                errorList.push('Valid telephone number or email is required.');
+                isValid = false;
+                $firstInvalid = $firstInvalid || $phoneInput;
+            }
         }
 
         // 3. Branch Visited
@@ -290,9 +295,14 @@
             .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
             .text('Status: Logged to QA Registry (Demo)');
 
-        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No data was sent to a server. This is a front-end evaluation simulation.</span>' +
-            '<span class="d-block">Guest ' + $('<div>').text(details.author).html() + ', your impression has been registered and prepended to the public review list below.</span>';
-        $('#fb-voucher-notice').html(noticeHtml);
+        // Safe DOM insertion without innerHTML
+        const $notice = $('#fb-voucher-notice').empty();
+        $notice.append(
+            $('<span class="text-warning d-block fw-semibold mb-1"></span>').text('★ Demonstration Notice: No data was sent to a server. This is a front-end evaluation simulation.'),
+            $('<span class="d-block"></span>').append(
+                document.createTextNode('Guest ' + details.author + ', your impression has been registered and prepended to the public review list below.')
+            )
+        );
 
         $voucherCard.addClass('card-dark-highlight');
 
@@ -333,6 +343,34 @@
 
         const $form = $('#form-feedback');
 
+        // Anonymous Review Toggle Switch handler (R4)
+        $('#fb-anonymous-toggle').on('change', function () {
+            const isAnon = $(this).prop('checked');
+            const $clientRow = $('#fb-client-fields-row');
+            const $inputs = $clientRow.find('input');
+
+            if (isAnon) {
+                $inputs.each(function () {
+                    $(this)
+                        .prop('required', false)
+                        .prop('disabled', true)
+                        .val('');
+                });
+                window.Logovo.clearFormErrors($('#form-feedback'));
+                $clientRow.slideUp(250);
+            } else {
+                $inputs.each(function () {
+                    $(this)
+                        .prop('required', true)
+                        .prop('disabled', false);
+                });
+                $clientRow.slideDown(250);
+                if (window.Logovo && window.Logovo.autofillForms) {
+                    window.Logovo.autofillForms();
+                }
+            }
+        });
+
         // Clear field error on typing
         $form.on('input change', '.is-error', function () {
             $(this)
@@ -350,13 +388,16 @@
             event.preventDefault();
 
             if (validateFeedbackForm($form)) {
+                const isAnonymous = $('#fb-anonymous-toggle').prop('checked');
                 const $nameInput = $('#fb-name-input');
                 const $branchSelect = $('#fb-branch-select');
                 const $ratingInput = $('#fb-rating-input');
                 const $commentsInput = $('#fb-comments-input');
 
+                const authorName = isAnonymous ? 'Anonymous Guest' : ($.trim($nameInput.val()) || 'Guest');
+
                 const details = {
-                    author: $.trim($nameInput.val()),
+                    author: authorName,
                     branchName: $branchSelect.find('option:selected').text(),
                     rating: parseInt($ratingInput.val(), 10),
                     comment: $.trim($commentsInput.val())
@@ -370,6 +411,7 @@
             setTimeout(function () {
                 window.Logovo.clearFormErrors($form);
                 setupCharacterCounter();
+                $('#fb-anonymous-toggle').prop('checked', false).trigger('change');
             }, 10);
         });
 

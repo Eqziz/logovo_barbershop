@@ -451,16 +451,44 @@
             .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
             .text('Status: Confirmed Demonstration Request');
 
-        // Structured HTML insertion with .html() where markup tags are explicitly required
-        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No real booking was placed. No data has been sent to a server.</span>' +
-            '<span class="d-block">Guest ' + $('<div>').text(details.guestName).html() + ', please present voucher code <strong>' + referenceId + '</strong> upon arrival at ' + $('<div>').text(details.branchName).html() + '. Fresh artisan espresso is reserved at the hospitality bar.</span>';
-        $('#booking-voucher-notice').html(noticeHtml);
+        // Safe DOM insertion without innerHTML
+        const $notice = $('#booking-voucher-notice').empty();
+        $notice.append(
+            $('<span class="text-warning d-block fw-semibold mb-1"></span>').text('★ Demonstration Notice: No real booking was placed. No data has been sent to a server.'),
+            $('<span class="d-block"></span>').append(
+                document.createTextNode('Guest ' + details.guestName + ', please present voucher code '),
+                $('<strong></strong>').text(referenceId),
+                document.createTextNode(' upon arrival at ' + details.branchName + '. Fresh artisan espresso is reserved at the hospitality bar.')
+            )
+        );
 
-        $voucherCard.addClass('card-dark-highlight');
+        // Persist booking to client storage (R1 & R2)
+        const bookingData = {
+            id: referenceId,
+            serviceName: details.serviceName,
+            formattedPrice: details.formattedPrice,
+            barberName: details.barberName,
+            branchName: details.branchName,
+            formattedDate: details.formattedDate,
+            timeSlot: details.timeSlot,
+            guestName: details.guestName,
+            status: 'Confirmed Demonstration Request',
+            createdAt: new Date().toISOString()
+        };
+        if (window.Logovo && window.Logovo.saveBooking) {
+            window.Logovo.saveBooking(bookingData);
+        }
+
+        // Update persistent toggle bar (R1)
+        $('#booking-toggle-summary').text(referenceId + ' — ' + details.serviceName);
+        $('#booking-toggle-meta').text('(' + details.formattedDate + ' at ' + details.timeSlot + ')');
+        $('#booking-toggle-arrow').text('▲');
+        $('#booking-toggle-action-label').text('Hide Details');
+        $('#booking-voucher-toggle-bar').attr('aria-expanded', 'true').removeClass('is-hidden');
+
+        $voucherCard.addClass('card-dark-highlight').show();
 
         // Effect with duration & completion callback:
-        // .slideDown(400) reveals the voucher container smoothly;
-        // The completion callback scrolls the page smoothly to the rendered voucher.
         $voucherWrapper.hide().removeClass('is-hidden').slideDown(400, function () {
             $('html, body').animate({
                 scrollTop: $voucherWrapper.offset().top - 80
@@ -565,15 +593,41 @@
             }, 10);
         });
 
-        // Event 6: 'click' on close reservation voucher buttons
+        // Event 6: 'click' on close reservation voucher buttons (collapses voucher into persistent toggle bar - R1)
         $('#btn-close-booking-voucher, #btn-close-voucher-bottom').on('click', function () {
-            const $voucherWrapper = $('#booking-confirmation-wrapper');
-            $voucherWrapper.slideUp(350, function () {
-                $voucherWrapper.addClass('is-hidden');
+            const $card = $('#booking-confirmation-card');
+            $card.slideUp(350, function () {
+                $('#booking-toggle-arrow').text('▼');
+                $('#booking-toggle-action-label').text('View Details');
+                $('#booking-voucher-toggle-bar').attr('aria-expanded', 'false');
             });
-            const bookingSection = document.getElementById('booking-section');
-            if (bookingSection) {
-                bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const toggleBar = document.getElementById('booking-voucher-toggle-bar');
+            if (toggleBar) {
+                toggleBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // Event 7: 'click' or 'keydown' on persistent toggle bar to expand/collapse (R1)
+        $('#booking-voucher-toggle-bar').on('click keydown', function (e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
+                return;
+            }
+            if (e.type === 'keydown') {
+                e.preventDefault();
+            }
+            const $card = $('#booking-confirmation-card');
+            if ($card.is(':visible')) {
+                $card.slideUp(350, function () {
+                    $('#booking-toggle-arrow').text('▼');
+                    $('#booking-toggle-action-label').text('View Details');
+                    $('#booking-voucher-toggle-bar').attr('aria-expanded', 'false');
+                });
+            } else {
+                $card.slideDown(350, function () {
+                    $('#booking-toggle-arrow').text('▲');
+                    $('#booking-toggle-action-label').text('Hide Details');
+                    $('#booking-voucher-toggle-bar').attr('aria-expanded', 'true');
+                });
             }
         });
     }

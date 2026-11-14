@@ -527,36 +527,267 @@
     }
 
     /**
-     * Renders pickup voucher upon successful submission
+     * Creates a fully interactive stacked order voucher element (R1)
+     * @param {Object} order - Stored order object
+     * @param {boolean} startCollapsed - Whether to initialize in collapsed state
+     * @returns {HTMLElement} Voucher container element
+     */
+    function createOrderVoucherElement(order, startCollapsed) {
+        const itemWrapper = document.createElement('div');
+        itemWrapper.className = 'order-voucher-item';
+        itemWrapper.id = 'order-voucher-item-' + order.id;
+
+        // Persistent Toggle Bar
+        const toggleBar = document.createElement('div');
+        toggleBar.className = 'voucher-toggle-bar mb-2';
+        toggleBar.setAttribute('role', 'button');
+        toggleBar.setAttribute('tabindex', '0');
+        toggleBar.setAttribute('aria-expanded', startCollapsed ? 'false' : 'true');
+
+        const leftBox = document.createElement('div');
+        leftBox.className = 'd-flex align-items-center gap-2 flex-wrap';
+
+        const badge = document.createElement('span');
+        badge.className = 'badge bg-gold text-dark';
+        badge.textContent = 'Dispensary Hold';
+        leftBox.appendChild(badge);
+
+        const summary = document.createElement('strong');
+        summary.className = 'text-light';
+        summary.textContent = order.id + ' — ' + order.itemsSummary;
+        leftBox.appendChild(summary);
+
+        const meta = document.createElement('span');
+        meta.className = 'text-secondary small';
+        meta.textContent = '(' + order.formattedTotal + ')';
+        leftBox.appendChild(meta);
+
+        const rightBox = document.createElement('div');
+        rightBox.className = 'd-flex align-items-center gap-2';
+
+        const actionLabel = document.createElement('span');
+        actionLabel.className = 'text-secondary small toggle-status-label d-none d-sm-inline';
+        actionLabel.textContent = startCollapsed ? 'View Details' : 'Hide Details';
+        rightBox.appendChild(actionLabel);
+
+        const arrow = document.createElement('span');
+        arrow.className = 'voucher-toggle-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = startCollapsed ? '▼' : '▲';
+        rightBox.appendChild(arrow);
+
+        toggleBar.appendChild(leftBox);
+        toggleBar.appendChild(rightBox);
+
+        // Details Card
+        const card = document.createElement('div');
+        card.className = 'confirmation-voucher shadow card-dark-highlight';
+        card.id = 'order-card-' + order.id;
+        if (startCollapsed) {
+            card.classList.add('is-hidden');
+        }
+
+        // Header Row
+        const cardHeader = document.createElement('div');
+        cardHeader.className = 'd-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3';
+
+        const titleDiv = document.createElement('div');
+        const cardBadge = document.createElement('span');
+        cardBadge.className = 'badge bg-gold text-dark mb-1';
+        cardBadge.textContent = 'Dispensary Hold';
+        const cardH3 = document.createElement('h3');
+        cardH3.className = 'h5 text-gold mb-0';
+        cardH3.textContent = 'Product Pre-Order Pickup Voucher';
+        titleDiv.appendChild(cardBadge);
+        titleDiv.appendChild(cardH3);
+
+        const actionDiv = document.createElement('div');
+        actionDiv.className = 'd-flex align-items-center gap-2 mt-2 mt-sm-0';
+        const statusBadge = document.createElement('span');
+        statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
+        statusBadge.textContent = 'Status: Reserved for 48 Hours (Demo)';
+        const btnHide = document.createElement('button');
+        btnHide.type = 'button';
+        btnHide.className = 'btn btn-outline-gold btn-sm';
+        btnHide.setAttribute('title', 'Close Voucher');
+        btnHide.setAttribute('aria-label', 'Close Voucher');
+        btnHide.textContent = '✕ Hide Voucher';
+        actionDiv.appendChild(statusBadge);
+        actionDiv.appendChild(btnHide);
+
+        cardHeader.appendChild(titleDiv);
+        cardHeader.appendChild(actionDiv);
+        card.appendChild(cardHeader);
+
+        // Divider
+        const div1 = document.createElement('div');
+        div1.className = 'voucher-divider';
+        card.appendChild(div1);
+
+        // 4 Columns Grid
+        const grid = document.createElement('div');
+        grid.className = 'row g-3 small';
+
+        // Col 1
+        const col1 = document.createElement('div');
+        col1.className = 'col-12 col-md-3';
+        const s1 = document.createElement('span');
+        s1.className = 'text-secondary d-block';
+        s1.textContent = 'Reservation Code:';
+        const d1 = document.createElement('strong');
+        d1.className = 'text-gold';
+        d1.textContent = order.id;
+        col1.appendChild(s1);
+        col1.appendChild(d1);
+
+        // Col 2
+        const col2 = document.createElement('div');
+        col2.className = 'col-12 col-md-3';
+        const s2 = document.createElement('span');
+        s2.className = 'text-secondary d-block';
+        s2.textContent = 'Reserved Items:';
+        const d2 = document.createElement('strong');
+        d2.className = 'text-light';
+        d2.textContent = order.itemsSummary;
+        col2.appendChild(s2);
+        col2.appendChild(d2);
+
+        // Col 3
+        const col3 = document.createElement('div');
+        col3.className = 'col-12 col-md-3';
+        const s3 = document.createElement('span');
+        s3.className = 'text-secondary d-block';
+        s3.textContent = 'Pickup Desk:';
+        const d3 = document.createElement('strong');
+        d3.className = 'text-light';
+        d3.textContent = order.branchName;
+        col3.appendChild(s3);
+        col3.appendChild(d3);
+
+        // Col 4
+        const col4 = document.createElement('div');
+        col4.className = 'col-12 col-md-3';
+        const s4 = document.createElement('span');
+        s4.className = 'text-secondary d-block';
+        s4.textContent = 'Amount Due at Desk:';
+        const d4 = document.createElement('strong');
+        d4.className = 'text-gold fs-6';
+        d4.textContent = order.formattedTotal;
+        col4.appendChild(s4);
+        col4.appendChild(d4);
+
+        grid.appendChild(col1);
+        grid.appendChild(col2);
+        grid.appendChild(col3);
+        grid.appendChild(col4);
+        card.appendChild(grid);
+
+        // Divider
+        const div2 = document.createElement('div');
+        div2.className = 'voucher-divider';
+        card.appendChild(div2);
+
+        // Notice
+        const noticeP = document.createElement('p');
+        noticeP.className = 'mb-3 text-secondary small';
+        const noticeText1 = document.createTextNode('* Please quote voucher code ');
+        const noticeCode = document.createElement('strong');
+        noticeCode.textContent = order.id;
+        const noticeText2 = document.createTextNode(' to the club administrator upon your visit. Items will remain safely packaged in your name.');
+        noticeP.appendChild(noticeText1);
+        noticeP.appendChild(noticeCode);
+        noticeP.appendChild(noticeText2);
+        card.appendChild(noticeP);
+
+        // Bottom action bar
+        const bottomBar = document.createElement('div');
+        bottomBar.className = 'd-flex flex-wrap justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25';
+        const bottomSmall = document.createElement('small');
+        bottomSmall.className = 'text-secondary';
+        bottomSmall.textContent = 'Present this voucher code to the club administrator upon your visit.';
+        const btnBottomClose = document.createElement('button');
+        btnBottomClose.type = 'button';
+        btnBottomClose.className = 'btn btn-outline-gold btn-sm mt-2 mt-sm-0';
+        btnBottomClose.textContent = '✕ Close Voucher / New Order';
+        bottomBar.appendChild(bottomSmall);
+        bottomBar.appendChild(btnBottomClose);
+        card.appendChild(bottomBar);
+
+        // Independent Toggle Behavior for this Voucher
+        function toggleVoucher() {
+            const isHidden = card.classList.contains('is-hidden');
+            if (isHidden) {
+                card.classList.remove('is-hidden');
+                arrow.textContent = '▲';
+                actionLabel.textContent = 'Hide Details';
+                toggleBar.setAttribute('aria-expanded', 'true');
+            } else {
+                card.classList.add('is-hidden');
+                arrow.textContent = '▼';
+                actionLabel.textContent = 'View Details';
+                toggleBar.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        function collapseVoucher() {
+            card.classList.add('is-hidden');
+            arrow.textContent = '▼';
+            actionLabel.textContent = 'View Details';
+            toggleBar.setAttribute('aria-expanded', 'false');
+            toggleBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        toggleBar.addEventListener('click', toggleVoucher);
+        toggleBar.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleVoucher();
+            }
+        });
+
+        btnHide.addEventListener('click', collapseVoucher);
+        btnBottomClose.addEventListener('click', function () {
+            collapseVoucher();
+            const catalog = document.getElementById('marketbar-cart-section');
+            if (catalog) {
+                catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        itemWrapper.appendChild(toggleBar);
+        itemWrapper.appendChild(card);
+        return itemWrapper;
+    }
+
+    /**
+     * Renders pickup voucher upon successful submission and stacks it (R1)
      * @param {Object} details - Order reservation details
      */
     function renderOrderVoucher(details) {
-        const voucherCard = document.getElementById('order-confirmation-card');
         const voucherWrapper = document.getElementById('order-confirmation-wrapper');
-        if (!voucherCard || !voucherWrapper) return;
-
-        const codeEl = document.getElementById('order-voucher-code');
-        const itemEl = document.getElementById('order-voucher-item');
-        const branchEl = document.getElementById('order-voucher-branch');
-        const priceEl = document.getElementById('order-voucher-price');
-        const statusBadge = document.getElementById('order-status-badge');
-        const noticeCodeEl = document.getElementById('order-voucher-notice-code');
+        const vouchersStack = document.getElementById('order-vouchers-stack');
+        if (!voucherWrapper || !vouchersStack) return;
 
         const referenceCode = window.Logovo.generateReference('RES');
-        if (codeEl) codeEl.textContent = referenceCode;
-        if (noticeCodeEl) noticeCodeEl.textContent = referenceCode;
-        if (itemEl) itemEl.textContent = details.itemsSummary;
-        if (branchEl) branchEl.textContent = details.branchName;
-        if (priceEl) priceEl.textContent = details.formattedTotal;
+        const order = {
+            id: referenceCode,
+            itemsSummary: details.itemsSummary,
+            branchName: details.branchName,
+            formattedTotal: details.formattedTotal,
+            customerName: details.customerName,
+            status: 'Reserved for 48 Hours (Demo)',
+            createdAt: new Date().toISOString()
+        };
 
-        if (statusBadge) {
-            statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-            statusBadge.textContent = 'Status: Reserved for 48 Hours (Demo)';
+        if (window.Logovo && window.Logovo.saveOrder) {
+            window.Logovo.saveOrder(order);
         }
 
-        voucherCard.classList.add('card-dark-highlight');
+        const voucherElement = createOrderVoucherElement(order, false);
+        vouchersStack.appendChild(voucherElement);
+
         voucherWrapper.classList.remove('is-hidden');
-        voucherWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        voucherElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         // Reset cart upon successful checkout
         clearCart();
@@ -569,8 +800,18 @@
         const orderForm = document.getElementById('form-market-order');
         const cartContainer = document.getElementById('cart-items-container');
         const clearCartBtn = document.getElementById('btn-clear-cart');
-        const closeVoucherBtn = document.getElementById('btn-close-order-voucher');
-        const closeVoucherBottomBtn = document.getElementById('btn-close-order-voucher-bottom');
+
+        // Render previously stored orders from client session (R1 & R2)
+        const existingOrders = window.Logovo && window.Logovo.getOrders ? window.Logovo.getOrders() : [];
+        const stack = document.getElementById('order-vouchers-stack');
+        const wrapper = document.getElementById('order-confirmation-wrapper');
+        if (existingOrders.length > 0 && stack && wrapper) {
+            wrapper.classList.remove('is-hidden');
+            for (let eIdx = 0; eIdx < existingOrders.length; eIdx++) {
+                const el = createOrderVoucherElement(existingOrders[eIdx], true);
+                stack.appendChild(el);
+            }
+        }
 
         // Initial default items for demonstration (e.g. 1 clay item)
         addToCart('clay', 1);
@@ -625,25 +866,6 @@
             clearCartBtn.addEventListener('click', function () {
                 clearCart();
             });
-        }
-
-        // Close Order Voucher buttons
-        function closeOrderVoucher() {
-            const voucherWrapper = document.getElementById('order-confirmation-wrapper');
-            if (voucherWrapper) {
-                voucherWrapper.classList.add('is-hidden');
-            }
-            const cartSection = document.getElementById('marketbar-cart-section');
-            if (cartSection) {
-                cartSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        if (closeVoucherBtn) {
-            closeVoucherBtn.addEventListener('click', closeOrderVoucher);
-        }
-        if (closeVoucherBottomBtn) {
-            closeVoucherBottomBtn.addEventListener('click', closeOrderVoucher);
         }
 
         // Form submission

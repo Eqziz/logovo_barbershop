@@ -573,3 +573,113 @@ img.img-fluid.rounded:hover,
     color: var(--color-steel-500) !important;
     font-family: 'Montserrat', sans-serif;
 }
+
+/* ==========================================================================
+   12. Interactive Collapsible Vouchers & Active Badges
+   ========================================================================== */
+.voucher-toggle-bar {
+    background: linear-gradient(145deg, #161a25 0%, #11141d 100%);
+    border: 1px solid var(--color-steel-400);
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.25s ease;
+    user-select: none;
+    color: var(--color-steel-100);
+}
+
+.voucher-toggle-bar:hover,
+.voucher-toggle-bar:focus {
+    background: #1d2232;
+    border-color: #ffffff;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+    outline: none;
+}
+
+.voucher-toggle-arrow {
+    font-size: 0.95rem;
+    color: var(--color-steel-300);
+    font-weight: bold;
+    transition: transform 0.2s ease;
+    margin-left: 0.75rem;
+}
+
+.active-status-badge-card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.active-status-badge-card:hover {
+    border-color: var(--color-steel-400);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.active-badge-header {
+    background: linear-gradient(145deg, #151824 0%, #0f1118 100%);
+    padding: 0.9rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.active-badge-header:hover {
+    background: #1a1e2d;
+}
+
+.active-badge-details {
+    padding: 1.25rem;
+    border-top: 1px dashed rgba(203, 213, 225, 0.2);
+    background-color: #0d0f16;
+}
+
+/* ==========================================================================
+   13. Client Login & Profile Modal Styles
+   ========================================================================== */
+.modal-backdrop.show {
+    opacity: 0.8 !important;
+    background-color: #050608 !important;
+}
+
+.logovo-modal-content {
+    background: linear-gradient(145deg, #13151f 0%, #0e1017 100%) !important;
+    border: 1px solid var(--color-steel-700) !important;
+    border-radius: 12px !important;
+    color: var(--color-steel-200) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(203, 213, 225, 0.08) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.logovo-modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--barber-pole-stripe);
+    z-index: 1055;
+}
+
+.logovo-modal-content .modal-header,
+.logovo-modal-content .modal-footer {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.logovo-modal-content .btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.form-check-input:checked {
+    background-color: var(--color-gold-base, #d4af37) !important;
+    border-color: var(--color-gold-base, #d4af37) !important;
+}
+

@@ -36,6 +36,13 @@
                         <li class="nav-item"><a class="nav-link text-light" href="careers.html" id="nav-link-careers">Careers</a></li>
                         <li class="nav-item"><a class="nav-link text-light" href="feedback.html" id="nav-link-feedback">Feedback</a></li>
                     </ul>
+
+                    <!-- Client Session / Profile Widget -->
+                    <div class="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0" id="header-auth-container">
+                        <button type="button" class="btn btn-outline-gold btn-sm" id="btn-header-login" data-bs-toggle="modal" data-bs-target="#login-profile-modal">
+                            Log In / Profile
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -314,6 +321,80 @@
             </div>
         </section>
     </main>
+
+    <!-- Client Login & Profile Modal -->
+    <div class="modal fade" id="login-profile-modal" tabindex="-1" aria-labelledby="loginModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content logovo-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-gold" id="loginModalTitle">Gentleman's Club Member Access</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <!-- View 1: Login / Profile Creation (Shown when Logged Out) -->
+                <div id="modal-view-login">
+                    <form id="form-modal-login">
+                        <div class="modal-body">
+                            <p class="text-secondary small mb-3">
+                                Sign in to save your credentials for expedited appointment bookings and cosmetic pre-orders.
+                            </p>
+                            <div class="mb-3">
+                                <label for="modal-input-name" class="form-label text-light small">Full Name:</label>
+                                <input type="text" id="modal-input-name" class="form-control bg-dark text-light border-secondary" placeholder="Arman Kassymov" required minlength="3">
+                            </div>
+                            <div class="mb-3">
+                                <label for="modal-input-phone" class="form-label text-light small">Telephone Number (+7...):</label>
+                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="modal-input-email" class="form-label text-light small">Email Address:</label>
+                                <input type="email" id="modal-input-email" class="form-control bg-dark text-light border-secondary" placeholder="arman@example.kz" required>
+                            </div>
+                            <div id="modal-login-error" class="alert-error-box is-hidden small mt-2" role="alert"></div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-gold btn-sm" id="btn-modal-save-login">Save & Log In</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- View 2: Active User Profile Details (Shown when Logged In) -->
+                <div id="modal-view-profile" class="is-hidden">
+                    <div class="modal-body">
+                        <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                            <div class="badge bg-gold p-2 fs-6 text-dark rounded-circle" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                                LGV
+                            </div>
+                            <div>
+                                <strong class="text-light fs-5 d-block" id="modal-profile-display-name">Arman Kassymov</strong>
+                                <span class="badge bg-gold text-dark small">Verified Club Member</span>
+                            </div>
+                        </div>
+                        <div class="row g-2 small mb-3">
+                            <div class="col-12">
+                                <span class="text-secondary d-block">Registered Contact Phone:</span>
+                                <strong class="text-light" id="modal-profile-display-phone">+7 (701) 218-19-19</strong>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-secondary d-block">Registered Email:</span>
+                                <strong class="text-light" id="modal-profile-display-email">arman@example.kz</strong>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-secondary d-block">Membership Privilege:</span>
+                                <span class="text-gold">Automatic Booking & MarketBar Autofill Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-danger btn-sm" id="btn-modal-action-logout">Log Out</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Unified Site Footer -->
     <footer class="bg-black text-secondary py-4 border-top border-secondary border-opacity-25 text-center" id="site-footer">
