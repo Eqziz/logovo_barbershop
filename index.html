@@ -74,10 +74,72 @@
                 </div>
 
                 <div class="col-12 col-lg-5 text-center">
-                    <figure class="mb-0">
-                        <img src="images/photo1.jpg" alt="Logovo Barbershop lounge waiting area with brick pillars and round wooden tables" class="img-fluid rounded shadow border border-secondary border-opacity-50" id="hero-image">
-                        <figcaption class="text-secondary small mt-2">Logovo Lounge & Reception Area (Syganak Flagship)</figcaption>
-                    </figure> 
+                    <div id="hero-gallery-carousel" class="carousel slide position-relative shadow" data-bs-ride="carousel" aria-label="Logovo Barbershop Atmosphere Gallery">
+                        <!-- Slide Indicators -->
+                        <div class="carousel-indicators mb-2" id="hero-carousel-indicators">
+                            <button type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1: Lounge Area"></button>
+                            <button type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide-to="1" aria-label="Slide 2: Cutting Floor Workstations"></button>
+                            <button type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide-to="2" aria-label="Slide 3: Precision Steel Shears"></button>
+                            <button type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide-to="3" aria-label="Slide 4: Hospitality Bar Counter"></button>
+                        </div>
+
+                        <!-- Carousel Slides -->
+                        <div class="carousel-inner" id="hero-carousel-slides">
+                            <!-- Slide 1: photo1.jpg (Lounge & Reception) -->
+                            <div class="carousel-item active" data-slide-index="0">
+                                <figure class="mb-0">
+                                    <img src="images/photo1.jpg" alt="Logovo Barbershop lounge waiting area with brick pillars and round wooden tables" class="img-fluid rounded" id="hero-image">
+                                    <figcaption class="carousel-caption-bar text-secondary small" id="hero-caption-1">
+                                        <strong class="text-gold d-block">1/4 · Reception & Lounge:</strong>
+                                        Syganak Flagship waiting lounge with coffee service and leather seating.
+                                    </figcaption>
+                                </figure>
+                            </div>
+
+                            <!-- Slide 2: photo2.jpg (Workstations & Chairs) -->
+                            <div class="carousel-item" data-slide-index="1">
+                                <figure class="mb-0">
+                                    <img src="images/photo2.jpg" alt="Master barber workstations and hydraulic chairs at Logovo" class="img-fluid rounded" id="hero-carousel-img-2">
+                                    <figcaption class="carousel-caption-bar text-secondary small" id="hero-caption-2">
+                                        <strong class="text-gold d-block">2/4 · Cutting Floor:</strong>
+                                        Workstation bays with ergonomic hydraulic chairs and individual task lighting.
+                                    </figcaption>
+                                </figure>
+                            </div>
+
+                            <!-- Slide 3: photo3.jpg (Precision Shears & Sanitized Tools) -->
+                            <div class="carousel-item" data-slide-index="2">
+                                <figure class="mb-0">
+                                    <img src="images/photo3.jpg" alt="Master barber inspecting Japanese precision steel shears" class="img-fluid rounded" id="hero-carousel-img-3">
+                                    <figcaption class="carousel-caption-bar text-secondary small" id="hero-caption-3">
+                                        <strong class="text-gold d-block">3/4 · Precision Craft:</strong>
+                                        Japanese cobalt steel shears sanitized under UV medical-grade protocol.
+                                    </figcaption>
+                                </figure>
+                            </div>
+
+                            <!-- Slide 4: photo4.jpg (Hospitality Bar & Apothecary) -->
+                            <div class="carousel-item" data-slide-index="3">
+                                <figure class="mb-0">
+                                    <img src="images/photo4.jpg" alt="Logovo Barbershop hospitality bar counter and dispensary display" class="img-fluid rounded" id="hero-carousel-img-4">
+                                    <figcaption class="carousel-caption-bar text-secondary small" id="hero-caption-4">
+                                        <strong class="text-gold d-block">4/4 · Hospitality & Apothecary:</strong>
+                                        Craft espresso bar and curated home-care apothecary display.
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <!-- Previous / Next Controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide="prev" id="hero-carousel-prev" aria-label="Previous slide">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#hero-gallery-carousel" data-bs-slide="next" id="hero-carousel-next" aria-label="Next slide">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

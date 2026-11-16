@@ -989,6 +989,144 @@ window.Logovo = (function () {
         }
     }
 
+    /**
+     * Initializes interactive hero gallery carousel on index.html
+     * Supports next/prev buttons, indicator pills, keyboard navigation, and touch swipes
+     */
+    function initHeroGalleryCarousel() {
+        const carousel = document.getElementById('hero-gallery-carousel');
+        if (!carousel) return;
+
+        const slides = carousel.querySelectorAll('.carousel-item');
+        const indicators = carousel.querySelectorAll('#hero-carousel-indicators button');
+        const prevBtn = document.getElementById('hero-carousel-prev');
+        const nextBtn = document.getElementById('hero-carousel-next');
+
+        if (!slides.length) return;
+
+        let currentIndex = 0;
+        let autoPlayTimer = null;
+
+        function showSlide(index) {
+            if (index < 0) {
+                currentIndex = slides.length - 1;
+            } else if (index >= slides.length) {
+                currentIndex = 0;
+            } else {
+                currentIndex = index;
+            }
+
+            for (let i = 0; i < slides.length; i++) {
+                if (i === currentIndex) {
+                    slides[i].classList.add('active');
+                } else {
+                    slides[i].classList.remove('active');
+                }
+            }
+
+            for (let j = 0; j < indicators.length; j++) {
+                if (j === currentIndex) {
+                    indicators[j].classList.add('active');
+                    indicators[j].setAttribute('aria-current', 'true');
+                } else {
+                    indicators[j].classList.remove('active');
+                    indicators[j].removeAttribute('aria-current');
+                }
+            }
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        function startAutoPlay() {
+            stopAutoPlay();
+            autoPlayTimer = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+        }
+
+        function restartAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                nextSlide();
+                restartAutoPlay();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                prevSlide();
+                restartAutoPlay();
+            });
+        }
+
+        for (let k = 0; k < indicators.length; k++) {
+            indicators[k].addEventListener('click', (function (targetIdx) {
+                return function (e) {
+                    e.preventDefault();
+                    showSlide(targetIdx);
+                    restartAutoPlay();
+                };
+            })(k));
+        }
+
+        // Keyboard arrow navigation when focused
+        carousel.setAttribute('tabindex', '0');
+        carousel.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                restartAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                restartAutoPlay();
+            }
+        });
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        carousel.addEventListener('touchstart', function (e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+                touchStartX = e.changedTouches[0].screenX;
+            }
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', function (e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff > 40) {
+                    prevSlide();
+                    restartAutoPlay();
+                } else if (diff < -40) {
+                    nextSlide();
+                    restartAutoPlay();
+                }
+            }
+        }, { passive: true });
+
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        startAutoPlay();
+    }
+
     // Public API returned by module
     return {
         formatPrice: formatPrice,
@@ -1011,6 +1149,7 @@ window.Logovo = (function () {
         autofillForms: autofillForms,
         clearAutofilledForms: clearAutofilledForms,
         initHomePageActiveBadges: initHomePageActiveBadges,
+        initHeroGalleryCarousel: initHeroGalleryCarousel,
         initShared: function () {
             syncNavigation();
             setupDemonstrationNotice();
@@ -1019,6 +1158,7 @@ window.Logovo = (function () {
             initSessionModal();
             autofillForms();
             initHomePageActiveBadges();
+            initHeroGalleryCarousel();
         }
     };
 })();
