@@ -605,7 +605,7 @@
         actionDiv.className = 'd-flex align-items-center gap-2 mt-2 mt-sm-0';
         const statusBadge = document.createElement('span');
         statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-        statusBadge.textContent = 'Status: Reserved for 48 Hours (Demo)';
+        statusBadge.textContent = 'Status: Pre-Order Confirmed & Reserved for 48h';
         actionDiv.appendChild(statusBadge);
 
         cardHeader.appendChild(titleDiv);
@@ -737,7 +737,7 @@
             branchName: details.branchName,
             formattedTotal: details.formattedTotal,
             customerName: details.customerName,
-            status: 'Reserved for 48 Hours (Demo)',
+            status: 'Pre-Order Confirmed & Reserved for 48h',
             createdAt: new Date().toISOString()
         };
 

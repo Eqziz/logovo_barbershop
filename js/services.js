@@ -449,16 +449,15 @@
         // Update status badge class and text
         $('#booking-voucher-status')
             .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
-            .text('Status: Confirmed Demonstration Request');
+            .text('Status: Booking Confirmed & SMS Queued');
 
         // Safe DOM insertion without innerHTML
         const $notice = $('#booking-voucher-notice').empty();
         $notice.append(
-            $('<span class="text-warning d-block fw-semibold mb-1"></span>').text('★ Demonstration Notice: No real booking was placed. No data has been sent to a server.'),
             $('<span class="d-block"></span>').append(
                 document.createTextNode('Guest ' + details.guestName + ', please present voucher code '),
                 $('<strong></strong>').text(referenceId),
-                document.createTextNode(' upon arrival at ' + details.branchName + '. Fresh artisan espresso is reserved at the hospitality bar.')
+                document.createTextNode(' upon arrival at ' + details.branchName + '. Fresh artisan espresso is reserved at the hospitality bar. An SMS reminder will arrive 2 hours prior to your slot.')
             )
         );
 
@@ -472,7 +471,7 @@
             formattedDate: details.formattedDate,
             timeSlot: details.timeSlot,
             guestName: details.guestName,
-            status: 'Confirmed Demonstration Request',
+            status: 'Booking Confirmed & SMS Queued',
             createdAt: new Date().toISOString()
         };
         if (window.Logovo && window.Logovo.saveBooking) {

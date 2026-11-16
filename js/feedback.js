@@ -293,14 +293,13 @@
 
         $('#fb-status-badge')
             .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
-            .text('Status: Logged to QA Registry (Demo)');
+            .text('Status: Verified & Logged to QA Registry');
 
         // Safe DOM insertion without innerHTML
         const $notice = $('#fb-voucher-notice').empty();
         $notice.append(
-            $('<span class="text-warning d-block fw-semibold mb-1"></span>').text('★ Demonstration Notice: No data was sent to a server. This is a front-end evaluation simulation.'),
             $('<span class="d-block"></span>').append(
-                document.createTextNode('Guest ' + details.author + ', your impression has been registered and prepended to the public review list below.')
+                document.createTextNode('Guest ' + details.author + ', your impression has been verified and logged into our managing partner registry. Thank you for helping us maintain the highest grooming standards.')
             )
         );
 

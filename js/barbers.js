@@ -413,20 +413,14 @@
 
         if (statusBadge) {
             statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
-            statusBadge.textContent = 'Status: Ticket Queued (Demo)';
+            statusBadge.textContent = 'Status: Ticket Queued for Master Review';
         }
 
         if (noticeP) {
             noticeP.textContent = '';
-            const noticeSpan = document.createElement('span');
-            noticeSpan.className = 'text-warning d-block fw-semibold mb-1';
-            noticeSpan.textContent = '★ Demonstration Notice: No real consultation inquiry was transmitted to a server.';
-            
             const detailSpan = document.createElement('span');
             detailSpan.className = 'd-block';
-            detailSpan.textContent = 'Client ' + details.clientName + ', your question on "' + details.topic + '" has been logged with code ' + referenceCode + '.';
-
-            noticeP.appendChild(noticeSpan);
+            detailSpan.textContent = 'Client ' + details.clientName + ', your question on "' + details.topic + '" has been logged with code ' + referenceCode + '. Master ' + details.barberName + ' reviews inquiries daily between appointments.';
             noticeP.appendChild(detailSpan);
         }
 

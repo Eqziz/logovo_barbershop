@@ -39,7 +39,7 @@ window.Logovo = (function () {
      * @returns {string} Reference code (e.g. "LGV-2026-BK-481")
      */
     function generateReference(prefix) {
-        const cleanPrefix = typeof prefix === 'string' && prefix.trim().length > 0 ? prefix.trim().toUpperCase() : 'DEMO';
+        const cleanPrefix = typeof prefix === 'string' && prefix.trim().length > 0 ? prefix.trim().toUpperCase() : 'LGV';
         const randomToken = Math.floor(100 + Math.random() * 900); // 3-digit random number between 100 and 999
         return 'LGV-2026-' + cleanPrefix + '-' + randomToken;
     }
@@ -71,6 +71,7 @@ window.Logovo = (function () {
     /**
      * Formats raw digits into standard Kazakhstan phone number: +7 (XXX) XXX-XX-XX
      * Ensures strict digit limit: exactly 11 digits (country code 7 + 10 digits)
+     * Never appends trailing separators without succeeding digits to allow seamless backspacing
      */
     function formatKZPhone(value) {
         if (!value) return '';
@@ -89,25 +90,16 @@ window.Logovo = (function () {
 
         let formatted = '+7';
         if (digits.length > 1) {
-            formatted += ' (' + digits.slice(1, 4);
-        }
-        if (digits.length >= 4) {
-            formatted += ') ';
+            formatted += ' (' + digits.slice(1, Math.min(4, digits.length));
         }
         if (digits.length > 4) {
-            formatted += digits.slice(4, 7);
-        }
-        if (digits.length >= 7) {
-            formatted += '-';
+            formatted += ') ' + digits.slice(4, Math.min(7, digits.length));
         }
         if (digits.length > 7) {
-            formatted += digits.slice(7, 9);
-        }
-        if (digits.length >= 9) {
-            formatted += '-';
+            formatted += '-' + digits.slice(7, Math.min(9, digits.length));
         }
         if (digits.length > 9) {
-            formatted += digits.slice(9, 11);
+            formatted += '-' + digits.slice(9, Math.min(11, digits.length));
         }
 
         return formatted;
@@ -115,15 +107,62 @@ window.Logovo = (function () {
 
     /**
      * Sets up global phone input formatting, auto +7 insertion, and digit capping
+     * Intercepts backspace so users never get stuck on formatting symbols (-, ), space)
      */
     function setupPhoneInputs() {
         const phoneSelector = 'input[type="tel"], #booking-phone-input, #order-phone-input, #fb-phone-input, #cand-phone-input, #modal-input-phone';
+
+        document.querySelectorAll(phoneSelector).forEach(function (input) {
+            input.setAttribute('maxlength', '18');
+            input.setAttribute('placeholder', '+7 (___) ___-__-__');
+            input.setAttribute('autocomplete', 'tel');
+        });
 
         document.addEventListener('focusin', function (e) {
             const target = e.target;
             if (target && target.matches && target.matches(phoneSelector)) {
                 if (!target.value || target.value.trim() === '') {
                     target.value = '+7 (';
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            const target = e.target;
+            if (target && target.matches && target.matches(phoneSelector)) {
+                if (e.key === 'Backspace') {
+                    const val = target.value;
+                    const digits = val.replace(/\D/g, '');
+
+                    // If input only contains country code or 1 digit, clear completely
+                    if (digits.length <= 1) {
+                        e.preventDefault();
+                        target.value = '';
+                        return;
+                    }
+
+                    const start = target.selectionStart;
+                    const end = target.selectionEnd;
+
+                    // If single cursor position directly after a formatting character (-, ), space, ()
+                    if (start === end && start > 0) {
+                        const prevChar = val[start - 1];
+                        if (/\D/.test(prevChar)) {
+                            // Find the preceding digit before the formatting symbol(s) and delete it
+                            e.preventDefault();
+                            let digitIdx = start - 1;
+                            while (digitIdx >= 0 && /\D/.test(val[digitIdx])) {
+                                digitIdx--;
+                            }
+                            if (digitIdx >= 0) {
+                                const newVal = val.slice(0, digitIdx) + val.slice(start);
+                                const formatted = formatKZPhone(newVal);
+                                target.value = formatted;
+                                const newPos = Math.min(digitIdx, formatted.length);
+                                target.setSelectionRange(newPos, newPos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -141,7 +180,7 @@ window.Logovo = (function () {
             const target = e.target;
             if (target && target.matches && target.matches(phoneSelector)) {
                 const trimmed = target.value.trim();
-                if (trimmed === '+7' || trimmed === '+7 (' || trimmed === '+7 ()' || trimmed === '') {
+                if (trimmed === '+7' || trimmed === '+7 (' || trimmed === '+7 ()' || trimmed === '+7 ' || trimmed === '') {
                     target.value = '';
                 }
             }
@@ -234,33 +273,6 @@ window.Logovo = (function () {
                 link.classList.remove('text-light');
                 link.setAttribute('aria-current', 'page');
             }
-        }
-    }
-
-    /**
-     * Injects an accessible site-wide demonstration notice bar via DOM construction
-     * Reaffirms that this is a simulated academic project
-     */
-    function setupDemonstrationNotice() {
-        const footer = document.getElementById('site-footer');
-        if (!footer) return;
-
-        const noticeContainer = document.createElement('div');
-        noticeContainer.className = 'demo-site-notice bg-dark border border-secondary border-opacity-25 rounded p-2 mb-3 text-center small text-secondary';
-        
-        const badge = document.createElement('span');
-        badge.className = 'badge bg-gold text-dark me-2 text-uppercase';
-        badge.textContent = 'Academic Demo';
-        
-        const text = document.createElement('span');
-        text.textContent = 'Logovo Barbershop is a student front-end simulation. No real bookings or financial transactions are processed.';
-        
-        noticeContainer.appendChild(badge);
-        noticeContainer.appendChild(text);
-
-        const container = footer.querySelector('.container');
-        if (container) {
-            container.insertBefore(noticeContainer, container.firstChild);
         }
     }
 
@@ -1204,6 +1216,7 @@ window.Logovo = (function () {
         carousel.addEventListener('mouseenter', stopAutoPlay);
         carousel.addEventListener('mouseleave', startAutoPlay);
 
+        showSlide(0);
         startAutoPlay();
     }
 
@@ -1233,7 +1246,6 @@ window.Logovo = (function () {
         formatKZPhone: formatKZPhone,
         initShared: function () {
             syncNavigation();
-            setupDemonstrationNotice();
             setupFloatingCallButton();
             setupPhoneInputs();
             syncSessionUI();

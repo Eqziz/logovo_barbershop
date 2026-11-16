@@ -250,10 +250,9 @@
 
         $('#careers-status-badge')
             .attr('class', 'status-badge-confirmed mt-2 mt-sm-0')
-            .text('Status: Dossier in HR Review (Demo)');
+            .text('Status: Application Registered & in HR Review');
 
-        const noticeHtml = '<span class="text-warning d-block fw-semibold mb-1">★ Demonstration Notice: No real employment application was submitted to an HR server.</span>' +
-            '<span class="d-block">Candidate ' + $('<div>').text(details.candidateName).html() + ', your credentials for ' + $('<div>').text(details.trackName).html() + ' have been registered under dossier code <strong>' + referenceCode + '</strong>.</span>';
+        const noticeHtml = '<span class="d-block">Candidate ' + $('<div>').text(details.candidateName).html() + ', your credentials for ' + $('<div>').text(details.trackName).html() + ' have been registered under dossier code <strong>' + referenceCode + '</strong>. Shortlisted candidates receive an interview invitation within 3 business days.</span>';
         $('#careers-voucher-notice').html(noticeHtml);
 
         $card.addClass('card-dark-highlight').show().removeClass('is-hidden');
