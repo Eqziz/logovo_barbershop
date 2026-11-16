@@ -431,7 +431,18 @@
         }
 
         card.classList.add('card-dark-highlight');
+        card.classList.remove('is-hidden');
         wrapper.classList.remove('is-hidden');
+
+        const toggleBar = document.getElementById('inquiry-voucher-toggle-bar');
+        const summaryEl = document.getElementById('inquiry-toggle-summary');
+        const arrowEl = document.getElementById('inquiry-toggle-arrow');
+        const actionLabelEl = document.getElementById('inquiry-toggle-action-label');
+        if (summaryEl) summaryEl.textContent = referenceCode + ' — ' + details.barberName;
+        if (arrowEl) arrowEl.textContent = '▲';
+        if (actionLabelEl) actionLabelEl.textContent = 'Hide Details';
+        if (toggleBar) toggleBar.setAttribute('aria-expanded', 'true');
+
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -493,25 +504,36 @@
             });
         }
 
-        // Close / hide inquiry voucher listener
-        function hideInquiryVoucher() {
-            const wrapper = document.getElementById('inquiry-confirmation-wrapper');
-            if (wrapper) {
-                wrapper.classList.add('is-hidden');
-            }
-            const formSection = document.getElementById('barber-inquiry-section');
-            if (formSection) {
-                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Toggle consultation ticket solely via toggle bar arrow
+        const toggleBar = document.getElementById('inquiry-voucher-toggle-bar');
+        const cardEl = document.getElementById('inquiry-confirmation-card');
+        const arrowEl = document.getElementById('inquiry-toggle-arrow');
+        const actionLabelEl = document.getElementById('inquiry-toggle-action-label');
+
+        function toggleInquiryVoucher() {
+            if (!cardEl) return;
+            const isHidden = cardEl.classList.contains('is-hidden');
+            if (isHidden) {
+                cardEl.classList.remove('is-hidden');
+                if (arrowEl) arrowEl.textContent = '▲';
+                if (actionLabelEl) actionLabelEl.textContent = 'Hide Details';
+                if (toggleBar) toggleBar.setAttribute('aria-expanded', 'true');
+            } else {
+                cardEl.classList.add('is-hidden');
+                if (arrowEl) arrowEl.textContent = '▼';
+                if (actionLabelEl) actionLabelEl.textContent = 'View Details';
+                if (toggleBar) toggleBar.setAttribute('aria-expanded', 'false');
             }
         }
 
-        const closeInquiryBtn = document.getElementById('btn-close-inquiry-voucher');
-        const closeInquiryBtnBottom = document.getElementById('btn-close-inquiry-voucher-bottom');
-        if (closeInquiryBtn) {
-            closeInquiryBtn.addEventListener('click', hideInquiryVoucher);
-        }
-        if (closeInquiryBtnBottom) {
-            closeInquiryBtnBottom.addEventListener('click', hideInquiryVoucher);
+        if (toggleBar) {
+            toggleBar.addEventListener('click', toggleInquiryVoucher);
+            toggleBar.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleInquiryVoucher();
+                }
+            });
         }
     }
 

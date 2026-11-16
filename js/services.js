@@ -593,21 +593,7 @@
             }, 10);
         });
 
-        // Event 6: 'click' on close reservation voucher buttons (collapses voucher into persistent toggle bar - R1)
-        $('#btn-close-booking-voucher, #btn-close-voucher-bottom').on('click', function () {
-            const $card = $('#booking-confirmation-card');
-            $card.slideUp(350, function () {
-                $('#booking-toggle-arrow').text('▼');
-                $('#booking-toggle-action-label').text('View Details');
-                $('#booking-voucher-toggle-bar').attr('aria-expanded', 'false');
-            });
-            const toggleBar = document.getElementById('booking-voucher-toggle-bar');
-            if (toggleBar) {
-                toggleBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-
-        // Event 7: 'click' or 'keydown' on persistent toggle bar to expand/collapse (R1)
+        // Event 6: 'click' or 'keydown' on persistent toggle bar to expand/collapse (R1)
         $('#booking-voucher-toggle-bar').on('click keydown', function (e) {
             if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
                 return;

@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label for="fb-phone-input" class="form-label text-light">Phone Number:</label>
-                                    <input type="tel" id="fb-phone-input" name="fb_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 000-00-00" required>
+                                    <input type="tel" id="fb-phone-input" name="fb_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 000-00-00" maxlength="18" required>
                                 </div>
                                 <div class="col-12">
                                     <label for="fb-email-input" class="form-label text-light">Email Address:</label>
@@ -156,16 +156,25 @@
 
                     <!-- Visible Confirmation Voucher Area -->
                     <div id="feedback-confirmation-wrapper" class="mt-4 is-hidden">
+                        <!-- Persistent Toggle Bar -->
+                        <div id="feedback-voucher-toggle-bar" class="voucher-toggle-bar mb-2" role="button" tabindex="0" aria-expanded="true">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <span class="badge bg-gold text-dark">Audit Ticket</span>
+                                <strong class="text-light" id="feedback-toggle-summary">AUDIT-2026-QA-582 — Quality Assurance Logged</strong>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-secondary small toggle-status-label d-none d-sm-inline" id="feedback-toggle-action-label">Hide Details</span>
+                                <span class="voucher-toggle-arrow" id="feedback-toggle-arrow" aria-hidden="true">▲</span>
+                            </div>
+                        </div>
+
                         <div class="confirmation-voucher shadow" id="feedback-confirmation-card">
                             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                                 <div>
                                     <span class="badge bg-gold mb-1">Quality Assurance</span>
                                     <h2 class="h5 text-gold mb-0">Audit Submission Acknowledged</h2>
                                 </div>
-                                <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
-                                    <span class="status-badge-confirmed" id="fb-status-badge">Status: Logged to QA Registry</span>
-                                    <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-feedback-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
-                                </div>
+                                <span class="status-badge-confirmed mt-2 mt-sm-0" id="fb-status-badge">Status: Logged to QA Registry</span>
                             </div>
 
                             <div class="voucher-divider"></div>
@@ -187,14 +196,9 @@
 
                             <div class="voucher-divider"></div>
 
-                            <p class="mb-3 text-secondary small" id="fb-voucher-notice">
+                            <p class="mb-0 text-secondary small" id="fb-voucher-notice">
                                 * Thank you for helping us maintain uncompromising grooming standards. Your feedback has been forwarded to the managing partners.
                             </p>
-
-                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25 flex-wrap gap-2">
-                                <small class="text-secondary">Your feedback helps improve our service standards.</small>
-                                <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-feedback-voucher-bottom">✕ Close Voucher / New Review</button>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -263,7 +267,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-phone" class="form-label text-light small">Telephone Number (+7...):</label>
-                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" maxlength="18" required>
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-email" class="form-label text-light small">Email Address:</label>

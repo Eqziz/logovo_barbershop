@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label for="cand-phone-input" class="form-label text-light">Contact Phone:</label>
-                                    <input type="tel" id="cand-phone-input" name="cand_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (705) 111-22-33" required>
+                                    <input type="tel" id="cand-phone-input" name="cand_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (705) 111-22-33" maxlength="18" required>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label for="cand-email-input" class="form-label text-light">Email Address:</label>
@@ -210,16 +210,25 @@
 
                     <!-- Visible Confirmation Voucher Area -->
                     <div id="careers-confirmation-wrapper" class="mt-4 is-hidden">
+                        <!-- Persistent Toggle Bar -->
+                        <div id="careers-voucher-toggle-bar" class="voucher-toggle-bar mb-2" role="button" tabindex="0" aria-expanded="true">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <span class="badge bg-gold text-dark">HR Dossier</span>
+                                <strong class="text-light" id="careers-toggle-summary">DOSSIER-2026-HR-319 — Application Registered</strong>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-secondary small toggle-status-label d-none d-sm-inline" id="careers-toggle-action-label">Hide Details</span>
+                                <span class="voucher-toggle-arrow" id="careers-toggle-arrow" aria-hidden="true">▲</span>
+                            </div>
+                        </div>
+
                         <div class="confirmation-voucher shadow" id="careers-confirmation-card">
                             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3">
                                 <div>
                                     <span class="badge bg-gold mb-1">HR Registry</span>
                                     <h3 class="h5 text-gold mb-0">Application Dossier Registered</h3>
                                 </div>
-                                <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
-                                    <span class="status-badge-pending" id="careers-status-badge">Status: Dossier in HR Review</span>
-                                    <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-careers-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
-                                </div>
+                                <span class="status-badge-pending mt-2 mt-sm-0" id="careers-status-badge">Status: Dossier in HR Review</span>
                             </div>
 
                             <div class="voucher-divider"></div>
@@ -241,14 +250,9 @@
 
                             <div class="voucher-divider"></div>
 
-                            <p class="mb-3 text-secondary small" id="careers-voucher-notice">
+                            <p class="mb-0 text-secondary small" id="careers-voucher-notice">
                                 * Your credentials have been submitted to our HR director. If you have questions regarding your application, reach out to <a href="mailto:hr@logovo-astana.kz" class="text-gold text-decoration-none">hr@logovo-astana.kz</a> quoting dossier code.
                             </p>
-
-                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25 flex-wrap gap-2">
-                                <small class="text-secondary">Track your application using your Dossier ID.</small>
-                                <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-careers-voucher-bottom">✕ Close Voucher / New Application</button>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -278,7 +282,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-phone" class="form-label text-light small">Telephone Number (+7...):</label>
-                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" maxlength="18" required>
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-email" class="form-label text-light small">Email Address:</label>

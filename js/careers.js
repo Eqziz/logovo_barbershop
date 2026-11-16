@@ -256,7 +256,11 @@
             '<span class="d-block">Candidate ' + $('<div>').text(details.candidateName).html() + ', your credentials for ' + $('<div>').text(details.trackName).html() + ' have been registered under dossier code <strong>' + referenceCode + '</strong>.</span>';
         $('#careers-voucher-notice').html(noticeHtml);
 
-        $card.addClass('card-dark-highlight');
+        $card.addClass('card-dark-highlight').show().removeClass('is-hidden');
+        $('#careers-toggle-summary').text(referenceCode + ' — ' + details.trackName);
+        $('#careers-voucher-toggle-bar').attr('aria-expanded', 'true');
+        $('#careers-toggle-arrow').text('▲');
+        $('#careers-toggle-action-label').text('Hide Details');
 
         // Effect: slideDown with duration and callback
         $wrapper.hide().removeClass('is-hidden').slideDown(400, function () {
@@ -309,14 +313,28 @@
             }, 10);
         });
 
-        // Close/hide application dossier voucher
-        $('#btn-close-careers-voucher, #btn-close-careers-voucher-bottom').on('click', function () {
-            $('#careers-confirmation-wrapper').slideUp(350, function () {
-                $(this).addClass('is-hidden');
-            });
-            $('html, body').animate({
-                scrollTop: $('#careers-form-section').offset().top - 40
-            }, 300);
+        // Toggle dossier voucher details solely via toggle bar arrow
+        $('#careers-voucher-toggle-bar').on('click keydown', function (e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
+                return;
+            }
+            if (e.type === 'keydown') {
+                e.preventDefault();
+            }
+            const $card = $('#careers-confirmation-card');
+            if ($card.is(':visible')) {
+                $card.slideUp(350, function () {
+                    $('#careers-toggle-arrow').text('▼');
+                    $('#careers-toggle-action-label').text('View Details');
+                    $('#careers-voucher-toggle-bar').attr('aria-expanded', 'false');
+                });
+            } else {
+                $card.slideDown(350, function () {
+                    $('#careers-toggle-arrow').text('▲');
+                    $('#careers-toggle-action-label').text('Hide Details');
+                    $('#careers-voucher-toggle-bar').attr('aria-expanded', 'true');
+                });
+            }
         });
     }
 

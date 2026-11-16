@@ -606,14 +606,7 @@
         const statusBadge = document.createElement('span');
         statusBadge.className = 'status-badge-confirmed mt-2 mt-sm-0';
         statusBadge.textContent = 'Status: Reserved for 48 Hours (Demo)';
-        const btnHide = document.createElement('button');
-        btnHide.type = 'button';
-        btnHide.className = 'btn btn-outline-gold btn-sm';
-        btnHide.setAttribute('title', 'Close Voucher');
-        btnHide.setAttribute('aria-label', 'Close Voucher');
-        btnHide.textContent = '✕ Hide Voucher';
         actionDiv.appendChild(statusBadge);
-        actionDiv.appendChild(btnHide);
 
         cardHeader.appendChild(titleDiv);
         cardHeader.appendChild(actionDiv);
@@ -689,7 +682,7 @@
 
         // Notice
         const noticeP = document.createElement('p');
-        noticeP.className = 'mb-3 text-secondary small';
+        noticeP.className = 'mb-0 text-secondary small';
         const noticeText1 = document.createTextNode('* Please quote voucher code ');
         const noticeCode = document.createElement('strong');
         noticeCode.textContent = order.id;
@@ -699,21 +692,7 @@
         noticeP.appendChild(noticeText2);
         card.appendChild(noticeP);
 
-        // Bottom action bar
-        const bottomBar = document.createElement('div');
-        bottomBar.className = 'd-flex flex-wrap justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25';
-        const bottomSmall = document.createElement('small');
-        bottomSmall.className = 'text-secondary';
-        bottomSmall.textContent = 'Present this voucher code to the club administrator upon your visit.';
-        const btnBottomClose = document.createElement('button');
-        btnBottomClose.type = 'button';
-        btnBottomClose.className = 'btn btn-outline-gold btn-sm mt-2 mt-sm-0';
-        btnBottomClose.textContent = '✕ Close Voucher / New Order';
-        bottomBar.appendChild(bottomSmall);
-        bottomBar.appendChild(btnBottomClose);
-        card.appendChild(bottomBar);
-
-        // Independent Toggle Behavior for this Voucher
+        // Independent Toggle Behavior for this Voucher (solely via toggle bar arrow)
         function toggleVoucher() {
             const isHidden = card.classList.contains('is-hidden');
             if (isHidden) {
@@ -729,28 +708,11 @@
             }
         }
 
-        function collapseVoucher() {
-            card.classList.add('is-hidden');
-            arrow.textContent = '▼';
-            actionLabel.textContent = 'View Details';
-            toggleBar.setAttribute('aria-expanded', 'false');
-            toggleBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
         toggleBar.addEventListener('click', toggleVoucher);
         toggleBar.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 toggleVoucher();
-            }
-        });
-
-        btnHide.addEventListener('click', collapseVoucher);
-        btnBottomClose.addEventListener('click', function () {
-            collapseVoucher();
-            const catalog = document.getElementById('marketbar-cart-section');
-            if (catalog) {
-                catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
 

@@ -259,7 +259,7 @@
 
                         <div class="col-12 col-md-4">
                             <label for="booking-phone-input" class="form-label text-light">Contact Phone:</label>
-                            <input type="tel" id="booking-phone-input" name="booking_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                            <input type="tel" id="booking-phone-input" name="booking_phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" maxlength="18" required>
                         </div>
 
                         <div class="col-12 col-md-4">
@@ -313,10 +313,7 @@
                             <span class="badge bg-gold mb-1">Reservation Voucher</span>
                             <h3 class="h5 text-gold mb-0">Booking Details & Check-In Voucher</h3>
                         </div>
-                        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
-                            <span class="status-badge-pending" id="booking-voucher-status">Status: Pending SMS Confirmation</span>
-                            <button type="button" class="btn btn-outline-gold btn-sm" id="btn-close-booking-voucher" title="Close Voucher" aria-label="Close Voucher">✕ Hide Voucher</button>
-                        </div>
+                        <span class="status-badge-pending mt-2 mt-sm-0" id="booking-voucher-status">Status: Pending SMS Confirmation</span>
                     </div>
 
                     <div class="voucher-divider"></div>
@@ -350,14 +347,9 @@
 
                     <div class="voucher-divider"></div>
 
-                    <p class="mb-3 text-secondary small" id="booking-voucher-notice">
+                    <p class="mb-0 text-secondary small" id="booking-voucher-notice">
                         * Please arrive 5 minutes prior to your time. Fresh espresso is served at our hospitality bar upon arrival. If you need to make changes, contact us directly at <a href="tel:+77012181919" class="text-gold text-decoration-none">+7 (701) 218-19-19</a>.
                     </p>
-
-                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
-                        <small class="text-secondary">Present this voucher code to the club administrator upon your visit.</small>
-                        <button type="button" class="btn btn-outline-gold btn-sm mt-2 mt-sm-0" id="btn-close-voucher-bottom">✕ Close Voucher / Book Another</button>
-                    </div>
                 </div>
             </div>
         </section>
@@ -380,7 +372,7 @@
                 </div>
                 <div class="col-12 col-md-5 text-center">
                     <figure class="mb-0">
-                        <img src="images/photo3.jpg" alt="Master barber preparing cutting station" class="img-fluid rounded shadow border border-secondary border-opacity-50" id="sanitation-image">
+                        <img src="images/photo2.jpg" alt="Master barber workstations and sanitized cutting station" class="img-fluid rounded shadow border border-secondary border-opacity-50" id="sanitation-image">
                         <figcaption class="text-secondary small mt-2">Station Disinfection & Tool Preparation</figcaption>
                     </figure>
                 </div>
@@ -410,7 +402,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-phone" class="form-label text-light small">Telephone Number (+7...):</label>
-                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" required>
+                                <input type="tel" id="modal-input-phone" class="form-control bg-dark text-light border-secondary" placeholder="+7 (701) 218-19-19" maxlength="18" required>
                             </div>
                             <div class="mb-3">
                                 <label for="modal-input-email" class="form-label text-light small">Email Address:</label>

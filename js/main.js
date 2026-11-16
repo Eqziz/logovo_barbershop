@@ -63,9 +63,89 @@ window.Logovo = (function () {
      */
     function isValidPhone(phone) {
         const cleaned = sanitize(phone).replace(/[\s\-\(\)]/g, '');
-        // Must start with +7 or 8 and contain 11 digits
-        const phoneRegex = /^(\+7|8|7)7\d{9}$/;
+        // Must start with +7 or 8 and contain 11 digits total (country code + 10 digits)
+        const phoneRegex = /^(\+7|8|7)\d{10}$/;
         return phoneRegex.test(cleaned);
+    }
+
+    /**
+     * Formats raw digits into standard Kazakhstan phone number: +7 (XXX) XXX-XX-XX
+     * Ensures strict digit limit: exactly 11 digits (country code 7 + 10 digits)
+     */
+    function formatKZPhone(value) {
+        if (!value) return '';
+        let digits = value.replace(/\D/g, '');
+        if (!digits.length) return '';
+
+        // If first digit is 8, convert to 7
+        if (digits[0] === '8') {
+            digits = '7' + digits.slice(1);
+        } else if (digits[0] !== '7') {
+            digits = '7' + digits;
+        }
+
+        // Limit strictly to 11 digits total (country code 7 + 10 subscriber digits)
+        digits = digits.slice(0, 11);
+
+        let formatted = '+7';
+        if (digits.length > 1) {
+            formatted += ' (' + digits.slice(1, 4);
+        }
+        if (digits.length >= 4) {
+            formatted += ') ';
+        }
+        if (digits.length > 4) {
+            formatted += digits.slice(4, 7);
+        }
+        if (digits.length >= 7) {
+            formatted += '-';
+        }
+        if (digits.length > 7) {
+            formatted += digits.slice(7, 9);
+        }
+        if (digits.length >= 9) {
+            formatted += '-';
+        }
+        if (digits.length > 9) {
+            formatted += digits.slice(9, 11);
+        }
+
+        return formatted;
+    }
+
+    /**
+     * Sets up global phone input formatting, auto +7 insertion, and digit capping
+     */
+    function setupPhoneInputs() {
+        const phoneSelector = 'input[type="tel"], #booking-phone-input, #order-phone-input, #fb-phone-input, #cand-phone-input, #modal-input-phone';
+
+        document.addEventListener('focusin', function (e) {
+            const target = e.target;
+            if (target && target.matches && target.matches(phoneSelector)) {
+                if (!target.value || target.value.trim() === '') {
+                    target.value = '+7 (';
+                }
+            }
+        });
+
+        document.addEventListener('input', function (e) {
+            const target = e.target;
+            if (target && target.matches && target.matches(phoneSelector)) {
+                const currentVal = target.value;
+                const formatted = formatKZPhone(currentVal);
+                target.value = formatted;
+            }
+        });
+
+        document.addEventListener('focusout', function (e) {
+            const target = e.target;
+            if (target && target.matches && target.matches(phoneSelector)) {
+                const trimmed = target.value.trim();
+                if (trimmed === '+7' || trimmed === '+7 (' || trimmed === '+7 ()' || trimmed === '') {
+                    target.value = '';
+                }
+            }
+        });
     }
 
     /**
@@ -1150,10 +1230,12 @@ window.Logovo = (function () {
         clearAutofilledForms: clearAutofilledForms,
         initHomePageActiveBadges: initHomePageActiveBadges,
         initHeroGalleryCarousel: initHeroGalleryCarousel,
+        formatKZPhone: formatKZPhone,
         initShared: function () {
             syncNavigation();
             setupDemonstrationNotice();
             setupFloatingCallButton();
+            setupPhoneInputs();
             syncSessionUI();
             initSessionModal();
             autofillForms();

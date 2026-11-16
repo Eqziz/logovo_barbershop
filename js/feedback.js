@@ -304,7 +304,11 @@
             )
         );
 
-        $voucherCard.addClass('card-dark-highlight');
+        $voucherCard.addClass('card-dark-highlight').show().removeClass('is-hidden');
+        $('#feedback-toggle-summary').text(referenceCode + ' — Quality Assurance (' + details.branchName + ')');
+        $('#feedback-voucher-toggle-bar').attr('aria-expanded', 'true');
+        $('#feedback-toggle-arrow').text('▲');
+        $('#feedback-toggle-action-label').text('Hide Details');
 
         // Dynamically prepend newly submitted review card into reviews list with .prependTo() and .fadeIn()
         const $reviewsContainer = $('#reviews-list-container');
@@ -415,14 +419,28 @@
             }, 10);
         });
 
-        // Close/hide confirmation voucher
-        $('#btn-close-feedback-voucher, #btn-close-feedback-voucher-bottom').on('click', function () {
-            $('#feedback-confirmation-wrapper').slideUp(350, function () {
-                $(this).addClass('is-hidden');
-            });
-            $('html, body').animate({
-                scrollTop: $('#feedback-form-section').offset().top - 40
-            }, 300);
+        // Toggle voucher details solely via toggle bar arrow
+        $('#feedback-voucher-toggle-bar').on('click keydown', function (e) {
+            if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
+                return;
+            }
+            if (e.type === 'keydown') {
+                e.preventDefault();
+            }
+            const $card = $('#feedback-confirmation-card');
+            if ($card.is(':visible')) {
+                $card.slideUp(350, function () {
+                    $('#feedback-toggle-arrow').text('▼');
+                    $('#feedback-toggle-action-label').text('View Details');
+                    $('#feedback-voucher-toggle-bar').attr('aria-expanded', 'false');
+                });
+            } else {
+                $card.slideDown(350, function () {
+                    $('#feedback-toggle-arrow').text('▲');
+                    $('#feedback-toggle-action-label').text('Hide Details');
+                    $('#feedback-voucher-toggle-bar').attr('aria-expanded', 'true');
+                });
+            }
         });
     }
 
